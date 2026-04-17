@@ -15,17 +15,16 @@
   --border: #F7DFB9;
   --card-green: #134F41;
   --card-blue: #134A52;
-  --btn-bg: #F7DFB9;
-  --btn-hover: #FFEDC9;
-  --btn-fg: #0A332D;
 }
 
 body {
   transition: background-color 0.45s ease, color 0.45s ease;
 }
 
-/* btn-primary ships with hardcoded white — flip via var */
-.btn-primary { color: var(--btn-fg) !important; }
+/* Primary CTA is always dark navy + white text in BOTH themes — strong,
+   consistent, unmissable call-to-action regardless of page background. */
+.btn-primary { background: #111827 !important; color: #ffffff !important; }
+.btn-primary:hover { background: #000000 !important; color: #ffffff !important; }
 
 /* ---- Dark mode overrides for hardcoded inline styles ---- */
 [data-theme="dark"] [style*="rgba(245,241,232,0.85)"] {
