@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>System Status — Awesome Crew</title>
+  <meta name="description" content="Live status of Awesome Crew services."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary { background: var(--btn-bg); color: #fff; border-radius: 10px; padding: 10px 18px; font-weight: 600; font-size: 13px; }
+    .btn-primary:hover { background: var(--btn-hover); }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .status-dot.up { background: #10B981; box-shadow: 0 0 0 3px rgba(16,185,129,0.2); }
+    .status-dot.degraded { background: #F59E0B; }
+    .status-dot.down { background: #EF4444; }
+  </style>
+</head>
+<body>
+
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
+          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+        </svg>
+        <span class="text-lg font-bold tracking-tight">Awesome Crew</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="hidden sm:block text-sm font-medium" style="color: var(--text-sec);">Sign in</a>
+        <a href="login.html" class="btn-primary">Get started</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 pt-12 pb-24">
+
+    <!-- Overall status banner -->
+    <section class="rounded-[20px] card-border p-8 mb-8 flex items-center gap-5" style="background: var(--card-green);">
+      <div class="w-12 h-12 rounded-full flex items-center justify-center card-border" style="background: #fff;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #10B981;"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight mb-1">All systems operational</h1>
+        <p class="text-sm" style="color: var(--text-sec);">Last checked: <span id="last-checked">just now</span></p>
+      </div>
+    </section>
+
+    <!-- Service list -->
+    <section class="rounded-[20px] card-border p-6 md:p-8 mb-8" style="background: var(--container);">
+      <h2 class="text-xs font-bold uppercase tracking-widest mb-5" style="color: var(--text-muted);">Services</h2>
+      <div class="flex flex-col divide-y" style="--tw-divide-opacity: 1; border-color: rgba(31,41,55,0.1);">
+
+        <div class="flex items-center justify-between py-4">
+          <div class="flex items-center gap-3">
+            <span class="status-dot up"></span>
+            <span class="text-sm font-semibold">Landing site (landing-pageeee.vercel.app)</span>
+          </div>
+          <span class="text-xs font-semibold" style="color: #10B981;">Operational</span>
+        </div>
+
+        <div class="flex items-center justify-between py-4" style="border-top: 1px solid rgba(31,41,55,0.1);">
+          <div class="flex items-center gap-3">
+            <span class="status-dot up"></span>
+            <span class="text-sm font-semibold">Authentication (Supabase Auth)</span>
+          </div>
+          <span class="text-xs font-semibold" style="color: #10B981;">Operational</span>
+        </div>
+
+        <div class="flex items-center justify-between py-4" style="border-top: 1px solid rgba(31,41,55,0.1);">
+          <div class="flex items-center gap-3">
+            <span class="status-dot up"></span>
+            <span class="text-sm font-semibold">Database (PostgreSQL, ap-south-1)</span>
+          </div>
+          <span class="text-xs font-semibold" style="color: #10B981;">Operational</span>
+        </div>
+
+        <div class="flex items-center justify-between py-4" style="border-top: 1px solid rgba(31,41,55,0.1);">
+          <div class="flex items-center gap-3">
+            <span class="status-dot up"></span>
+            <span class="text-sm font-semibold">AI generation pipeline</span>
+          </div>
+          <span class="text-xs font-semibold" style="color: #10B981;">Operational</span>
+        </div>
+
+        <div class="flex items-center justify-between py-4" style="border-top: 1px solid rgba(31,41,55,0.1);">
+          <div class="flex items-center gap-3">
+            <span class="status-dot up"></span>
+            <span class="text-sm font-semibold">Published page delivery (CDN)</span>
+          </div>
+          <span class="text-xs font-semibold" style="color: #10B981;">Operational</span>
+        </div>
+
+        <div class="flex items-center justify-between py-4" style="border-top: 1px solid rgba(31,41,55,0.1);">
+          <div class="flex items-center gap-3">
+            <span class="status-dot up"></span>
+            <span class="text-sm font-semibold">Dashboard API</span>
+          </div>
+          <span class="text-xs font-semibold" style="color: #10B981;">Operational</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Incidents -->
+    <section class="rounded-[20px] card-border p-6 md:p-8" style="background: var(--container);">
+      <h2 class="text-xs font-bold uppercase tracking-widest mb-5" style="color: var(--text-muted);">Past incidents</h2>
+      <div class="space-y-6">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="status-dot up"></span>
+            <span class="text-sm font-semibold">No incidents</span>
+          </div>
+          <p class="text-xs" style="color: var(--text-muted);">April 10 – April 17, 2026 — 7 days of clean running.</p>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="status-dot degraded"></span>
+            <span class="text-sm font-semibold">Degraded generation latency</span>
+          </div>
+          <p class="text-xs mb-1" style="color: var(--text-muted);">April 3, 2026 · 14:20 – 14:42 UTC · 22 min</p>
+          <p class="text-sm" style="color: var(--text-sec);">Upstream AI provider experienced elevated latency. Fallback routing restored normal generation times.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="text-xs text-center mt-8" style="color: var(--text-muted);">
+      For uptime history, see <a href="uptime.html" class="underline">uptime report</a>.
+    </p>
+  </main>
+
+  <footer class="border-t mt-12" style="border-color: #E6E1D8; background: rgba(245,241,232,0.6);">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-4 items-center">
+      <p class="text-xs" style="color: var(--text-muted);">© <span id="year"></span> Awesome Crew. All rights reserved.</p>
+      <div class="flex flex-wrap gap-6 text-xs">
+        <a href="docs.html" class="hover:underline" style="color: var(--text-sec);">Docs</a>
+        <a href="changelog.html" class="hover:underline" style="color: var(--text-sec);">Changelog</a>
+        <a href="privacy.html" class="hover:underline" style="color: var(--text-sec);">Privacy</a>
+        <a href="terms.html" class="hover:underline" style="color: var(--text-sec);">Terms</a>
+        <a href="status.html" class="hover:underline" style="color: var(--text-sec);">Status</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('last-checked').textContent = new Date().toLocaleString();
+  </script>
+</body>
+</html>

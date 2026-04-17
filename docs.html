@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Documentation — Awesome Crew</title>
+  <meta name="description" content="Learn how to build, publish and manage landing pages with Awesome Crew."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary {
+      background: var(--btn-bg); color: #fff;
+      border-radius: 10px; padding: 10px 18px;
+      font-weight: 600; font-size: 13px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--btn-hover); transform: translateY(-1px); }
+    .prose h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+    .prose h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .prose p { color: var(--text-sec); line-height: 1.7; margin-bottom: 1rem; }
+    .prose ul { list-style: disc; padding-left: 1.5rem; color: var(--text-sec); line-height: 1.7; margin-bottom: 1rem; }
+    .prose li { margin-bottom: 0.35rem; }
+    .prose code { background: rgba(31,41,55,0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.875em; font-family: ui-monospace, monospace; }
+    .sidebar-link { display: block; padding: 6px 10px; border-radius: 8px; color: var(--text-sec); font-size: 13px; font-weight: 500; }
+    .sidebar-link:hover { background: rgba(31,41,55,0.08); color: var(--text); }
+    .sidebar-link.active { background: var(--card-green); color: var(--text); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
+          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+        </svg>
+        <span class="text-lg font-bold tracking-tight">Awesome Crew</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="hidden sm:block text-sm font-medium" style="color: var(--text-sec);">Sign in</a>
+        <a href="login.html" class="btn-primary">Get started</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 pt-12 pb-24">
+    <div class="grid md:grid-cols-[220px_1fr] gap-10">
+
+      <!-- Sidebar -->
+      <aside class="md:sticky md:top-24 md:self-start">
+        <h3 class="text-xs font-bold uppercase tracking-widest mb-3" style="color: var(--text-muted);">Getting started</h3>
+        <nav class="flex flex-col gap-0.5 mb-6">
+          <a href="#introduction" class="sidebar-link active">Introduction</a>
+          <a href="#quickstart" class="sidebar-link">Quickstart</a>
+          <a href="#authentication" class="sidebar-link">Authentication</a>
+        </nav>
+        <h3 class="text-xs font-bold uppercase tracking-widest mb-3" style="color: var(--text-muted);">Guides</h3>
+        <nav class="flex flex-col gap-0.5 mb-6">
+          <a href="#generating" class="sidebar-link">Generating a page</a>
+          <a href="#editing" class="sidebar-link">Editing content</a>
+          <a href="#publishing" class="sidebar-link">Publishing</a>
+          <a href="#custom-domain" class="sidebar-link">Custom domains</a>
+        </nav>
+        <h3 class="text-xs font-bold uppercase tracking-widest mb-3" style="color: var(--text-muted);">Reference</h3>
+        <nav class="flex flex-col gap-0.5">
+          <a href="#plans" class="sidebar-link">Plans & limits</a>
+          <a href="#faq" class="sidebar-link">FAQ</a>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <article class="rounded-[20px] card-border p-8 md:p-10 prose" style="background: var(--container);">
+        <h1 class="text-4xl font-bold tracking-tight mb-2">Documentation</h1>
+        <p class="text-sm" style="color: var(--text-muted);">Everything you need to ship a landing page with Awesome Crew.</p>
+
+        <h2 id="introduction">Introduction</h2>
+        <p>Awesome Crew turns a single prompt into a fully-editable landing page. Describe your business, and our models produce the hero, feature blocks, pricing, and call-to-action — styled, responsive, and ready to deploy.</p>
+
+        <h2 id="quickstart">Quickstart</h2>
+        <ol class="list-decimal pl-6 space-y-2" style="color: var(--text-sec);">
+          <li>Create an account from the <a href="login.html" class="underline">sign in page</a>.</li>
+          <li>From your <a href="dashboard.html" class="underline">dashboard</a>, click <strong>New page</strong>.</li>
+          <li>Describe your business in one sentence.</li>
+          <li>Review and tweak the generated page.</li>
+          <li>Click <strong>Publish</strong> to make it live.</li>
+        </ol>
+
+        <h2 id="authentication">Authentication</h2>
+        <p>We support email + password, Google, and GitHub. All sessions are stored securely via Supabase Auth with row-level security enforced on every request.</p>
+
+        <h2 id="generating">Generating a page</h2>
+        <p>Each generation uses your monthly quota. Free accounts get 3 generations per month, Starter gets 20, and Pro is unlimited.</p>
+
+        <h3 id="editing">Editing content</h3>
+        <p>After generation, every section is editable in place — headlines, paragraphs, features, pricing tiers, and CTA links.</p>
+
+        <h3 id="publishing">Publishing</h3>
+        <p>Publishing a page makes it accessible at your Awesome Crew subdomain. You can unpublish at any time from the dashboard.</p>
+
+        <h3 id="custom-domain">Custom domains</h3>
+        <p>Pro plan includes custom domain support with automatic SSL. Point a CNAME record to <code>pages.awesomecrew.app</code>.</p>
+
+        <h2 id="plans">Plans & limits</h2>
+        <ul>
+          <li><strong>Free</strong> — 3 pages/month, Awesome Crew subdomain</li>
+          <li><strong>Starter</strong> — 20 pages/month, custom meta tags</li>
+          <li><strong>Pro</strong> — Unlimited pages, custom domains, priority support</li>
+        </ul>
+
+        <h2 id="faq">FAQ</h2>
+        <h3>Can I export the HTML?</h3>
+        <p>Yes — paid plans include one-click static HTML export.</p>
+        <h3>Do you collect analytics on my pages?</h3>
+        <p>We collect aggregate traffic data for uptime purposes only. We never track your visitors.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="border-t mt-12" style="border-color: #E6E1D8; background: rgba(245,241,232,0.6);">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-4 items-center">
+      <p class="text-xs" style="color: var(--text-muted);">© <span id="year"></span> Awesome Crew. All rights reserved.</p>
+      <div class="flex flex-wrap gap-6 text-xs">
+        <a href="docs.html" class="hover:underline" style="color: var(--text-sec);">Docs</a>
+        <a href="changelog.html" class="hover:underline" style="color: var(--text-sec);">Changelog</a>
+        <a href="privacy.html" class="hover:underline" style="color: var(--text-sec);">Privacy</a>
+        <a href="terms.html" class="hover:underline" style="color: var(--text-sec);">Terms</a>
+        <a href="status.html" class="hover:underline" style="color: var(--text-sec);">Status</a>
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

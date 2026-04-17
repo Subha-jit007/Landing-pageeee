@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Changelog — Awesome Crew</title>
+  <meta name="description" content="New features, improvements and fixes in Awesome Crew."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary { background: var(--btn-bg); color: #fff; border-radius: 10px; padding: 10px 18px; font-weight: 600; font-size: 13px; }
+    .btn-primary:hover { background: var(--btn-hover); }
+    .tag { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border: 1.5px solid var(--border); }
+    .tag-new { background: var(--card-green); color: #14532d; }
+    .tag-fix { background: var(--card-blue); color: #0c4a6e; }
+    .tag-improve { background: #fff; color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
+          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+        </svg>
+        <span class="text-lg font-bold tracking-tight">Awesome Crew</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="hidden sm:block text-sm font-medium" style="color: var(--text-sec);">Sign in</a>
+        <a href="login.html" class="btn-primary">Get started</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 pt-12 pb-24">
+    <h1 class="text-5xl font-bold tracking-tight mb-3">Changelog</h1>
+    <p class="text-base mb-10" style="color: var(--text-muted);">New features, improvements and fixes — shipped weekly.</p>
+
+    <div class="space-y-6">
+
+      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+        <div class="flex items-center gap-3 mb-3 flex-wrap">
+          <span class="tag tag-new">v2.0 Launch</span>
+          <span class="text-xs font-semibold" style="color: var(--text-muted);">April 15, 2026</span>
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight mb-3">Awesome Crew v2.0</h2>
+        <ul class="space-y-2 text-sm leading-relaxed" style="color: var(--text-sec);">
+          <li>• Full rebrand and redesigned landing experience</li>
+          <li>• New cream + pastel design system with 2px borders</li>
+          <li>• Faster AI generation pipeline (10 seconds, down from 45)</li>
+          <li>• Email + password authentication alongside Google and GitHub</li>
+          <li>• New dashboard with per-page publish controls</li>
+        </ul>
+      </article>
+
+      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+        <div class="flex items-center gap-3 mb-3 flex-wrap">
+          <span class="tag tag-improve">Improvement</span>
+          <span class="text-xs font-semibold" style="color: var(--text-muted);">March 28, 2026</span>
+        </div>
+        <h2 class="text-xl font-bold tracking-tight mb-3">Supabase row-level security hardening</h2>
+        <p class="text-sm leading-relaxed" style="color: var(--text-sec);">Tightened RLS policies on the <code class="bg-black/5 px-1 rounded">pages</code> table so users can only read, update, or delete their own rows. Public reads are limited to rows where <code class="bg-black/5 px-1 rounded">published = true</code>.</p>
+      </article>
+
+      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+        <div class="flex items-center gap-3 mb-3 flex-wrap">
+          <span class="tag tag-fix">Fix</span>
+          <span class="text-xs font-semibold" style="color: var(--text-muted);">March 20, 2026</span>
+        </div>
+        <h2 class="text-xl font-bold tracking-tight mb-3">Fixed localhost redirect in magic links</h2>
+        <p class="text-sm leading-relaxed" style="color: var(--text-sec);">OAuth and magic-link flows now always return to the production domain, regardless of where the browser was pointed at the time of sign-in.</p>
+      </article>
+
+      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+        <div class="flex items-center gap-3 mb-3 flex-wrap">
+          <span class="tag tag-new">Feature</span>
+          <span class="text-xs font-semibold" style="color: var(--text-muted);">March 10, 2026</span>
+        </div>
+        <h2 class="text-xl font-bold tracking-tight mb-3">Publish / Unpublish toggle</h2>
+        <p class="text-sm leading-relaxed" style="color: var(--text-sec);">Toggle a page live or back to draft from the dashboard in one click — useful for quick experiments and seasonal pages.</p>
+      </article>
+
+      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+        <div class="flex items-center gap-3 mb-3 flex-wrap">
+          <span class="tag tag-new">v1.0 Launch</span>
+          <span class="text-xs font-semibold" style="color: var(--text-muted);">February 1, 2026</span>
+        </div>
+        <h2 class="text-xl font-bold tracking-tight mb-3">Initial release</h2>
+        <p class="text-sm leading-relaxed" style="color: var(--text-sec);">First public release. Generate landing pages from a text prompt. Google sign-in, a simple dashboard, and a template gallery.</p>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="border-t mt-12" style="border-color: #E6E1D8; background: rgba(245,241,232,0.6);">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-4 items-center">
+      <p class="text-xs" style="color: var(--text-muted);">© <span id="year"></span> Awesome Crew. All rights reserved.</p>
+      <div class="flex flex-wrap gap-6 text-xs">
+        <a href="docs.html" class="hover:underline" style="color: var(--text-sec);">Docs</a>
+        <a href="changelog.html" class="hover:underline" style="color: var(--text-sec);">Changelog</a>
+        <a href="privacy.html" class="hover:underline" style="color: var(--text-sec);">Privacy</a>
+        <a href="terms.html" class="hover:underline" style="color: var(--text-sec);">Terms</a>
+        <a href="status.html" class="hover:underline" style="color: var(--text-sec);">Status</a>
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

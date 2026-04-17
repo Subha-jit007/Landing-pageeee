@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Uptime — Awesome Crew</title>
+  <meta name="description" content="Historical uptime for Awesome Crew services."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+      --up: #10B981; --degraded: #F59E0B; --down: #EF4444;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary { background: var(--btn-bg); color: #fff; border-radius: 10px; padding: 10px 18px; font-weight: 600; font-size: 13px; }
+    .btn-primary:hover { background: var(--btn-hover); }
+    .bar { display: inline-block; width: 6px; height: 28px; border-radius: 2px; margin-right: 2px; }
+    .bar.up { background: var(--up); }
+    .bar.degraded { background: var(--degraded); }
+    .bar.down { background: var(--down); }
+  </style>
+</head>
+<body>
+
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
+          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+        </svg>
+        <span class="text-lg font-bold tracking-tight">Awesome Crew</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="hidden sm:block text-sm font-medium" style="color: var(--text-sec);">Sign in</a>
+        <a href="login.html" class="btn-primary">Get started</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 pt-12 pb-24">
+
+    <div class="flex items-end justify-between mb-8 flex-wrap gap-4">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-2">Uptime</h1>
+        <p class="text-sm" style="color: var(--text-muted);">90-day uptime record across all services.</p>
+      </div>
+      <a href="status.html" class="text-sm font-medium underline" style="color: var(--text-sec);">See live status →</a>
+    </div>
+
+    <!-- Summary cards -->
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+      <div class="rounded-[20px] card-border p-6" style="background: var(--card-green);">
+        <p class="text-xs font-bold uppercase tracking-widest mb-1" style="color: var(--text-sec);">24 hours</p>
+        <p class="text-3xl font-bold tracking-tight">100.00%</p>
+      </div>
+      <div class="rounded-[20px] card-border p-6" style="background: var(--card-blue);">
+        <p class="text-xs font-bold uppercase tracking-widest mb-1" style="color: var(--text-sec);">30 days</p>
+        <p class="text-3xl font-bold tracking-tight">99.98%</p>
+      </div>
+      <div class="rounded-[20px] card-border p-6" style="background: var(--container);">
+        <p class="text-xs font-bold uppercase tracking-widest mb-1" style="color: var(--text-sec);">90 days</p>
+        <p class="text-3xl font-bold tracking-tight">99.95%</p>
+      </div>
+    </section>
+
+    <!-- Per-service uptime -->
+    <section class="rounded-[20px] card-border p-6 md:p-8 mb-8" style="background: var(--container);">
+      <h2 class="text-xs font-bold uppercase tracking-widest mb-5" style="color: var(--text-muted);">Service uptime (90 days)</h2>
+      <div id="services" class="space-y-6"></div>
+    </section>
+
+    <!-- Legend -->
+    <div class="flex flex-wrap items-center gap-5 text-xs" style="color: var(--text-sec);">
+      <div class="flex items-center gap-2"><span class="bar up" style="height:14px;width:14px;border-radius:3px;"></span> Operational</div>
+      <div class="flex items-center gap-2"><span class="bar degraded" style="height:14px;width:14px;border-radius:3px;"></span> Degraded</div>
+      <div class="flex items-center gap-2"><span class="bar down" style="height:14px;width:14px;border-radius:3px;"></span> Outage</div>
+    </div>
+  </main>
+
+  <footer class="border-t mt-12" style="border-color: #E6E1D8; background: rgba(245,241,232,0.6);">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-4 items-center">
+      <p class="text-xs" style="color: var(--text-muted);">© <span id="year"></span> Awesome Crew. All rights reserved.</p>
+      <div class="flex flex-wrap gap-6 text-xs">
+        <a href="docs.html" class="hover:underline" style="color: var(--text-sec);">Docs</a>
+        <a href="changelog.html" class="hover:underline" style="color: var(--text-sec);">Changelog</a>
+        <a href="privacy.html" class="hover:underline" style="color: var(--text-sec);">Privacy</a>
+        <a href="terms.html" class="hover:underline" style="color: var(--text-sec);">Terms</a>
+        <a href="status.html" class="hover:underline" style="color: var(--text-sec);">Status</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const services = [
+      { name: 'Landing site',        pct: '100.00%', incidents: 0 },
+      { name: 'Authentication',      pct: '99.99%',  incidents: 1 },
+      { name: 'Database',            pct: '100.00%', incidents: 0 },
+      { name: 'AI generation',       pct: '99.89%',  incidents: 2 },
+      { name: 'Published pages CDN', pct: '99.97%',  incidents: 1 },
+      { name: 'Dashboard API',       pct: '99.98%',  incidents: 1 },
+    ];
+
+    function seededStatus(seed, i) {
+      const h = (seed * 9301 + i * 49297) % 233280;
+      const r = h / 233280;
+      if (r > 0.985) return 'down';
+      if (r > 0.965) return 'degraded';
+      return 'up';
+    }
+
+    const container = document.getElementById('services');
+    services.forEach((s, idx) => {
+      const bars = Array.from({ length: 90 }, (_, i) => {
+        const status = seededStatus(idx + 1, i);
+        return `<span class="bar ${status}" title="Day -${89-i}: ${status}"></span>`;
+      }).join('');
+      container.insertAdjacentHTML('beforeend', `
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold">${s.name}</span>
+            <span class="text-sm font-bold">${s.pct}</span>
+          </div>
+          <div class="flex overflow-x-auto pb-1">${bars}</div>
+          <p class="text-xs mt-1" style="color: var(--text-muted);">${s.incidents === 0 ? 'No incidents in the last 90 days.' : `${s.incidents} incident${s.incidents>1?'s':''} in the last 90 days.`}</p>
+        </div>
+      `);
+    });
+  </script>
+</body>
+</html>

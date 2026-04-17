@@ -1,348 +1,298 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>PageForge AI | Generate Landing Pages in 10 Seconds</title>
-  <meta name="description" content="Describe your business. Get a beautiful, animated, fully-editable landing page. Ship it to a subdomain or download the code." />
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "surface-container-lowest": "#0a0a0a",
-            "surface-container-high": "#1a1a1a",
-            "surface-container-low": "#121212",
-            "surface-container": "#151515",
-            "secondary": "#a5b4fc",
-            "primary-container": "#4f46e5",
-            "outline-variant": "#2a2a2a",
-            "on-surface-variant": "#a1a1aa",
-            "on-primary-fixed": "#e0e7ff",
-            "surface": "#0a0a0a",
-            "primary": "#818cf8",
-            "on-surface": "#f4f4f5",
-            "background": "#0a0a0a",
-            "primary-fixed-dim": "#6366f1",
-            "secondary-container": "#571bc1",
-            "on-secondary-container": "#c4abff",
-          },
-          borderRadius: {
-            "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
-          },
-          fontFamily: {
-            "headline": ["Space Grotesk"], "body": ["Manrope"], "label": ["Manrope"]
-          },
-          animation: {
-            'fade-in': 'fadeIn 1s ease-out forwards',
-            'slide-up': 'slideUp 1s ease-out forwards',
-          },
-          keyframes: {
-            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-            slideUp: { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
-          }
-        },
-      },
-    }
-  </script>
+  <title>Awesome Crew — Landing Pages in 10 Seconds</title>
+  <meta name="description" content="Describe your business. Get a beautiful, fully-editable landing page in 10 seconds."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    body { background-color: #0a0a0a; color: #f4f4f5; font-family: 'Manrope', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; min-height: max(884px, 100dvh); }
-    .font-headline { font-family: 'Space Grotesk', sans-serif; }
-    .glass-panel { background: rgba(20,20,20,0.4); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-    .aurora-text { background: linear-gradient(to right, #818cf8, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-glow { background: radial-gradient(circle at 50% 0%, rgba(79,70,229,0.08) 0%, rgba(10,10,10,0) 60%); }
-    .animate-delay-100 { animation-delay: 100ms; }
-    .animate-delay-200 { animation-delay: 200ms; }
-    .animate-delay-300 { animation-delay: 300ms; }
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary {
+      background: var(--btn-bg); color: #fff;
+      border-radius: 10px; padding: 12px 24px;
+      font-weight: 600; font-size: 14px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--btn-hover); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      border: 2px solid var(--border); border-radius: 10px;
+      padding: 10px 22px; font-weight: 600; font-size: 14px;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: rgba(31,41,55,0.06); }
   </style>
 </head>
-<body class="bg-surface-container-lowest selection:bg-primary-container selection:text-on-primary-fixed">
+<body>
 
   <!-- Header -->
-  <header class="fixed top-0 w-full z-50 bg-zinc-950/70 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]">
-    <div class="bg-gradient-to-b from-zinc-800/10 to-transparent">
-      <nav class="flex items-center justify-between px-6 h-20 w-full max-w-screen-2xl mx-auto">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-indigo-300 text-3xl">auto_awesome</span>
-          <span class="text-xl font-bold tracking-tighter text-zinc-100 font-headline">PageForge AI</span>
-        </div>
-        <div class="hidden md:flex items-center gap-10 font-headline text-sm tracking-tight">
-          <a class="text-indigo-300 border-b-2 border-indigo-400 py-1 transition-colors duration-300" href="#">Home</a>
-          <a class="text-zinc-400 hover:text-zinc-100 transition-colors duration-300 py-1" href="#features">Features</a>
-          <a class="text-zinc-400 hover:text-zinc-100 transition-colors duration-300 py-1" href="#pricing">Pricing</a>
-          <a class="text-zinc-400 hover:text-zinc-100 transition-colors duration-300 py-1" href="login.html">Log in</a>
-        </div>
-        <a href="login.html" class="bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-6 py-2 rounded-full font-headline text-sm tracking-tight hover:bg-indigo-500/20 transition-colors duration-300">
-          Get Started
-        </a>
-      </nav>
-    </div>
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
+          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+        </svg>
+        <span class="text-lg font-bold tracking-tight" style="color: var(--text);">Awesome Crew</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium" style="color: var(--text-sec);">
+        <a href="#features" class="hover:text-black transition-colors">Features</a>
+        <a href="#pricing" class="hover:text-black transition-colors">Pricing</a>
+        <a href="docs.html" class="hover:text-black transition-colors">Docs</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="hidden sm:block text-sm font-medium" style="color: var(--text-sec);">Sign in</a>
+        <a href="login.html" class="btn-primary">Get started</a>
+      </div>
+    </nav>
   </header>
 
-  <main class="relative pt-32">
+  <main class="max-w-6xl mx-auto px-6 pt-20 pb-24">
 
     <!-- Hero -->
-    <section class="relative pt-24 pb-32 px-8 hero-glow">
-      <div class="max-w-4xl mx-auto text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/50 mb-10 border border-zinc-800 animate-fade-in opacity-0">
-          <span class="material-symbols-outlined text-primary text-xs">rocket_launch</span>
-          <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400">V2.0 is now live</span>
-        </div>
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-headline font-bold tracking-tighter leading-[1.05] mb-8 animate-slide-up opacity-0 animate-delay-100">
-          Generate a landing page <br/>
-          <span class="aurora-text italic font-light">in 10 seconds</span>
-        </h1>
-        <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-16 font-body leading-relaxed animate-slide-up opacity-0 animate-delay-200">
-          Stop wrestling with builders. Describe your vision and watch our AI engine sculpt high-conversion interfaces from the void.
-        </p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 animate-slide-up opacity-0 animate-delay-300">
-          <a href="login.html" class="w-full sm:w-auto px-8 py-4 bg-zinc-100 text-zinc-950 rounded-full font-headline font-semibold text-sm hover:bg-white transition-colors">
-            Start for Free
-          </a>
-          <a href="#features" class="w-full sm:w-auto px-8 py-4 bg-transparent text-zinc-300 rounded-full font-headline font-semibold text-sm border border-zinc-800 hover:border-zinc-600 transition-colors">
-            View Features
-          </a>
-        </div>
+    <section class="text-center max-w-3xl mx-auto mb-20">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-8" style="background: var(--container); border: 1px solid var(--border);">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+        <span class="text-xs font-semibold" style="color: var(--text-sec);">v2.0 — now live</span>
+      </div>
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6" style="color: var(--text);">
+        Landing pages,<br/>in ten seconds.
+      </h1>
+      <p class="text-lg max-w-xl mx-auto mb-10 leading-relaxed" style="color: var(--text-muted);">
+        Describe your business. Awesome Crew generates a beautiful, fully-editable landing page — ready to ship.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="login.html" class="btn-primary">Start for free</a>
+        <a href="#features" class="btn-secondary">See how it works</a>
       </div>
     </section>
 
-    <!-- Demo / Prompt-to-Pixels -->
-    <section class="py-32 px-8 border-t border-zinc-900/50">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-20 items-center">
-          <div class="space-y-12">
-            <div>
-              <h2 class="text-3xl md:text-4xl font-headline font-bold mb-6 tracking-tight">The Prompt-to-Pixels Engine</h2>
-              <p class="text-zinc-400 text-lg leading-relaxed font-light">
-                Simply articulate your business model. Our engine analyzes content density and semantic intent to build bespoke structures.
-              </p>
-            </div>
-            <div class="bg-zinc-900/30 rounded-2xl p-8 border border-zinc-800/50 backdrop-blur-sm">
-              <label class="block text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-4">Input Prompt</label>
-              <div class="bg-zinc-950 p-6 rounded-xl font-body text-indigo-300/80 italic min-h-[140px] border border-zinc-800/80 font-light leading-relaxed">
-                "I sell handmade leather wallets crafted in Tuscany. I need a minimal, high-end landing page that emphasizes the artisanal process and durability."
-              </div>
-              <div class="mt-6 flex justify-end">
-                <div class="flex items-center gap-2 text-indigo-400/80 font-medium text-xs tracking-wide">
-                  <span class="material-symbols-outlined text-sm" style="animation: spin 3s linear infinite;">sync</span>
-                  AI Architect Processing...
-                </div>
-              </div>
-            </div>
+    <!-- Main feature container -->
+    <section class="rounded-[20px] p-6 md:p-10 card-border mb-20" style="background: var(--container);">
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <!-- Left card (green) -->
+        <div class="rounded-[20px] p-8 card-border" style="background: var(--card-green);">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6 text-xs font-semibold" style="background: rgba(255,255,255,0.5); color: var(--text);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Instant
           </div>
-          <div class="relative">
-            <div class="glass-panel p-1 rounded-3xl border border-zinc-800/50">
-              <div class="bg-zinc-950 rounded-[1.4rem] overflow-hidden">
-                <div class="h-48 bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-6xl text-zinc-700">image</span>
-                </div>
-                <div class="p-8">
-                  <div class="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 class="text-xl font-headline font-semibold mb-1">The Tuscan Classic</h3>
-                      <p class="text-zinc-500 text-xs tracking-wide">Artisan Series № 01</p>
-                    </div>
-                    <span class="bg-zinc-900 text-zinc-300 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-zinc-800">In Stock</span>
-                  </div>
-                  <p class="text-zinc-400 text-sm mb-6 leading-relaxed font-light">Crafted from full-grain vegetable-tanned leather. Designed to age with grace.</p>
-                  <button class="w-full py-3 bg-zinc-800 text-zinc-100 rounded-lg font-headline font-medium text-sm hover:bg-zinc-700 transition-colors">Secure the Heritage — $129</button>
-                </div>
-              </div>
-            </div>
+          <h3 class="text-2xl font-bold mb-3 leading-tight" style="color: var(--text);">Describe it. Ship it.</h3>
+          <p class="text-sm leading-relaxed mb-6" style="color: var(--text-sec);">
+            Tell us what you sell. We render a complete, animated page in ten seconds. Edit it in the next breath.
+          </p>
+          <div class="rounded-[14px] p-5 card-border" style="background: rgba(255,255,255,0.6);">
+            <p class="text-xs font-mono mb-2" style="color: var(--text-muted);">YOUR PROMPT</p>
+            <p class="text-sm italic" style="color: var(--text);">"Artisanal coffee roaster in Portland. Minimal, earthy."</p>
           </div>
         </div>
+
+        <!-- Right card (blue) -->
+        <div class="rounded-[20px] p-8 card-border" style="background: var(--card-blue);">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6 text-xs font-semibold" style="background: rgba(255,255,255,0.5); color: var(--text);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+            Yours
+          </div>
+          <h3 class="text-2xl font-bold mb-3 leading-tight" style="color: var(--text);">Own the code.</h3>
+          <p class="text-sm leading-relaxed mb-6" style="color: var(--text-sec);">
+            Download the page as a ZIP. Static HTML, zero lock-in. Host anywhere — Vercel, Netlify, your own server.
+          </p>
+          <div class="rounded-[14px] p-5 card-border flex items-center gap-3" style="background: rgba(255,255,255,0.6);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            <span class="text-sm font-mono" style="color: var(--text);">awesome-crew-page.zip</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
     <!-- Features -->
-    <section id="features" class="py-32 px-8 bg-zinc-950">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-24">
-          <h2 class="text-3xl md:text-5xl font-headline font-bold mb-6 tracking-tight">Engineered for Velocity</h2>
-          <p class="text-zinc-400 max-w-xl mx-auto font-light text-lg">No bloat. No complex nested menus. Just pure architectural logic applied to the web.</p>
+    <section id="features" class="mb-24">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] mb-3" style="color: var(--text-muted);">Built right</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight" style="color: var(--text);">Every detail considered.</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+
+        <div class="rounded-[20px] p-7 card-border" style="background: var(--container);">
+          <div class="w-11 h-11 rounded-[10px] flex items-center justify-center mb-5 card-border" style="background: var(--card-green);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2" style="color: var(--text);">Ten-second generation</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">Describe your business. We render a complete, animated page. Edit it in the next breath.</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="bg-zinc-900/20 p-10 rounded-3xl border border-zinc-800/30">
-            <div class="w-12 h-12 bg-zinc-900 rounded-xl flex items-center justify-center mb-8 border border-zinc-800">
-              <span class="material-symbols-outlined text-indigo-400 text-xl">bolt</span>
-            </div>
-            <h3 class="text-xl font-headline font-semibold mb-4">One-click AI Generation</h3>
-            <p class="text-zinc-400 leading-relaxed font-light text-sm">Translates natural language into optimized responsive layouts instantly. No manual dragging required.</p>
+
+        <div class="rounded-[20px] p-7 card-border" style="background: var(--container);">
+          <div class="w-11 h-11 rounded-[10px] flex items-center justify-center mb-5 card-border" style="background: var(--card-blue);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
           </div>
-          <div class="bg-zinc-900/20 p-10 rounded-3xl border border-zinc-800/30">
-            <div class="w-12 h-12 bg-zinc-900 rounded-xl flex items-center justify-center mb-8 border border-zinc-800">
-              <span class="material-symbols-outlined text-indigo-400 text-xl">edit_note</span>
-            </div>
-            <h3 class="text-xl font-headline font-semibold mb-4">Visual Editor</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed font-light">Fine-tune your AI creation with a distraction-free visual interface. Real-time changes, zero lag.</p>
-          </div>
-          <div class="bg-zinc-900/20 p-10 rounded-3xl border border-zinc-800/30">
-            <div class="w-12 h-12 bg-zinc-900 rounded-xl flex items-center justify-center mb-8 border border-zinc-800">
-              <span class="material-symbols-outlined text-indigo-400 text-xl">public</span>
-            </div>
-            <h3 class="text-xl font-headline font-semibold mb-4">Subdomain Publishing</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed font-light">Deploy instantly to our globally distributed edge network. Custom domains with SSL included.</p>
-          </div>
-          <div class="bg-zinc-900/20 p-10 rounded-3xl border border-zinc-800/30">
-            <div class="w-12 h-12 bg-zinc-900 rounded-xl flex items-center justify-center mb-8 border border-zinc-800">
-              <span class="material-symbols-outlined text-indigo-400 text-xl">code</span>
-            </div>
-            <h3 class="text-xl font-headline font-semibold mb-4">Own Your Code</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed font-light">Download the page as a ZIP. Static HTML, ready to host on Vercel, Netlify, or GitHub Pages.</p>
-          </div>
-          <div class="bg-zinc-900/20 p-10 rounded-3xl border border-zinc-800/30">
-            <div class="w-12 h-12 bg-zinc-900 rounded-xl flex items-center justify-center mb-8 border border-zinc-800">
-              <span class="material-symbols-outlined text-indigo-400 text-xl">shield</span>
-            </div>
-            <h3 class="text-xl font-headline font-semibold mb-4">Seven Security Layers</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed font-light">CSP, HSTS, CSRF, bcrypt, rate limits, validation, sanitization. Auth-grade by default.</p>
-          </div>
-          <div class="bg-zinc-900/20 p-10 rounded-3xl border border-zinc-800/30">
-            <div class="w-12 h-12 bg-zinc-900 rounded-xl flex items-center justify-center mb-8 border border-zinc-800">
-              <span class="material-symbols-outlined text-indigo-400 text-xl">auto_awesome</span>
-            </div>
-            <h3 class="text-xl font-headline font-semibold mb-4">Zero API Keys</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed font-light">Runs entirely on your own machine. No OpenAI bill. No vendor lock-in. No surprises.</p>
-          </div>
+          <h3 class="text-lg font-bold mb-2" style="color: var(--text);">8 themes, 5 font pairs</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">Designs that feel built, not generated. Never the same page twice.</p>
         </div>
+
+        <div class="rounded-[20px] p-7 card-border" style="background: var(--container);">
+          <div class="w-11 h-11 rounded-[10px] flex items-center justify-center mb-5 card-border" style="background: var(--card-green);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2" style="color: var(--text);">Ten polished sections</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">Hero, features, stats, testimonials, pricing, FAQ — all animated, all customizable.</p>
+        </div>
+
+        <div class="rounded-[20px] p-7 card-border" style="background: var(--container);">
+          <div class="w-11 h-11 rounded-[10px] flex items-center justify-center mb-5 card-border" style="background: var(--card-blue);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2" style="color: var(--text);">Own your code</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">Download as a ZIP. Static HTML, ready to host anywhere.</p>
+        </div>
+
+        <div class="rounded-[20px] p-7 card-border" style="background: var(--container);">
+          <div class="w-11 h-11 rounded-[10px] flex items-center justify-center mb-5 card-border" style="background: var(--card-green);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2" style="color: var(--text);">Seven security layers</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">CSP, HSTS, CSRF, bcrypt, rate limits, validation, sanitization. Auth-grade by default.</p>
+        </div>
+
+        <div class="rounded-[20px] p-7 card-border" style="background: var(--container);">
+          <div class="w-11 h-11 rounded-[10px] flex items-center justify-center mb-5 card-border" style="background: var(--card-blue);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2" style="color: var(--text);">Publish or export</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">Live at /your-slug instantly, or export static HTML you fully own.</p>
+        </div>
+
       </div>
     </section>
 
     <!-- Pricing -->
-    <section id="pricing" class="py-40 px-8">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-24">
-          <span class="text-indigo-400/80 font-semibold tracking-[0.2em] uppercase text-[10px] mb-6 block">Transparent Growth</span>
-          <h2 class="text-3xl md:text-5xl font-headline font-bold tracking-tight">Simple, Scalable Tiers</h2>
+    <section id="pricing" class="mb-24">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] mb-3" style="color: var(--text-muted);">Pricing</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight" style="color: var(--text);">Simple, scalable tiers.</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+
+        <div class="rounded-[20px] p-8 card-border flex flex-col" style="background: var(--container);">
+          <h3 class="text-lg font-semibold mb-2" style="color: var(--text);">Free</h3>
+          <div class="flex items-baseline gap-1 mb-8">
+            <span class="text-5xl font-bold" style="color: var(--text);">$0</span>
+            <span class="text-sm" style="color: var(--text-muted);">/forever</span>
+          </div>
+          <ul class="space-y-3 mb-8 flex-1 text-sm" style="color: var(--text-sec);">
+            <li class="flex items-center gap-2"><span style="color: var(--text);">✓</span> 3 AI generations / mo</li>
+            <li class="flex items-center gap-2"><span style="color: var(--text);">✓</span> Standard templates</li>
+            <li class="flex items-center gap-2"><span style="color: var(--text);">✓</span> Community support</li>
+          </ul>
+          <a href="login.html" class="btn-secondary text-center">Get started</a>
         </div>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="p-10 rounded-3xl bg-zinc-900/10 border border-zinc-800/30 flex flex-col">
-            <div class="mb-10">
-              <h3 class="text-lg font-headline font-medium mb-3 text-zinc-300">Free</h3>
-              <div class="flex items-baseline gap-1">
-                <span class="text-4xl font-headline font-bold">$0</span>
-                <span class="text-zinc-500 text-xs font-light">/forever</span>
-              </div>
-            </div>
-            <ul class="space-y-5 mb-12 flex-1 text-sm text-zinc-400 font-light">
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-zinc-600 text-sm">check</span> 3 AI Generations / mo</li>
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-zinc-600 text-sm">check</span> Standard Templates</li>
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-zinc-600 text-sm">check</span> Community Support</li>
-            </ul>
-            <a href="login.html" class="w-full py-3.5 bg-transparent rounded-full font-headline font-medium text-sm border border-zinc-800 text-zinc-300 hover:bg-zinc-900 transition-colors text-center block">Get Started</a>
+
+        <div class="rounded-[20px] p-8 card-border flex flex-col relative" style="background: var(--card-green);">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold" style="background: var(--btn-bg); color: #fff;">Most Popular</div>
+          <h3 class="text-lg font-semibold mb-2" style="color: var(--text);">Starter</h3>
+          <div class="flex items-baseline gap-1 mb-8">
+            <span class="text-5xl font-bold" style="color: var(--text);">$12</span>
+            <span class="text-sm" style="color: var(--text-sec);">/month</span>
           </div>
-          <div class="p-10 rounded-3xl bg-zinc-900/40 relative border border-indigo-500/20 flex flex-col">
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 rounded-full text-[9px] font-bold uppercase tracking-widest">Most Popular</div>
-            <div class="mb-10">
-              <h3 class="text-lg font-headline font-medium mb-3 text-indigo-100">Starter</h3>
-              <div class="flex items-baseline gap-1">
-                <span class="text-4xl font-headline font-bold">$12</span>
-                <span class="text-zinc-500 text-xs font-light">/month</span>
-              </div>
-            </div>
-            <ul class="space-y-5 mb-12 flex-1 text-sm text-zinc-300 font-light">
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-indigo-400 text-sm">check</span> 20 AI Generations / mo</li>
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-indigo-400 text-sm">check</span> Custom Domains</li>
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-indigo-400 text-sm">check</span> No PageForge Branding</li>
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-indigo-400 text-sm">check</span> Priority Generation</li>
-            </ul>
-            <a href="login.html" class="w-full py-3.5 bg-indigo-500 text-white rounded-full font-headline font-medium text-sm hover:bg-indigo-600 transition-colors text-center block">Choose Starter</a>
-          </div>
-          <div class="p-10 rounded-3xl bg-zinc-900/10 border border-zinc-800/30 flex flex-col">
-            <div class="mb-10">
-              <h3 class="text-lg font-headline font-medium mb-3 text-zinc-300">Pro</h3>
-              <div class="flex items-baseline gap-1">
-                <span class="text-4xl font-headline font-bold">$29</span>
-                <span class="text-zinc-500 text-xs font-light">/month</span>
-              </div>
-            </div>
-            <ul class="space-y-5 mb-12 flex-1 text-sm text-zinc-400 font-light">
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-zinc-600 text-sm">check</span> Unlimited Generations</li>
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-zinc-600 text-sm">check</span> Advanced SEO Suite</li>
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-zinc-600 text-sm">check</span> 24/7 Concierge Support</li>
-              <li class="flex items-center gap-3"><span class="material-symbols-outlined text-zinc-600 text-sm">check</span> Team Collaboration</li>
-            </ul>
-            <a href="login.html" class="w-full py-3.5 bg-transparent rounded-full font-headline font-medium text-sm border border-zinc-800 text-zinc-300 hover:bg-zinc-900 transition-colors text-center block">Go Professional</a>
-          </div>
+          <ul class="space-y-3 mb-8 flex-1 text-sm" style="color: var(--text);">
+            <li class="flex items-center gap-2"><span>✓</span> 20 AI generations / mo</li>
+            <li class="flex items-center gap-2"><span>✓</span> Custom domains</li>
+            <li class="flex items-center gap-2"><span>✓</span> Priority generation</li>
+            <li class="flex items-center gap-2"><span>✓</span> Email support</li>
+          </ul>
+          <a href="login.html" class="btn-primary text-center">Choose Starter</a>
         </div>
+
+        <div class="rounded-[20px] p-8 card-border flex flex-col" style="background: var(--container);">
+          <h3 class="text-lg font-semibold mb-2" style="color: var(--text);">Pro</h3>
+          <div class="flex items-baseline gap-1 mb-8">
+            <span class="text-5xl font-bold" style="color: var(--text);">$29</span>
+            <span class="text-sm" style="color: var(--text-muted);">/month</span>
+          </div>
+          <ul class="space-y-3 mb-8 flex-1 text-sm" style="color: var(--text-sec);">
+            <li class="flex items-center gap-2"><span style="color: var(--text);">✓</span> Unlimited generations</li>
+            <li class="flex items-center gap-2"><span style="color: var(--text);">✓</span> Advanced SEO suite</li>
+            <li class="flex items-center gap-2"><span style="color: var(--text);">✓</span> 24/7 priority support</li>
+            <li class="flex items-center gap-2"><span style="color: var(--text);">✓</span> Team collaboration</li>
+          </ul>
+          <a href="login.html" class="btn-secondary text-center">Go Professional</a>
+        </div>
+
       </div>
     </section>
 
-    <!-- Final CTA -->
-    <section class="py-40 px-8">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-4xl md:text-6xl font-headline font-bold mb-10 tracking-tight leading-tight">
-          Sculpt your digital presence <br/>
-          <span class="text-zinc-600 font-light">tonight.</span>
-        </h2>
-        <a href="login.html" class="inline-block px-10 py-4 bg-zinc-100 text-zinc-950 rounded-full font-headline font-semibold text-sm hover:bg-white transition-colors">
-          Start Forging Now
-        </a>
-      </div>
+    <!-- CTA -->
+    <section class="rounded-[20px] p-12 md:p-16 text-center card-border mb-24" style="background: var(--container);">
+      <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4" style="color: var(--text);">Ready when you are.</h2>
+      <p class="text-base max-w-md mx-auto mb-8" style="color: var(--text-muted);">No credit card. No catch. Just a working landing page generator.</p>
+      <a href="login.html" class="btn-primary inline-block">Start for free</a>
     </section>
 
   </main>
 
   <!-- Footer -->
-  <footer class="w-full pt-20 pb-32 md:pb-20 border-t border-zinc-900/50">
-    <div class="max-w-6xl mx-auto px-8 flex flex-col md:flex-row justify-between gap-16">
-      <div class="space-y-6">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-indigo-400/80 text-xl">auto_awesome</span>
-          <span class="font-headline text-base font-bold text-zinc-300">PageForge AI</span>
+  <footer style="border-top: 1px solid #E6E1D8;">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+        <div class="col-span-2 md:col-span-1">
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-6 h-6" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+              <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
+              <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+              <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+            </svg>
+            <span class="font-bold" style="color: var(--text);">Awesome Crew</span>
+          </div>
+          <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
+            © <span id="year"></span> Awesome Crew. Landing pages, crafted in seconds.
+          </p>
         </div>
-        <p class="font-body text-xs text-zinc-600 max-w-xs font-light leading-relaxed">
-          © <span id="year"></span> PageForge AI. Sculpting light within the void. Engineered for those who demand excellence in seconds.
-        </p>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-12 lg:gap-20">
-        <div class="flex flex-col gap-4">
-          <h4 class="text-zinc-300 font-medium text-xs font-headline uppercase tracking-wider">Product</h4>
-          <a class="text-zinc-500 hover:text-zinc-300 transition-colors text-sm font-light" href="#">Documentation</a>
-          <a class="text-zinc-500 hover:text-zinc-300 transition-colors text-sm font-light" href="#">Changelog</a>
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--text);">Product</h4>
+          <ul class="space-y-2 text-sm" style="color: var(--text-muted);">
+            <li><a href="docs.html" class="hover:text-black transition-colors">Documentation</a></li>
+            <li><a href="changelog.html" class="hover:text-black transition-colors">Changelog</a></li>
+          </ul>
         </div>
-        <div class="flex flex-col gap-4">
-          <h4 class="text-zinc-300 font-medium text-xs font-headline uppercase tracking-wider">Legal</h4>
-          <a class="text-zinc-500 hover:text-zinc-300 transition-colors text-sm font-light" href="#">Privacy Policy</a>
-          <a class="text-zinc-500 hover:text-zinc-300 transition-colors text-sm font-light" href="#">Terms of Service</a>
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--text);">Legal</h4>
+          <ul class="space-y-2 text-sm" style="color: var(--text-muted);">
+            <li><a href="privacy.html" class="hover:text-black transition-colors">Privacy Policy</a></li>
+            <li><a href="terms.html" class="hover:text-black transition-colors">Terms of Service</a></li>
+          </ul>
         </div>
-        <div class="flex flex-col gap-4">
-          <h4 class="text-zinc-300 font-medium text-xs font-headline uppercase tracking-wider">System</h4>
-          <a class="text-zinc-500 hover:text-zinc-300 transition-colors text-sm font-light" href="#">API Status</a>
-          <a class="text-zinc-500 hover:text-zinc-300 transition-colors text-sm font-light" href="#">Uptime</a>
-        </div>
-        <div class="flex flex-col gap-4">
-          <h4 class="text-zinc-300 font-medium text-xs font-headline uppercase tracking-wider">Connect</h4>
-          <a class="text-zinc-500 hover:text-zinc-300 transition-colors text-sm font-light" href="#">Twitter</a>
-          <a class="text-zinc-500 hover:text-zinc-300 transition-colors text-sm font-light" href="#">Discord</a>
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--text);">System</h4>
+          <ul class="space-y-2 text-sm" style="color: var(--text-muted);">
+            <li><a href="status.html" class="hover:text-black transition-colors">API Status</a></li>
+            <li><a href="uptime.html" class="hover:text-black transition-colors">Uptime</a></li>
+          </ul>
         </div>
       </div>
     </div>
   </footer>
-
-  <!-- Mobile Bottom Nav -->
-  <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 md:hidden bg-zinc-950/80 backdrop-blur-xl rounded-t-2xl border-t border-zinc-800/50 shadow-[0_-4px_24px_rgba(0,0,0,0.5)] z-50">
-    <div class="flex flex-col items-center gap-1 text-indigo-300 bg-indigo-500/10 rounded-xl px-4 py-2">
-      <span class="material-symbols-outlined">home</span>
-      <span class="font-body text-[10px] uppercase tracking-widest">Home</span>
-    </div>
-    <a href="#features" class="flex flex-col items-center gap-1 text-zinc-500 hover:bg-zinc-800/50 rounded-xl px-4 py-2 transition-colors">
-      <span class="material-symbols-outlined">bolt</span>
-      <span class="font-body text-[10px] uppercase tracking-widest">Features</span>
-    </a>
-    <a href="#pricing" class="flex flex-col items-center gap-1 text-zinc-500 hover:bg-zinc-800/50 rounded-xl px-4 py-2 transition-colors">
-      <span class="material-symbols-outlined">payments</span>
-      <span class="font-body text-[10px] uppercase tracking-widest">Pricing</span>
-    </a>
-    <a href="login.html" class="flex flex-col items-center gap-1 text-zinc-500 hover:bg-zinc-800/50 rounded-xl px-4 py-2 transition-colors">
-      <span class="material-symbols-outlined">login</span>
-      <span class="font-body text-[10px] uppercase tracking-widest">Sign In</span>
-    </a>
-  </nav>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();

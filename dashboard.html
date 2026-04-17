@@ -1,163 +1,166 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Dashboard — PageForge AI</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <title>Dashboard — Awesome Crew</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    body { background-color: #09090b; color: #e5e2e1; font-family: 'Manrope', sans-serif; min-height: max(884px, 100dvh); }
-    .font-headline { font-family: 'Space Grotesk', sans-serif; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .skeleton { animation: pulse 1.5s ease-in-out infinite; background: #27272a; border-radius: 6px; }
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary {
+      background: var(--btn-bg); color: #fff;
+      border-radius: 10px; padding: 10px 18px;
+      font-weight: 600; font-size: 13px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--btn-hover); transform: translateY(-1px); }
+    .btn-secondary {
+      background: #fff; color: var(--text);
+      border: 2px solid var(--border); border-radius: 10px;
+      padding: 8px 14px; font-weight: 600; font-size: 13px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: rgba(31,41,55,0.06); }
+    .page-card {
+      background: #fff; border-radius: 20px;
+      border: 2px solid var(--border);
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: flex; flex-direction: column;
+    }
+    .page-card:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 var(--border); }
+    .chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: 999px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border: 1.5px solid var(--border);
+    }
+    .chip-green { background: var(--card-green); color: #14532d; }
+    .chip-muted { background: #fff; color: var(--text-muted); }
+    .icon-btn {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--text-sec); transition: background 0.15s, color 0.15s;
+      background: transparent;
+    }
+    .icon-btn:hover { background: rgba(31,41,55,0.08); color: var(--text); }
+    .icon-btn.danger:hover { color: #991B1B; background: #FEE2E2; }
   </style>
 </head>
-<body class="min-h-screen bg-zinc-950 text-zinc-300">
+<body>
 
-  <!-- Sidebar (desktop) -->
-  <aside class="hidden lg:flex flex-col border-r border-zinc-800 h-full w-72 fixed left-0 top-0 bg-zinc-950 z-40">
-    <div class="px-6 py-8">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
+          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+        </svg>
+        <span class="text-lg font-bold tracking-tight" style="color: var(--text);">Awesome Crew</span>
+      </a>
       <div class="flex items-center gap-3">
-        <span class="material-symbols-outlined text-indigo-400 text-2xl">auto_awesome</span>
-        <span class="text-2xl font-black text-zinc-100 font-headline tracking-tighter">PageForge AI</span>
+        <div id="user-chip" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full card-border" style="background: #fff;">
+          <div id="avatar" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold overflow-hidden" style="background: var(--card-green); color: var(--text);">?</div>
+          <span id="user-name" class="text-xs font-semibold" style="color: var(--text);">Loading…</span>
+        </div>
+        <button id="btn-signout" class="btn-secondary">Sign out</button>
       </div>
-    </div>
-    <nav class="flex flex-col gap-1 px-4">
-      <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-indigo-300 bg-zinc-900 font-bold transition-all">
-        <span class="material-symbols-outlined">architecture</span>
-        <span class="font-headline font-medium text-sm">Projects</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200 transition-all">
-        <span class="material-symbols-outlined">layers</span>
-        <span class="font-headline font-medium text-sm">Templates</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200 transition-all">
-        <span class="material-symbols-outlined">science</span>
-        <span class="font-headline font-medium text-sm">AI Lab</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200 transition-all">
-        <span class="material-symbols-outlined">payments</span>
-        <span class="font-headline font-medium text-sm">Billing</span>
-      </a>
     </nav>
-    <div class="mt-auto p-6 border-t border-zinc-800/50">
-      <div class="flex items-center gap-3">
-        <div id="sidebar-avatar" class="w-8 h-8 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 text-sm font-bold overflow-hidden">?</div>
-        <div class="flex flex-col min-w-0">
-          <span id="sidebar-name" class="font-label text-xs font-bold text-zinc-200 truncate">Loading…</span>
-          <button id="sidebar-signout" class="text-[11px] text-zinc-500 hover:text-zinc-300 transition-colors text-left">Sign out</button>
-        </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 pt-12 pb-24">
+
+    <!-- Heading -->
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight" style="color: var(--text);">My projects</h1>
+        <p class="text-sm mt-2" style="color: var(--text-muted);">Build, publish and manage your landing pages.</p>
       </div>
-    </div>
-  </aside>
-
-  <!-- Main content -->
-  <main class="lg:ml-72 min-h-screen pb-24 lg:pb-12 pt-24">
-
-    <!-- Top bar -->
-    <header class="fixed top-0 w-full lg:w-[calc(100%-18rem)] z-50 bg-zinc-950/70 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] bg-gradient-to-b from-zinc-800/10 to-transparent">
-      <div class="flex items-center justify-between px-6 h-20 w-full max-w-screen-2xl mx-auto">
-        <h1 class="font-headline text-xl font-bold tracking-tighter text-zinc-100">My Projects</h1>
-        <div class="flex items-center gap-4">
-          <button id="btn-new" class="hidden md:flex items-center gap-2 px-5 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 font-medium rounded-lg transition-colors">
-            <span class="material-symbols-outlined text-sm">add</span>
-            <span class="text-sm font-headline">New Page</span>
-          </button>
-          <div id="topbar-avatar" class="w-8 h-8 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 text-sm font-bold overflow-hidden">?</div>
-          <button id="topbar-signout" class="lg:hidden text-zinc-500 hover:text-zinc-200 transition-colors text-xs font-headline border border-zinc-800 px-3 py-1 rounded-lg">Sign out</button>
-        </div>
-      </div>
-    </header>
-
-    <div class="max-w-7xl mx-auto px-6 pt-4">
-
-      <!-- Usage banner -->
-      <section class="mb-12">
-        <div class="bg-zinc-900/50 p-6 rounded-xl border border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div class="flex flex-col gap-2">
-            <h2 class="font-headline font-semibold text-sm text-zinc-200">Current Capacity</h2>
-            <p id="usage-text" class="text-zinc-500 text-xs">Loading usage…</p>
-            <div class="w-full md:w-64 h-1 bg-zinc-800 rounded-full mt-2 overflow-hidden">
-              <div id="usage-bar" class="h-full bg-indigo-400/80 rounded-full transition-all" style="width:0%"></div>
-            </div>
-          </div>
-          <a href="#" class="flex items-center gap-2 text-indigo-400/80 text-sm font-medium hover:text-indigo-300 transition-colors">
-            <span>Upgrade to Pro</span>
-            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-          </a>
-        </div>
-      </section>
-
-      <!-- Project grid -->
-      <section class="mb-20">
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="font-headline text-sm font-bold text-zinc-500 uppercase tracking-widest">Active Foundations</h3>
-          <div class="flex gap-2">
-            <button class="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-md transition-colors">
-              <span class="material-symbols-outlined text-lg">search</span>
-            </button>
-            <button class="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-md transition-colors">
-              <span class="material-symbols-outlined text-lg">filter_list</span>
-            </button>
-          </div>
-        </div>
-        <div id="pages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- filled by JS -->
-        </div>
-      </section>
-
-      <!-- Empty state (shown when no pages and not loading) -->
-      <section id="empty-state" class="hidden mt-24 mb-20 text-center max-w-xl mx-auto">
-        <div class="w-16 h-16 mx-auto bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-center mb-6">
-          <span class="material-symbols-outlined text-2xl text-zinc-500">add_box</span>
-        </div>
-        <h3 class="font-headline text-xl font-bold mb-3 text-zinc-200">Sculpt a New Vision</h3>
-        <p class="text-zinc-500 text-sm mb-8">Start from a blank slate or use our AI to forge a landing page that captures attention.</p>
-        <button onclick="newPage()" class="inline-flex items-center gap-2 px-6 py-2.5 bg-zinc-100 text-zinc-900 text-sm font-semibold rounded-lg hover:bg-white transition-colors">
-          <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
-          Forge First Page
-        </button>
-      </section>
-
+      <button id="btn-new" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        New page
+      </button>
     </div>
 
-    <!-- Footer -->
-    <footer class="w-full py-12 bg-zinc-950 border-t border-zinc-900 mt-20">
-      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-8 items-center">
-        <div class="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
-          <span class="font-headline text-lg font-bold text-zinc-300">PageForge AI</span>
-          <p class="font-body text-xs text-zinc-600">© <span id="year"></span> PageForge AI. Minimal focus.</p>
+    <!-- Usage card -->
+    <section class="rounded-[20px] p-6 md:p-8 card-border mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6" style="background: var(--card-blue);">
+      <div class="flex-1">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="chip chip-muted" id="plan-chip">Free</span>
+          <span class="text-xs font-semibold" style="color: var(--text-sec);">Current plan</span>
         </div>
-        <div class="flex flex-wrap justify-center gap-6 text-xs font-label">
-          <a class="text-zinc-600 hover:text-zinc-300 transition-colors" href="#">Documentation</a>
-          <a class="text-zinc-600 hover:text-zinc-300 transition-colors" href="#">Privacy</a>
-          <a class="text-zinc-600 hover:text-zinc-300 transition-colors" href="#">Changelog</a>
+        <h2 class="text-xl font-bold mb-1" style="color: var(--text);">Monthly usage</h2>
+        <p id="usage-text" class="text-sm mb-3" style="color: var(--text-sec);">Loading…</p>
+        <div class="w-full md:w-80 h-2 rounded-full overflow-hidden" style="background: rgba(31,41,55,0.15);">
+          <div id="usage-bar" class="h-full transition-all" style="width:0%; background: var(--btn-bg);"></div>
         </div>
       </div>
-    </footer>
+      <a href="index.html#pricing" class="btn-secondary">
+        Upgrade plan
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </section>
+
+    <!-- Pages -->
+    <section>
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--text-muted);">Your pages</h3>
+        <span id="pages-count" class="text-xs font-medium" style="color: var(--text-muted);"></span>
+      </div>
+      <div id="pages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- Empty state -->
+    <section id="empty-state" class="hidden mt-10 rounded-[20px] card-border p-10 md:p-16 text-center" style="background: var(--container);">
+      <div class="w-14 h-14 mx-auto rounded-[14px] card-border flex items-center justify-center mb-5" style="background: var(--card-green);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text);"><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+      <h3 class="text-2xl font-bold mb-2" style="color: var(--text);">Create your first page</h3>
+      <p class="text-sm mb-6 max-w-md mx-auto" style="color: var(--text-muted);">Describe your business in a sentence. We'll generate a full landing page in ten seconds.</p>
+      <button onclick="newPage()" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+        Get started
+      </button>
+    </section>
+
   </main>
 
-  <!-- Mobile bottom nav -->
-  <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-zinc-950/80 backdrop-blur-xl border-t border-zinc-800/50 rounded-t-2xl px-4 pb-6 pt-2 flex justify-around items-center">
-    <div class="flex flex-col items-center gap-1 text-indigo-300 bg-indigo-500/10 rounded-xl px-4 py-2">
-      <span class="material-symbols-outlined text-xl">architecture</span>
-      <span class="font-body text-[10px] uppercase tracking-widest">Projects</span>
+  <!-- Footer -->
+  <footer class="border-t mt-12" style="border-color: #E6E1D8; background: rgba(245,241,232,0.6);">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-4 items-center">
+      <p class="text-xs" style="color: var(--text-muted);">© <span id="year"></span> Awesome Crew. All rights reserved.</p>
+      <div class="flex flex-wrap gap-6 text-xs">
+        <a href="docs.html" class="hover:underline" style="color: var(--text-sec);">Docs</a>
+        <a href="changelog.html" class="hover:underline" style="color: var(--text-sec);">Changelog</a>
+        <a href="privacy.html" class="hover:underline" style="color: var(--text-sec);">Privacy</a>
+        <a href="terms.html" class="hover:underline" style="color: var(--text-sec);">Terms</a>
+        <a href="status.html" class="hover:underline" style="color: var(--text-sec);">Status</a>
+      </div>
     </div>
-    <div class="flex flex-col items-center gap-1 text-zinc-500 rounded-xl px-4 py-2">
-      <span class="material-symbols-outlined text-xl">layers</span>
-      <span class="font-body text-[10px] uppercase tracking-widest">Templates</span>
-    </div>
-    <button id="mobile-new" class="flex flex-col items-center gap-1 text-zinc-500 rounded-xl px-4 py-2">
-      <span class="material-symbols-outlined text-xl">add_circle</span>
-      <span class="font-body text-[10px] uppercase tracking-widest">New</span>
-    </button>
-    <div class="flex flex-col items-center gap-1 text-zinc-500 rounded-xl px-4 py-2">
-      <span class="material-symbols-outlined text-xl">settings</span>
-      <span class="font-body text-[10px] uppercase tracking-widest">Settings</span>
-    </div>
-  </nav>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
@@ -169,28 +172,24 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    function escHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
     async function init() {
       const { data: { session } } = await sb.auth.getSession();
       if (!session) { window.location.href = 'login.html'; return; }
 
       const user = session.user;
       const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Creator';
-      const initial = name[0].toUpperCase();
+      const initial = (name[0] || 'A').toUpperCase();
       const avatar = user.user_metadata?.avatar_url;
 
-      // Set avatars
-      ['sidebar-avatar', 'topbar-avatar'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          if (avatar) el.innerHTML = `<img src="${avatar}" class="w-full h-full object-cover" alt="avatar"/>`;
-          else el.textContent = initial;
-        }
-      });
+      const avatarEl = document.getElementById('avatar');
+      if (avatar) avatarEl.innerHTML = `<img src="${avatar}" class="w-full h-full object-cover" alt="avatar"/>`;
+      else avatarEl.textContent = initial;
+      document.getElementById('user-name').textContent = name;
 
-      const sidebarName = document.getElementById('sidebar-name');
-      if (sidebarName) sidebarName.textContent = name;
-
-      // Load data
       const [profileRes, pagesRes] = await Promise.all([
         sb.from('profiles').select('plan, pages_count').eq('id', user.id).single(),
         sb.from('pages').select('*').order('created_at', { ascending: false })
@@ -201,14 +200,16 @@
       const maxGen = plan === 'free' ? 3 : plan === 'starter' ? 20 : 999;
       const used = Math.min(pages.length, maxGen);
 
-      document.getElementById('usage-text').textContent = `${used}/${maxGen === 999 ? '∞' : maxGen} generations used this month · Plan: ${plan.charAt(0).toUpperCase() + plan.slice(1)}`;
-      document.getElementById('usage-bar').style.width = maxGen === 999 ? '20%' : `${Math.round((used / maxGen) * 100)}%`;
+      document.getElementById('plan-chip').textContent = plan.charAt(0).toUpperCase() + plan.slice(1);
+      document.getElementById('usage-text').textContent =
+        `${used}/${maxGen === 999 ? '∞' : maxGen} pages generated this month`;
+      document.getElementById('usage-bar').style.width =
+        maxGen === 999 ? '20%' : `${Math.min(100, Math.round((used / maxGen) * 100))}%`;
+
+      document.getElementById('pages-count').textContent =
+        pages.length === 1 ? '1 page' : `${pages.length} pages`;
 
       renderPages(pages);
-    }
-
-    function escHtml(str) {
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
     function renderPages(pages) {
@@ -221,28 +222,33 @@
         return;
       }
       empty.classList.add('hidden');
+
       grid.innerHTML = pages.map(page => `
-        <div class="group bg-zinc-900/30 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors duration-200 flex flex-col cursor-pointer">
-          <div class="h-48 relative overflow-hidden bg-zinc-900 flex items-center justify-center">
-            <span class="material-symbols-outlined text-5xl text-zinc-700">web</span>
-            <div class="absolute top-3 right-3 bg-zinc-950/90 px-2.5 py-1 rounded-md border border-zinc-800">
-              <span class="text-[9px] font-bold ${page.published ? 'text-zinc-300' : 'text-zinc-500'} uppercase tracking-widest">${page.published ? 'Published' : 'Draft'}</span>
+        <div class="page-card">
+          <div class="h-40 rounded-t-[18px] flex items-center justify-center relative" style="background: ${page.published ? 'var(--card-green)' : 'var(--card-blue)'}; border-bottom: 2px solid var(--border);">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text);"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+            <div class="absolute top-3 right-3">
+              <span class="chip ${page.published ? 'chip-green' : 'chip-muted'}">${page.published ? 'Published' : 'Draft'}</span>
             </div>
           </div>
           <div class="p-5 flex flex-col flex-grow">
-            <h4 class="font-headline text-base font-semibold mb-1 text-zinc-200 group-hover:text-indigo-300 transition-colors">${escHtml(page.title)}</h4>
-            <p class="text-zinc-500 text-xs mb-6 font-mono">/${escHtml(page.slug)}</p>
+            <h4 class="text-base font-bold mb-1 tracking-tight" style="color: var(--text);">${escHtml(page.title)}</h4>
+            <p class="text-xs mb-5 font-mono" style="color: var(--text-muted);">/${escHtml(page.slug)}</p>
             <div class="mt-auto flex items-center justify-between">
-              <span class="text-zinc-600 text-[11px]">${new Date(page.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-              <div class="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <button onclick="editPage('${page.id}')" title="Edit">
-                  <span class="material-symbols-outlined text-sm text-zinc-500 hover:text-zinc-200 transition-colors">edit</span>
+              <span class="text-[11px]" style="color: var(--text-muted);">
+                ${new Date(page.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+              </span>
+              <div class="flex gap-1">
+                <button class="icon-btn" onclick="editPage('${page.id}')" title="Edit">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 </button>
-                <button onclick="togglePublish('${page.id}', ${page.published})" title="${page.published ? 'Unpublish' : 'Publish'}">
-                  <span class="material-symbols-outlined text-sm text-zinc-500 hover:text-indigo-400 transition-colors">${page.published ? 'cloud_off' : 'cloud_upload'}</span>
+                <button class="icon-btn" onclick="togglePublish('${page.id}', ${page.published})" title="${page.published ? 'Unpublish' : 'Publish'}">
+                  ${page.published
+                    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l20 20M5.5 7.2A7 7 0 0 0 4 12c0 3.87 3.13 7 7 7a7 7 0 0 0 4.8-1.91"/><path d="M12 5a7 7 0 0 1 7 7c0 1.77-.66 3.39-1.75 4.62"/></svg>'
+                    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10M8 6l4-4 4 4"/><path d="M20 15v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-5"/></svg>'}
                 </button>
-                <button onclick="deletePage('${page.id}')" title="Delete">
-                  <span class="material-symbols-outlined text-sm text-zinc-500 hover:text-red-400 transition-colors">delete</span>
+                <button class="icon-btn danger" onclick="deletePage('${page.id}')" title="Delete">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
                 </button>
               </div>
             </div>
@@ -264,20 +270,11 @@
       init();
     }
 
-    async function signOut() {
+    document.getElementById('btn-signout').addEventListener('click', async () => {
       await sb.auth.signOut();
       window.location.href = 'index.html';
-    }
-
-    ['sidebar-signout', 'topbar-signout'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('click', signOut);
     });
-
-    ['btn-new', 'mobile-new'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('click', newPage);
-    });
+    document.getElementById('btn-new').addEventListener('click', newPage);
 
     init();
   </script>

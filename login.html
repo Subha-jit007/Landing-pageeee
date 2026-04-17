@@ -1,97 +1,142 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Sign In — PageForge AI</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <title>Sign In — Awesome Crew</title>
+  <meta name="description" content="Sign in to Awesome Crew to build and manage your landing pages."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    body { background-color: #0a0a0a; color: #f4f4f5; font-family: 'Manrope', sans-serif; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
-    .font-headline { font-family: 'Space Grotesk', sans-serif; }
-    .glass-panel { background: rgba(20,20,20,0.6); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-    .aurora-text { background: linear-gradient(to right, #818cf8, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-glow { background: radial-gradient(circle at 50% 30%, rgba(79,70,229,0.12) 0%, transparent 60%); }
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary {
+      background: var(--btn-bg); color: #fff;
+      border-radius: 10px; padding: 12px 24px;
+      font-weight: 600; font-size: 14px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--btn-hover); transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-secondary {
+      background: #fff; color: var(--text);
+      border: 2px solid var(--border); border-radius: 10px;
+      padding: 10px 16px; font-weight: 600; font-size: 14px;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover:not(:disabled) { background: rgba(31,41,55,0.06); }
+    .btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .field {
+      width: 100%; padding: 12px 14px;
+      background: #fff; border: 2px solid var(--border);
+      border-radius: 10px; font-size: 14px; color: var(--text);
+      transition: box-shadow 0.15s;
+    }
+    .field:focus { outline: none; box-shadow: 0 0 0 3px rgba(31,41,55,0.12); }
+    .tab-btn {
+      flex: 1; padding: 10px; font-size: 13px; font-weight: 600;
+      border-radius: 8px; transition: all 0.15s;
+      color: var(--text-muted); background: transparent;
+    }
+    .tab-btn.active { background: #fff; color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
   </style>
 </head>
-<body class="bg-zinc-950 flex flex-col min-h-screen hero-glow">
+<body class="flex flex-col">
 
-  <!-- Back link -->
-  <a href="index.html" class="fixed top-6 left-6 flex items-center gap-2 text-zinc-500 hover:text-zinc-200 transition-colors text-sm font-headline z-10">
-    <span class="material-symbols-outlined text-base">arrow_back</span>
-    Back
-  </a>
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
+          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
+          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+        </svg>
+        <span class="text-lg font-bold tracking-tight" style="color: var(--text);">Awesome Crew</span>
+      </a>
+      <a href="index.html" class="text-sm font-medium flex items-center gap-1.5" style="color: var(--text-sec);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+      </a>
+    </nav>
+  </header>
 
-  <!-- Logo top-right on desktop -->
-  <div class="fixed top-6 right-6 hidden md:flex items-center gap-2">
-    <span class="material-symbols-outlined text-indigo-400 text-xl">auto_awesome</span>
-    <span class="font-headline font-bold text-zinc-300 tracking-tighter">PageForge AI</span>
-  </div>
+  <main class="flex-1 flex items-center justify-center px-6 py-16">
+    <div class="w-full max-w-md">
 
-  <main class="flex-1 flex items-center justify-center px-4 py-20">
-    <div class="w-full max-w-sm">
+      <div class="rounded-[20px] card-border p-8 md:p-10" style="background: var(--container);">
 
-      <!-- Card -->
-      <div class="glass-panel border border-zinc-800/60 rounded-3xl p-8 shadow-2xl">
+        <h1 class="text-3xl font-bold tracking-tight mb-2" style="color: var(--text);">Welcome back</h1>
+        <p class="text-sm mb-8" style="color: var(--text-muted);">Sign in to continue building.</p>
 
-        <!-- Logo -->
-        <div class="flex items-center gap-3 mb-8">
-          <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center">
-            <span class="material-symbols-outlined text-indigo-400 text-lg">auto_awesome</span>
-          </div>
-          <span class="font-headline font-bold text-zinc-100 text-lg tracking-tighter">PageForge AI</span>
+        <!-- Tabs -->
+        <div class="flex gap-1 p-1 rounded-[10px] mb-6" style="background: rgba(31,41,55,0.08);">
+          <button id="tab-signin" class="tab-btn active" type="button">Sign in</button>
+          <button id="tab-signup" class="tab-btn" type="button">Create account</button>
         </div>
 
-        <h1 class="font-headline font-bold text-2xl text-zinc-100 mb-1 tracking-tight">Welcome back</h1>
-        <p class="text-zinc-500 text-sm mb-8 font-light">Sign in to continue building.</p>
-
-        <!-- Google -->
-        <button id="btn-google" class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/60 text-zinc-200 text-sm font-headline font-medium transition-colors mb-3 disabled:opacity-50">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-          </svg>
-          Continue with Google
-        </button>
-
-        <!-- GitHub -->
-        <button id="btn-github" class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/60 text-zinc-200 text-sm font-headline font-medium transition-colors disabled:opacity-50">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
-          </svg>
-          Continue with GitHub
-        </button>
-
-        <div class="flex items-center gap-3 my-6">
-          <hr class="flex-1 border-zinc-800"/>
-          <span class="text-zinc-600 text-xs font-light">or use email</span>
-          <hr class="flex-1 border-zinc-800"/>
-        </div>
-
-        <!-- Magic link form -->
-        <form id="magic-form" class="flex flex-col gap-3">
-          <input
-            id="email-input"
-            type="email"
-            placeholder="you@example.com"
-            required
-            class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 placeholder-zinc-600 text-sm font-body focus:outline-none focus:border-indigo-500/60 transition-colors"
-          />
-          <button type="submit" id="btn-magic" class="w-full py-3 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-headline font-semibold transition-colors disabled:opacity-60">
-            Send magic link
+        <!-- OAuth buttons -->
+        <div class="flex flex-col gap-3 mb-5">
+          <button id="btn-google" type="button" class="btn-secondary flex items-center justify-center gap-3">
+            <svg width="16" height="16" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Continue with Google
           </button>
+          <button id="btn-github" type="button" class="btn-secondary flex items-center justify-center gap-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            Continue with GitHub
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3 my-5">
+          <hr class="flex-1" style="border-color: rgba(31,41,55,0.15);"/>
+          <span class="text-xs font-medium" style="color: var(--text-muted);">or use email</span>
+          <hr class="flex-1" style="border-color: rgba(31,41,55,0.15);"/>
+        </div>
+
+        <!-- Email + password form -->
+        <form id="auth-form" class="flex flex-col gap-3">
+          <div>
+            <label for="email" class="block text-xs font-semibold mb-1.5" style="color: var(--text-sec);">Email</label>
+            <input id="email" type="email" required autocomplete="email" placeholder="you@example.com" class="field"/>
+          </div>
+          <div>
+            <label for="password" class="block text-xs font-semibold mb-1.5" style="color: var(--text-sec);">Password</label>
+            <input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters" class="field"/>
+          </div>
+          <button type="submit" id="btn-submit" class="btn-primary mt-2">Sign in</button>
         </form>
 
         <!-- Toast -->
-        <div id="toast" class="hidden mt-4 px-4 py-3 rounded-xl text-sm"></div>
+        <div id="toast" class="hidden mt-4 px-4 py-3 rounded-[10px] text-sm font-medium"></div>
 
-        <p class="text-zinc-600 text-xs text-center mt-6 font-light leading-relaxed">
-          By signing in you agree to our
-          <a href="#" class="text-zinc-500 underline hover:text-zinc-300">Terms</a> and
-          <a href="#" class="text-zinc-500 underline hover:text-zinc-300">Privacy Policy</a>.
+        <p class="text-xs text-center mt-6 leading-relaxed" style="color: var(--text-muted);">
+          By continuing you agree to our
+          <a href="terms.html" class="underline hover:text-black">Terms</a> and
+          <a href="privacy.html" class="underline hover:text-black">Privacy Policy</a>.
         </p>
       </div>
     </div>
@@ -102,23 +147,53 @@
     const SUPABASE_URL  = 'https://ltvxbquveerzjizfbzvv.supabase.co';
     const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0dnhicXV2ZWVyemppemZienZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTUyNzcsImV4cCI6MjA5MTk3MTI3N30.vj7SNmI4oFKxD-wyaoZ45RTuQ38IpjyzQYTGSmaJjOo';
 
-    // Always redirect to the live site, never localhost
-    const SITE_URL = 'https://landing-pageeee.vercel.app';
+    // Always redirect OAuth flows to production, never localhost
+    const SITE_URL = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+      ? location.origin
+      : 'https://landing-pageeee.vercel.app';
 
     const { createClient } = supabase;
     const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
+    // If already signed in, skip straight to dashboard
     sb.auth.getSession().then(({ data }) => {
       if (data.session) window.location.href = 'dashboard.html';
     });
 
+    let mode = 'signin'; // or 'signup'
+
+    const tabSignin = document.getElementById('tab-signin');
+    const tabSignup = document.getElementById('tab-signup');
+    const btnSubmit = document.getElementById('btn-submit');
+    const pwdInput  = document.getElementById('password');
+
+    function setMode(next) {
+      mode = next;
+      tabSignin.classList.toggle('active', mode === 'signin');
+      tabSignup.classList.toggle('active', mode === 'signup');
+      btnSubmit.textContent = mode === 'signin' ? 'Sign in' : 'Create account';
+      pwdInput.setAttribute('autocomplete', mode === 'signin' ? 'current-password' : 'new-password');
+      hideToast();
+    }
+    tabSignin.addEventListener('click', () => setMode('signin'));
+    tabSignup.addEventListener('click', () => setMode('signup'));
+
     function showToast(msg, type = 'success') {
       const t = document.getElementById('toast');
       t.textContent = msg;
-      t.className = type === 'success'
-        ? 'mt-4 px-4 py-3 rounded-xl text-sm bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
-        : 'mt-4 px-4 py-3 rounded-xl text-sm bg-red-500/10 border border-red-500/20 text-red-400';
-      t.style.display = 'block';
+      t.className = 'mt-4 px-4 py-3 rounded-[10px] text-sm font-medium block';
+      if (type === 'success') {
+        t.style.background = '#CFE3D1';
+        t.style.border = '2px solid #1F2937';
+        t.style.color = '#111827';
+      } else {
+        t.style.background = '#FEE2E2';
+        t.style.border = '2px solid #991B1B';
+        t.style.color = '#7F1D1D';
+      }
+    }
+    function hideToast() {
+      document.getElementById('toast').className = 'hidden';
     }
 
     function setLoading(btn, loading, label) {
@@ -126,8 +201,8 @@
       btn.textContent = loading ? 'Please wait…' : label;
     }
 
-    document.getElementById('btn-google').addEventListener('click', async () => {
-      const btn = document.getElementById('btn-google');
+    document.getElementById('btn-google').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
       btn.disabled = true;
       const { error } = await sb.auth.signInWithOAuth({
         provider: 'google',
@@ -136,8 +211,8 @@
       if (error) { showToast(error.message, 'error'); btn.disabled = false; }
     });
 
-    document.getElementById('btn-github').addEventListener('click', async () => {
-      const btn = document.getElementById('btn-github');
+    document.getElementById('btn-github').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
       btn.disabled = true;
       const { error } = await sb.auth.signInWithOAuth({
         provider: 'github',
@@ -146,18 +221,29 @@
       if (error) { showToast(error.message, 'error'); btn.disabled = false; }
     });
 
-    document.getElementById('magic-form').addEventListener('submit', async (e) => {
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('email-input').value.trim();
-      const btn = document.getElementById('btn-magic');
-      setLoading(btn, true, 'Send magic link');
-      const { error } = await sb.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: SITE_URL + '/dashboard.html' }
-      });
-      setLoading(btn, false, 'Send magic link');
-      if (error) showToast(error.message, 'error');
-      else showToast('Magic link sent! Check your inbox.', 'success');
+      hideToast();
+      const email = document.getElementById('email').value.trim();
+      const password = pwdInput.value;
+      const label = mode === 'signin' ? 'Sign in' : 'Create account';
+      setLoading(btnSubmit, true, label);
+
+      if (mode === 'signin') {
+        const { error } = await sb.auth.signInWithPassword({ email, password });
+        if (error) { showToast(error.message, 'error'); setLoading(btnSubmit, false, label); return; }
+        window.location.href = 'dashboard.html';
+      } else {
+        const { data, error } = await sb.auth.signUp({ email, password });
+        setLoading(btnSubmit, false, label);
+        if (error) { showToast(error.message, 'error'); return; }
+        if (data.session) {
+          window.location.href = 'dashboard.html';
+        } else {
+          showToast('Account created! Check your inbox to confirm, then sign in.', 'success');
+          setMode('signin');
+        }
+      }
     });
   </script>
 </body>
