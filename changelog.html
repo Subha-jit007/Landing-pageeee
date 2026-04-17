@@ -25,6 +25,8 @@
       min-height: 100dvh;
     }
     .card-border { border: 2px solid var(--border); }
+    .hover-lift { transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1); will-change: transform; }
+    .hover-lift:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
     .btn-primary { background: var(--btn-bg); color: #fff; border-radius: 10px; padding: 10px 18px; font-weight: 600; font-size: 13px; }
     .btn-primary:hover { background: var(--btn-hover); }
     .tag { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border: 1.5px solid var(--border); }
@@ -59,7 +61,7 @@
 
     <div class="space-y-6">
 
-      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+      <article class="rounded-[20px] card-border hover-lift p-8" style="background: var(--container);">
         <div class="flex items-center gap-3 mb-3 flex-wrap">
           <span class="tag tag-new">v2.0 Launch</span>
           <span class="text-xs font-semibold" style="color: var(--text-muted);">April 15, 2026</span>
@@ -74,7 +76,7 @@
         </ul>
       </article>
 
-      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+      <article class="rounded-[20px] card-border hover-lift p-8" style="background: var(--container);">
         <div class="flex items-center gap-3 mb-3 flex-wrap">
           <span class="tag tag-improve">Improvement</span>
           <span class="text-xs font-semibold" style="color: var(--text-muted);">March 28, 2026</span>
@@ -83,7 +85,7 @@
         <p class="text-sm leading-relaxed" style="color: var(--text-sec);">Tightened RLS policies on the <code class="bg-black/5 px-1 rounded">pages</code> table so users can only read, update, or delete their own rows. Public reads are limited to rows where <code class="bg-black/5 px-1 rounded">published = true</code>.</p>
       </article>
 
-      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+      <article class="rounded-[20px] card-border hover-lift p-8" style="background: var(--container);">
         <div class="flex items-center gap-3 mb-3 flex-wrap">
           <span class="tag tag-fix">Fix</span>
           <span class="text-xs font-semibold" style="color: var(--text-muted);">March 20, 2026</span>
@@ -92,7 +94,7 @@
         <p class="text-sm leading-relaxed" style="color: var(--text-sec);">OAuth and magic-link flows now always return to the production domain, regardless of where the browser was pointed at the time of sign-in.</p>
       </article>
 
-      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+      <article class="rounded-[20px] card-border hover-lift p-8" style="background: var(--container);">
         <div class="flex items-center gap-3 mb-3 flex-wrap">
           <span class="tag tag-new">Feature</span>
           <span class="text-xs font-semibold" style="color: var(--text-muted);">March 10, 2026</span>
@@ -101,7 +103,7 @@
         <p class="text-sm leading-relaxed" style="color: var(--text-sec);">Toggle a page live or back to draft from the dashboard in one click — useful for quick experiments and seasonal pages.</p>
       </article>
 
-      <article class="rounded-[20px] card-border p-8" style="background: var(--container);">
+      <article class="rounded-[20px] card-border hover-lift p-8" style="background: var(--container);">
         <div class="flex items-center gap-3 mb-3 flex-wrap">
           <span class="tag tag-new">v1.0 Launch</span>
           <span class="text-xs font-semibold" style="color: var(--text-muted);">February 1, 2026</span>

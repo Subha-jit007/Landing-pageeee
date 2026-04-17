@@ -44,10 +44,13 @@
     .page-card {
       background: #fff; border-radius: 20px;
       border: 2px solid var(--border);
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);
       display: flex; flex-direction: column;
+      will-change: transform;
     }
-    .page-card:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 var(--border); }
+    .page-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+    .hover-lift { transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1); will-change: transform; }
+    .hover-lift:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
     .chip {
       display: inline-flex; align-items: center; gap: 4px;
       padding: 3px 8px; border-radius: 999px;

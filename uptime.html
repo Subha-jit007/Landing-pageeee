@@ -26,6 +26,8 @@
       min-height: 100dvh;
     }
     .card-border { border: 2px solid var(--border); }
+    .hover-lift { transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1); will-change: transform; }
+    .hover-lift:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
     .btn-primary { background: var(--btn-bg); color: #fff; border-radius: 10px; padding: 10px 18px; font-weight: 600; font-size: 13px; }
     .btn-primary:hover { background: var(--btn-hover); }
     .bar { display: inline-block; width: 6px; height: 28px; border-radius: 2px; margin-right: 2px; }
@@ -66,15 +68,15 @@
 
     <!-- Summary cards -->
     <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-      <div class="rounded-[20px] card-border p-6" style="background: var(--card-green);">
+      <div class="rounded-[20px] card-border hover-lift p-6" style="background: var(--card-green);">
         <p class="text-xs font-bold uppercase tracking-widest mb-1" style="color: var(--text-sec);">24 hours</p>
         <p class="text-3xl font-bold tracking-tight">100.00%</p>
       </div>
-      <div class="rounded-[20px] card-border p-6" style="background: var(--card-blue);">
+      <div class="rounded-[20px] card-border hover-lift p-6" style="background: var(--card-blue);">
         <p class="text-xs font-bold uppercase tracking-widest mb-1" style="color: var(--text-sec);">30 days</p>
         <p class="text-3xl font-bold tracking-tight">99.98%</p>
       </div>
-      <div class="rounded-[20px] card-border p-6" style="background: var(--container);">
+      <div class="rounded-[20px] card-border hover-lift p-6" style="background: var(--container);">
         <p class="text-xs font-bold uppercase tracking-widest mb-1" style="color: var(--text-sec);">90 days</p>
         <p class="text-3xl font-bold tracking-tight">99.95%</p>
       </div>
