@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PageForge — Premium landing pages. In ten seconds.</title>
+  <meta name="description" content="Describe your business. Get a beautiful, animated, fully-editable landing page. Ship it to a subdomain or download the code." />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --background: #0a0a0a;
+      --surface: #111111;
+      --border: #1f1f1f;
+      --foreground: #fafafa;
+      --muted: #a1a1aa;
+      --primary: #6366f1;
+      --primary-hover: #5558e3;
+      --accent: #8b5cf6;
+    }
+
+    html {
+      font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body { min-height: 100vh; background: var(--background); overflow-x: hidden; }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Clash Display', system-ui, sans-serif;
+      letter-spacing: -0.02em;
+      font-weight: 600;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+    ::selection { background: #6366f1; color: #fff; }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .no-flash { opacity: 0; animation: fadeIn 0.4s ease-out 0.1s forwards; }
+
+    .animated-gradient {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease-in-out infinite;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .mesh-gradient {
+      background-image:
+        radial-gradient(at 20% 30%, rgba(99,102,241,0.12) 0, transparent 50%),
+        radial-gradient(at 80% 0%, rgba(139,92,246,0.10) 0, transparent 50%),
+        radial-gradient(at 40% 80%, rgba(99,102,241,0.08) 0, transparent 50%);
+    }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: rgba(10,10,10,0.7);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto; padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Clash Display', sans-serif; font-weight: 700;
+      color: #fff; font-size: 15px;
+    }
+    .nav-logo-text {
+      font-family: 'Clash Display', sans-serif; font-weight: 600;
+      font-size: 18px; letter-spacing: -0.03em;
+    }
+    .nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; }
+    .nav-links a { color: var(--muted); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--foreground); }
+    .nav-cta {
+      padding: 8px 16px; border-radius: 8px;
+      background: var(--primary); color: #fff !important;
+      font-weight: 600; font-size: 14px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--primary-hover) !important; transform: translateY(-1px); }
+
+    /* Hero */
+    .hero {
+      position: relative; padding: 160px 24px 128px;
+      isolation: isolate;
+    }
+    .hero-glow {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 400px;
+      background: rgba(99,102,241,0.2); filter: blur(120px);
+      z-index: -1; pointer-events: none;
+    }
+    .hero-inner { max-width: 896px; margin: 0 auto; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 9999px;
+      border: 1px solid var(--border); background: rgba(17,17,17,0.5);
+      margin-bottom: 32px; font-size: 12px; color: var(--muted); font-weight: 500;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--primary); box-shadow: 0 0 12px #6366f1;
+    }
+    .hero-h1 {
+      font-size: clamp(44px, 7.5vw, 88px); line-height: 1.02;
+      letter-spacing: -0.02em; margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 18px; color: var(--muted); max-width: 672px;
+      margin: 0 auto 40px; line-height: 1.7;
+    }
+    .hero-btns {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 8px;
+      background: var(--primary); color: #fff;
+      font-weight: 600; font-size: 15px;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 20px 60px rgba(99,102,241,0.2);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover); transform: translateY(-1px);
+      box-shadow: 0 20px 60px rgba(99,102,241,0.4);
+    }
+    .btn-primary svg { transition: transform 0.15s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+    .btn-outline {
+      padding: 14px 28px; border-radius: 8px;
+      border: 1px solid var(--border); color: var(--foreground);
+      font-weight: 600; font-size: 15px;
+      transition: border-color 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--muted); }
+
+    /* Mockup */
+    .mockup-wrap { max-width: 1024px; margin: 96px auto 0; position: relative; }
+    .mockup {
+      aspect-ratio: 16/9; border-radius: 16px;
+      border: 1px solid var(--border); background: var(--surface);
+      overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .mockup-dots {
+      position: absolute; top: 16px; left: 16px;
+      display: flex; gap: 6px; z-index: 10;
+    }
+    .mockup-dots span { width: 12px; height: 12px; border-radius: 50%; }
+    .mockup-grid {
+      height: 100%; display: grid; grid-template-columns: 240px 1fr;
+      padding-top: 48px;
+    }
+    .mockup-sidebar {
+      border-right: 1px solid var(--border); padding: 16px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .mockup-sidebar span {
+      display: block; height: 12px; border-radius: 4px; background: var(--border);
+    }
+    .mockup-sidebar span.active { background: rgba(99,102,241,0.6); }
+    .mockup-content { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .mockup-content .row { height: 16px; border-radius: 4px; background: var(--primary); width: 25%; }
+    .mockup-content .row2 { height: 32px; border-radius: 4px; background: var(--border); width: 66%; }
+    .mockup-content .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .mockup-content .grid3 span { aspect-ratio: 1; border-radius: 8px; background: var(--border); display: block; }
+    .mockup-content .lines { display: flex; flex-direction: column; gap: 8px; }
+    .mockup-content .lines span { height: 10px; border-radius: 4px; background: var(--border); display: block; }
+
+    /* Section shared */
+    section { border-top: 1px solid var(--border); }
+
+    /* Features */
+    .features-section { padding: 96px 24px; }
+    .features-inner { max-width: 1152px; margin: 0 auto; }
+    .features-header { max-width: 672px; margin-bottom: 64px; }
+    .section-label {
+      font-size: 12px; font-weight: 600; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+    }
+    .section-h2 {
+      font-size: clamp(32px,4vw,48px); line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    }
+    .feature-card {
+      background: var(--background); padding: 32px;
+      transition: background 0.15s;
+    }
+    .feature-card:hover { background: var(--surface); }
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 8px;
+      background: rgba(99,102,241,0.1); color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .feature-icon svg { width: 20px; height: 20px; }
+    .feature-title {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 18px; font-weight: 600; margin-bottom: 8px;
+    }
+    .feature-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* How it works */
+    .how-section { padding: 96px 24px; }
+    .how-inner { max-width: 896px; margin: 0 auto; }
+    .how-header { text-align: center; margin-bottom: 64px; }
+    .step {
+      display: flex; gap: 32px; align-items: flex-start;
+      border-top: 1px solid var(--border); padding-top: 40px; margin-top: 40px;
+    }
+    .step:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+    .step-num {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 36px; font-weight: 600; color: rgba(99,102,241,0.7);
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 24px; font-weight: 600; margin-bottom: 8px;
+    }
+    .step-desc { color: var(--muted); line-height: 1.6; }
+
+    /* CTA */
+    .cta-section { padding: 96px 24px; }
+    .cta-box {
+      max-width: 768px; margin: 0 auto; text-align: center;
+      border-radius: 24px; border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.1), transparent);
+      padding: 64px;
+    }
+    .cta-h2 { font-size: clamp(32px,4vw,48px); line-height: 1.1; margin-bottom: 16px; }
+    .cta-sub { font-size: 18px; color: var(--muted); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    /* Footer */
+    footer { padding: 48px 24px; border-top: 1px solid var(--border); }
+    .footer-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: space-between; gap: 16px;
+      font-size: 14px; color: var(--muted);
+    }
+    .footer-brand { display: flex; align-items: center; gap: 8px; }
+    .footer-brand-icon { width: 24px; height: 24px; border-radius: 4px; background: linear-gradient(135deg, var(--primary), var(--accent)); }
+
+    @media (min-width: 768px) {
+      .footer-inner { flex-direction: row; }
+    }
+    @media (max-width: 640px) {
+      .nav-links a:not(.nav-cta):not([href="/login"]) { display: none; }
+      .mockup-grid { grid-template-columns: 1fr; }
+      .mockup-sidebar { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .cta-box { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-icon">P</div>
+        <span class="nav-logo-text">PageForge</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="login.html">Log in</a>
+        <a href="login.html" class="nav-cta">Start free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero mesh-gradient" style="border-top: none;">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-badge no-flash">
+        <span class="hero-badge-dot"></span>
+        <span>7 security layers · 0 API keys · 100% yours</span>
+      </div>
+      <h1 class="hero-h1 no-flash">
+        Premium landing pages.<br>
+        <span class="animated-gradient">In ten seconds.</span>
+      </h1>
+      <p class="hero-sub no-flash">
+        Describe your business. Get a beautiful, animated, fully-editable landing page. Ship it to a subdomain or download the code.
+      </p>
+      <div class="hero-btns no-flash">
+        <a href="login.html" class="btn-primary">
+          Generate your first page
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#features" class="btn-outline">See how it works</a>
+      </div>
+    </div>
+
+    <!-- Mockup -->
+    <div class="mockup-wrap no-flash">
+      <div class="mockup">
+        <div class="mockup-dots">
+          <span style="background:rgba(248,113,113,0.8)"></span>
+          <span style="background:rgba(250,204,21,0.8)"></span>
+          <span style="background:rgba(74,222,128,0.8)"></span>
+        </div>
+        <div class="mockup-grid">
+          <div class="mockup-sidebar">
+            <span style="width:80%"></span>
+            <span style="width:60%"></span>
+            <span class="active" style="width:66%"></span>
+            <span style="width:80%"></span>
+            <span style="width:50%"></span>
+          </div>
+          <div class="mockup-content">
+            <div class="row"></div>
+            <div class="row2"></div>
+            <div class="grid3">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="lines">
+              <span style="width:100%"></span>
+              <span style="width:83%"></span>
+              <span style="width:66%"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="features-section">
+    <div class="features-inner">
+      <div class="features-header">
+        <p class="section-label">Built right</p>
+        <h2 class="section-h2">Every pixel considered.<br>Every byte accounted for.</h2>
+      </div>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="feature-title">Ten-second generation</h3>
+          <p class="feature-desc">Describe your business. We render a complete, animated page. Edit it in the next breath.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          </div>
+          <h3 class="feature-title">8 themes, 5 font pairs</h3>
+          <p class="feature-desc">Clash Display × Satoshi. Never Inter. Designs that feel built, not generated.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+          </div>
+          <h3 class="feature-title">Ten polished sections</h3>
+          <p class="feature-desc">Hero, features, stats, testimonials, pricing, FAQ — all GSAP-animated, all customisable.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3 class="feature-title">Own your code</h3>
+          <p class="feature-desc">Download the page as a ZIP. Static HTML, ready to host on Vercel, Netlify, GitHub Pages.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="feature-title">Seven security layers</h3>
+          <p class="feature-desc">CSP, HSTS, CSRF, bcrypt, rate limits, validation, sanitization. Auth-grade by default.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4M19 17v4M3 5h4M17 19h4"/></svg>
+          </div>
+          <h3 class="feature-title">Zero API keys</h3>
+          <p class="feature-desc">Runs entirely on your own machine. No OpenAI bill. No vendor lock-in. No surprises.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="how-section">
+    <div class="how-inner">
+      <div class="how-header">
+        <p class="section-label">How it works</p>
+        <h2 class="section-h2">Three steps to live.</h2>
+      </div>
+      <div>
+        <div class="step">
+          <div class="step-num">01</div>
+          <div>
+            <h3 class="step-title">Describe your product</h3>
+            <p class="step-desc">One sentence. Two. A paragraph. Whatever's natural.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div>
+            <h3 class="step-title">Pick a look</h3>
+            <p class="step-desc">Eight themes, five font pairs, four animation levels. Or let us pick.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div>
+            <h3 class="step-title">Publish or download</h3>
+            <p class="step-desc">Your page lives at /preview/your-slug, or zips into static HTML you own.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2 class="cta-h2">Ready when you are.</h2>
+      <p class="cta-sub">No credit card. No API key. No catch. Just a working landing page generator on your machine.</p>
+      <a href="login.html" class="btn-primary" style="display:inline-flex;">
+        Start for free
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-icon"></div>
+        <span>PageForge AI · Self-hosted, open-source, yours.</span>
+      </div>
+      <p id="year"></p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = '© ' + new Date().getFullYear() + ' PageForge';
+  </script>
+</body>
+</html>

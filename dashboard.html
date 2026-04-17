@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — PageForge</title>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --background: #0a0a0a; --surface: #111111; --border: #1f1f1f;
+      --foreground: #fafafa; --muted: #a1a1aa;
+      --primary: #6366f1; --primary-hover: #5558e3; --accent: #8b5cf6;
+    }
+    html { font-family: 'Satoshi', system-ui, sans-serif; background: var(--background); color: var(--foreground); -webkit-font-smoothing: antialiased; }
+    body { min-height: 100vh; background: var(--background); }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: rgba(10,10,10,0.8); border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+    .nav-logo-icon {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Clash Display', sans-serif; font-weight: 700; color: #fff; font-size: 14px;
+    }
+    .nav-logo-text { font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: -0.03em; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; color: #fff; overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .btn-signout {
+      padding: 7px 14px; border-radius: 8px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); font-family: 'Satoshi', sans-serif; font-size: 13px;
+      cursor: pointer; transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-signout:hover { color: var(--foreground); border-color: #333; }
+
+    /* Main layout */
+    main { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+
+    .page-header { margin-bottom: 40px; }
+    .greeting { font-family: 'Clash Display', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .greeting-sub { font-size: 14px; color: var(--muted); }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px;
+    }
+    .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .stat-value { font-family: 'Clash Display', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+    .stat-value span { font-size: 14px; color: var(--muted); font-family: 'Satoshi', sans-serif; font-weight: 400; }
+
+    /* New page button */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .section-title { font-family: 'Clash Display', sans-serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+    .btn-new {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border-radius: 8px; border: none;
+      background: var(--primary); color: #fff;
+      font-family: 'Satoshi', sans-serif; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .btn-new:hover { background: var(--primary-hover); }
+
+    /* Pages grid */
+    .pages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+    .page-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 22px; transition: border-color 0.15s;
+    }
+    .page-card:hover { border-color: #333; }
+    .page-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+    .page-title { font-family: 'Clash Display', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+    .badge {
+      padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
+    }
+    .badge-live { background: rgba(74,222,128,0.15); color: #4ade80; }
+    .badge-draft { background: rgba(161,161,170,0.15); color: var(--muted); }
+    .page-slug { font-size: 12px; color: var(--muted); margin-bottom: 16px; font-family: monospace; }
+    .page-date { font-size: 12px; color: var(--muted); }
+    .page-actions { display: flex; gap: 8px; margin-top: 16px; }
+    .btn-sm {
+      flex: 1; padding: 8px; border-radius: 8px; font-size: 13px; font-weight: 500;
+      font-family: 'Satoshi', sans-serif; cursor: pointer; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-sm:hover { color: var(--foreground); border-color: #333; }
+    .btn-sm.danger:hover { color: #f87171; border-color: rgba(248,113,113,0.3); }
+
+    /* Empty state */
+    .empty {
+      grid-column: 1/-1; padding: 64px 24px; text-align: center;
+      border: 1px dashed var(--border); border-radius: 14px;
+    }
+    .empty-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: rgba(99,102,241,0.1); margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .empty h3 { font-family: 'Clash Display', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+    .empty p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+
+    /* Loading skeleton */
+    .skeleton { animation: pulse 1.5s ease-in-out infinite; background: var(--border); border-radius: 6px; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">P</div>
+        <span class="nav-logo-text">PageForge</span>
+      </a>
+      <div class="nav-right">
+        <div class="avatar" id="avatar">?</div>
+        <button class="btn-signout" id="btn-signout">Sign out</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1 class="greeting" id="greeting">Loading…</h1>
+      <p class="greeting-sub">Here's what you've built so far.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <p class="stat-label">Total pages</p>
+        <p class="stat-value" id="stat-total">—</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Published</p>
+        <p class="stat-value" id="stat-published">—</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Plan</p>
+        <p class="stat-value" id="stat-plan">— <span>/ free</span></p>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-title">Your pages</h2>
+      <button class="btn-new" id="btn-new">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        New page
+      </button>
+    </div>
+
+    <div class="pages-grid" id="pages-grid">
+      <!-- filled by JS -->
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL  = 'https://ltvxbquveerzjizfbzvv.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0dnhicXV2ZWVyemppemZienZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTUyNzcsImV4cCI6MjA5MTk3MTI3N30.vj7SNmI4oFKxD-wyaoZ45RTuQ38IpjyzQYTGSmaJjOo';
+
+    const { createClient } = supabase;
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    async function init() {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) { window.location.href = 'login.html'; return; }
+
+      const user = session.user;
+      const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'there';
+
+      // Greeting
+      document.getElementById('greeting').textContent = 'Hey, ' + name.split(' ')[0] + ' 👋';
+
+      // Avatar
+      const avatarEl = document.getElementById('avatar');
+      if (user.user_metadata?.avatar_url) {
+        avatarEl.innerHTML = `<img src="${user.user_metadata.avatar_url}" alt="avatar" />`;
+      } else {
+        avatarEl.textContent = name[0].toUpperCase();
+      }
+
+      // Load profile + pages in parallel
+      const [profileRes, pagesRes] = await Promise.all([
+        sb.from('profiles').select('plan, pages_count').eq('id', user.id).single(),
+        sb.from('pages').select('*').order('created_at', { ascending: false })
+      ]);
+
+      const plan = profileRes.data?.plan || 'free';
+      const pages = pagesRes.data || [];
+
+      // Stats
+      document.getElementById('stat-total').textContent = pages.length;
+      document.getElementById('stat-published').textContent = pages.filter(p => p.published).length;
+      document.getElementById('stat-plan').innerHTML = plan.charAt(0).toUpperCase() + plan.slice(1) + ' <span>plan</span>';
+
+      // Pages grid
+      renderPages(pages);
+    }
+
+    function renderPages(pages) {
+      const grid = document.getElementById('pages-grid');
+      if (pages.length === 0) {
+        grid.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3>No pages yet</h3>
+            <p>Generate your first landing page in ten seconds.</p>
+            <button class="btn-new" onclick="newPage()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              Create my first page
+            </button>
+          </div>`;
+        return;
+      }
+      grid.innerHTML = pages.map(page => `
+        <div class="page-card">
+          <div class="page-card-header">
+            <h3 class="page-title">${escHtml(page.title)}</h3>
+            <span class="badge ${page.published ? 'badge-live' : 'badge-draft'}">${page.published ? 'Live' : 'Draft'}</span>
+          </div>
+          <p class="page-slug">/${escHtml(page.slug)}</p>
+          <p class="page-date">${new Date(page.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+          <div class="page-actions">
+            <button class="btn-sm" onclick="editPage('${page.id}')">Edit</button>
+            <button class="btn-sm" onclick="togglePublish('${page.id}', ${page.published})">${page.published ? 'Unpublish' : 'Publish'}</button>
+            <button class="btn-sm danger" onclick="deletePage('${page.id}')">Delete</button>
+          </div>
+        </div>`).join('');
+    }
+
+    function escHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function newPage() {
+      alert('Page builder coming soon!');
+    }
+
+    async function togglePublish(id, current) {
+      await sb.from('pages').update({ published: !current }).eq('id', id);
+      init();
+    }
+
+    async function deletePage(id) {
+      if (!confirm('Delete this page? This cannot be undone.')) return;
+      await sb.from('pages').delete().eq('id', id);
+      init();
+    }
+
+    function editPage(id) {
+      alert('Editor coming soon! Page ID: ' + id);
+    }
+
+    document.getElementById('btn-signout').addEventListener('click', async () => {
+      await sb.auth.signOut();
+      window.location.href = 'index.html';
+    });
+
+    document.getElementById('btn-new').addEventListener('click', newPage);
+
+    init();
+  </script>
+</body>
+</html>
