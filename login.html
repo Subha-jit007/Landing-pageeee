@@ -102,6 +102,9 @@
     const SUPABASE_URL  = 'https://ltvxbquveerzjizfbzvv.supabase.co';
     const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0dnhicXV2ZWVyemppemZienZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTUyNzcsImV4cCI6MjA5MTk3MTI3N30.vj7SNmI4oFKxD-wyaoZ45RTuQ38IpjyzQYTGSmaJjOo';
 
+    // Always redirect to the live site, never localhost
+    const SITE_URL = 'https://landing-pageeee.vercel.app';
+
     const { createClient } = supabase;
     const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
@@ -128,7 +131,7 @@
       btn.disabled = true;
       const { error } = await sb.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.origin + '/dashboard.html' }
+        options: { redirectTo: SITE_URL + '/dashboard.html' }
       });
       if (error) { showToast(error.message, 'error'); btn.disabled = false; }
     });
@@ -138,7 +141,7 @@
       btn.disabled = true;
       const { error } = await sb.auth.signInWithOAuth({
         provider: 'github',
-        options: { redirectTo: window.location.origin + '/dashboard.html' }
+        options: { redirectTo: SITE_URL + '/dashboard.html' }
       });
       if (error) { showToast(error.message, 'error'); btn.disabled = false; }
     });
@@ -150,7 +153,7 @@
       setLoading(btn, true, 'Send magic link');
       const { error } = await sb.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: window.location.origin + '/dashboard.html' }
+        options: { emailRedirectTo: SITE_URL + '/dashboard.html' }
       });
       setLoading(btn, false, 'Send magic link');
       if (error) showToast(error.message, 'error');
