@@ -1,0 +1,119 @@
+/* === Awesome Crew — shared theme + logo morph === */
+
+:root {
+  --btn-fg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --bg: #0F0E0B;
+  --grid: #1F1D19;
+  --text: #F5F1E8;
+  --text-sec: #D6D1C5;
+  --text-muted: #9CA096;
+  --container: #24211C;
+  --border: #E6E1D8;
+  --card-green: #2E4A3A;
+  --card-blue: #2C3E4A;
+  --btn-bg: #F5F1E8;
+  --btn-hover: #FFFFFF;
+  --btn-fg: #111827;
+}
+
+body {
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
+
+/* btn-primary ships with hardcoded white — flip via var */
+.btn-primary { color: var(--btn-fg) !important; }
+
+/* ---- Dark mode overrides for hardcoded inline styles ---- */
+[data-theme="dark"] [style*="rgba(245,241,232,0.85)"] {
+  background: rgba(15,14,11,0.85) !important;
+}
+[data-theme="dark"] [style*="rgba(245,241,232,0.6)"] {
+  background: rgba(15,14,11,0.6) !important;
+}
+[data-theme="dark"] [style*="border-color: #E6E1D8"],
+[data-theme="dark"] [style*="border-bottom: 1px solid #E6E1D8"] {
+  border-color: #2A2723 !important;
+}
+[data-theme="dark"] .page-card,
+[data-theme="dark"] .field,
+[data-theme="dark"] .btn-secondary,
+[data-theme="dark"] .chip-muted {
+  background: #1A1814 !important;
+}
+[data-theme="dark"] .field { color: var(--text) !important; }
+[data-theme="dark"] .field::placeholder { color: var(--text-muted) !important; }
+[data-theme="dark"] [style*="background: #fff"] { background: #1A1814 !important; }
+[data-theme="dark"] [style*="rgba(255,255,255,0.5)"] { background: rgba(36,33,28,0.6) !important; }
+[data-theme="dark"] [style*="rgba(255,255,255,0.6)"] { background: rgba(36,33,28,0.7) !important; }
+[data-theme="dark"] [style*="background: rgba(31,41,55,0.08)"] { background: rgba(245,241,232,0.08) !important; }
+[data-theme="dark"] [style*="background: rgba(31,41,55,0.15)"] { background: rgba(245,241,232,0.15) !important; }
+[data-theme="dark"] [style*="color: #14532d"] { color: #86efac !important; }
+[data-theme="dark"] [style*="color: #0c4a6e"] { color: #93c5fd !important; }
+[data-theme="dark"] [style*="color: #7F1D1D"] { color: #FCA5A5 !important; }
+[data-theme="dark"] [style*="background: #FEE2E2"] { background: rgba(220,38,38,0.15) !important; }
+[data-theme="dark"] [style*="background: #CFE3D1"] { background: var(--card-green) !important; }
+
+/* ---- Brand text: "Awesome Crew" → "AC" on dark ---- */
+.brand-text { white-space: nowrap; display: inline-flex; align-items: baseline; }
+.brand-text .f,
+.brand-text .s {
+  display: inline-block;
+  overflow: hidden;
+  white-space: pre;
+  vertical-align: baseline;
+  transition:
+    max-width 0.55s cubic-bezier(0.22,1,0.36,1),
+    opacity 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+.brand-text .f { max-width: 10ch; opacity: 1; }
+.brand-text .s { max-width: 0.6ch; opacity: 1; }
+[data-theme="dark"] .brand-text .f { max-width: 0; opacity: 0; }
+[data-theme="dark"] .brand-text .s { max-width: 0; opacity: 0; }
+/* Staggered cascade — first word shrinks, then space, then last word */
+.brand-text > :nth-child(2) { transition-delay: 0s; }
+.brand-text > :nth-child(3) { transition-delay: 0.08s; }
+.brand-text > :nth-child(5) { transition-delay: 0.04s; }
+[data-theme="dark"] .brand-text > :nth-child(2) { transition-delay: 0s; }
+[data-theme="dark"] .brand-text > :nth-child(3) { transition-delay: 0.12s; }
+[data-theme="dark"] .brand-text > :nth-child(5) { transition-delay: 0.18s; }
+
+/* ---- Theme toggle button (logo) ---- */
+.theme-toggle {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: var(--border);
+}
+.theme-toggle svg {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  transition:
+    opacity 0.5s cubic-bezier(0.22,1,0.36,1),
+    transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.theme-toggle .logo-dark {
+  opacity: 0;
+  transform: scale(0.8) rotate(-12deg);
+}
+[data-theme="dark"] .theme-toggle .logo-light {
+  opacity: 0;
+  transform: scale(0.8) rotate(12deg);
+}
+[data-theme="dark"] .theme-toggle .logo-dark {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+}
+.theme-toggle:active { transform: scale(0.94); transition: transform 0.12s; }
+.theme-toggle:focus-visible { outline: 2px solid var(--border); outline-offset: 4px; border-radius: 6px; }

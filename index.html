@@ -7,6 +7,9 @@
   <meta name="description" content="Describe your business. Get a beautiful, fully-editable landing page in 10 seconds."/>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="theme.css" rel="stylesheet"/>
+  <script>if(localStorage.getItem('ac-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
+  <script src="theme.js" defer></script>
   <style>
     :root {
       --bg: #F5F1E8; --grid: #E6E1D8;
@@ -49,15 +52,23 @@
   <!-- Header -->
   <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
     <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3">
-        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
-          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
-          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
-          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
-        </svg>
-        <span class="text-lg font-bold tracking-tight" style="color: var(--text);">Awesome Crew</span>
-      </a>
+      <div class="flex items-center gap-3">
+        <button type="button" class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+          <svg class="logo-light" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="currentColor"/>
+            <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+          </svg>
+          <svg class="logo-dark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 8 15 L 28 15 A 15 15 0 0 1 28 45 L 8 45 Z" fill="currentColor"/>
+            <rect x="42" y="15" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 8 55 L 28 55 A 15 15 0 0 1 28 85 L 8 85 Z" fill="#CFE3D1"/>
+            <rect x="42" y="55" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+          </svg>
+        </button>
+        <a href="index.html" class="text-lg font-bold tracking-tight brand-text" style="color: var(--text);"><span>A</span><span class="f">wesome</span><span class="s">&nbsp;</span><span>C</span><span class="f">rew</span></a>
+      </div>
       <div class="hidden md:flex items-center gap-8 text-sm font-medium" style="color: var(--text-sec);">
         <a href="#features" class="hover:text-black transition-colors">Features</a>
         <a href="#pricing" class="hover:text-black transition-colors">Pricing</a>
@@ -213,9 +224,12 @@
         <div class="rounded-[20px] p-8 card-border hover-lift flex flex-col relative" style="background: var(--card-green);">
           <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold" style="background: var(--btn-bg); color: #fff;">Most Popular</div>
           <h3 class="text-lg font-semibold mb-2" style="color: var(--text);">Starter</h3>
-          <div class="flex items-baseline gap-1 mb-8">
-            <span class="text-5xl font-bold" style="color: var(--text);">$12</span>
-            <span class="text-sm" style="color: var(--text-sec);">/month</span>
+          <div class="mb-8">
+            <div class="flex items-baseline gap-1">
+              <span class="text-5xl font-bold price-usd" data-usd="12" style="color: var(--text);">$12</span>
+              <span class="text-sm" style="color: var(--text-sec);">/month</span>
+            </div>
+            <p class="price-local text-xs mt-1 hidden" style="color: var(--text-sec);"></p>
           </div>
           <ul class="space-y-3 mb-8 flex-1 text-sm" style="color: var(--text);">
             <li class="flex items-center gap-2"><span>✓</span> 20 AI generations / mo</li>
@@ -228,9 +242,12 @@
 
         <div class="rounded-[20px] p-8 card-border hover-lift flex flex-col" style="background: var(--container);">
           <h3 class="text-lg font-semibold mb-2" style="color: var(--text);">Pro</h3>
-          <div class="flex items-baseline gap-1 mb-8">
-            <span class="text-5xl font-bold" style="color: var(--text);">$29</span>
-            <span class="text-sm" style="color: var(--text-muted);">/month</span>
+          <div class="mb-8">
+            <div class="flex items-baseline gap-1">
+              <span class="text-5xl font-bold price-usd" data-usd="29" style="color: var(--text);">$29</span>
+              <span class="text-sm" style="color: var(--text-muted);">/month</span>
+            </div>
+            <p class="price-local text-xs mt-1 hidden" style="color: var(--text-muted);"></p>
           </div>
           <ul class="space-y-3 mb-8 flex-1 text-sm" style="color: var(--text-sec);">
             <li class="flex items-center gap-2"><span style="color: var(--text);">✓</span> Unlimited generations</li>
@@ -298,6 +315,85 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+    // IP-based local-currency pricing (no permission popup).
+    // Calls ipapi.co (free, no key) → gets country + currency.
+    // Converts via open.er-api.com (free, no key). Results cached in sessionStorage.
+    (function () {
+      var priceEls = document.querySelectorAll('.price-usd');
+      if (!priceEls.length) return;
+
+      var CACHE_KEY = 'ac-geo-pricing-v1';
+      var CACHE_TTL = 6 * 60 * 60 * 1000; // 6 hours
+
+      function renderLocal(currency, rate, countryName) {
+        priceEls.forEach(function (el) {
+          var usd = parseFloat(el.getAttribute('data-usd'));
+          if (!usd || currency === 'USD') return;
+          var local = usd * rate;
+          var formatted;
+          try {
+            formatted = new Intl.NumberFormat(undefined, {
+              style: 'currency',
+              currency: currency,
+              maximumFractionDigits: local >= 100 ? 0 : 2
+            }).format(local);
+          } catch (_) {
+            formatted = '~' + Math.round(local) + ' ' + currency;
+          }
+          var wrapper = el.closest('.mb-8') || el.parentElement && el.parentElement.parentElement;
+          if (!wrapper) return;
+          var localEl = wrapper.querySelector('.price-local');
+          if (!localEl) return;
+          localEl.textContent = '≈ ' + formatted + (countryName ? ' in ' + countryName : '');
+          localEl.classList.remove('hidden');
+        });
+      }
+
+      function loadCached() {
+        try {
+          var raw = sessionStorage.getItem(CACHE_KEY);
+          if (!raw) return null;
+          var obj = JSON.parse(raw);
+          if (!obj || Date.now() - obj.ts > CACHE_TTL) return null;
+          return obj;
+        } catch (_) { return null; }
+      }
+
+      function saveCache(data) {
+        try {
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
+        } catch (_) {}
+      }
+
+      var cached = loadCached();
+      if (cached && cached.data) {
+        renderLocal(cached.data.currency, cached.data.rate, cached.data.country);
+        return;
+      }
+
+      fetch('https://ipapi.co/json/')
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (geo) {
+          var currency = geo && geo.currency;
+          var country = geo && geo.country_name;
+          if (!currency || currency === 'USD') {
+            saveCache({ currency: 'USD', rate: 1, country: country });
+            return;
+          }
+          return fetch('https://open.er-api.com/v6/latest/USD')
+            .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+            .then(function (fx) {
+              var rate = fx && fx.rates && fx.rates[currency];
+              if (!rate) return;
+              saveCache({ currency: currency, rate: rate, country: country });
+              renderLocal(currency, rate, country);
+            });
+        })
+        .catch(function () { /* silent — USD stays as-is */ });
+    })();
   </script>
 </body>
 </html>

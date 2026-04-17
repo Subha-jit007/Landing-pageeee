@@ -7,6 +7,9 @@
   <meta name="description" content="Live status of Awesome Crew services."/>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="theme.css" rel="stylesheet"/>
+  <script>if(localStorage.getItem('ac-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
+  <script src="theme.js" defer></script>
   <style>
     :root {
       --bg: #F5F1E8; --grid: #E6E1D8;
@@ -37,15 +40,23 @@
 
   <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
     <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3">
-        <svg class="w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
-          <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="#1F2937"/>
-          <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="#1F2937" stroke-width="5"/>
-          <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
-        </svg>
-        <span class="text-lg font-bold tracking-tight">Awesome Crew</span>
-      </a>
+      <div class="flex items-center gap-3">
+        <button type="button" class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+          <svg class="logo-light" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="currentColor"/>
+            <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+          </svg>
+          <svg class="logo-dark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 8 15 L 28 15 A 15 15 0 0 1 28 45 L 8 45 Z" fill="currentColor"/>
+            <rect x="42" y="15" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 8 55 L 28 55 A 15 15 0 0 1 28 85 L 8 85 Z" fill="#CFE3D1"/>
+            <rect x="42" y="55" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+          </svg>
+        </button>
+        <a href="index.html" class="text-lg font-bold tracking-tight brand-text" style="color: var(--text);"><span>A</span><span class="f">wesome</span><span class="s">&nbsp;</span><span>C</span><span class="f">rew</span></a>
+      </div>
       <div class="flex items-center gap-3">
         <a href="login.html" class="hidden sm:block text-sm font-medium" style="color: var(--text-sec);">Sign in</a>
         <a href="login.html" class="btn-primary">Get started</a>
