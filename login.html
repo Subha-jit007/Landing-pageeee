@@ -173,6 +173,7 @@
       tabSignup.classList.toggle('active', mode === 'signup');
       btnSubmit.textContent = mode === 'signin' ? 'Sign in' : 'Create account';
       pwdInput.setAttribute('autocomplete', mode === 'signin' ? 'current-password' : 'new-password');
+      document.getElementById('btn-forgot').style.visibility = mode === 'signin' ? 'visible' : 'hidden';
       hideToast();
     }
     tabSignin.addEventListener('click', () => setMode('signin'));

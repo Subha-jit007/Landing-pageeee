@@ -1,22 +1,23 @@
 /* === Awesome Crew — shared theme + logo morph === */
+/* Dark palette: Fence Green #0A332D bg + Macadamia Beige #F7DFB9 foreground */
 
 :root {
   --btn-fg: #ffffff;
 }
 
 [data-theme="dark"] {
-  --bg: #0F0E0B;
-  --grid: #1F1D19;
-  --text: #F5F1E8;
-  --text-sec: #D6D1C5;
-  --text-muted: #9CA096;
-  --container: #24211C;
-  --border: #E6E1D8;
-  --card-green: #2E4A3A;
-  --card-blue: #2C3E4A;
-  --btn-bg: #F5F1E8;
-  --btn-hover: #FFFFFF;
-  --btn-fg: #111827;
+  --bg: #0A332D;
+  --grid: #0E3A33;
+  --text: #F7DFB9;
+  --text-sec: #E0C9A3;
+  --text-muted: #A89779;
+  --container: #0F3D35;
+  --border: #F7DFB9;
+  --card-green: #134F41;
+  --card-blue: #134A52;
+  --btn-bg: #F7DFB9;
+  --btn-hover: #FFEDC9;
+  --btn-fg: #0A332D;
 }
 
 body {
@@ -28,33 +29,35 @@ body {
 
 /* ---- Dark mode overrides for hardcoded inline styles ---- */
 [data-theme="dark"] [style*="rgba(245,241,232,0.85)"] {
-  background: rgba(15,14,11,0.85) !important;
+  background: rgba(10,51,45,0.85) !important;
 }
 [data-theme="dark"] [style*="rgba(245,241,232,0.6)"] {
-  background: rgba(15,14,11,0.6) !important;
+  background: rgba(10,51,45,0.6) !important;
 }
 [data-theme="dark"] [style*="border-color: #E6E1D8"],
 [data-theme="dark"] [style*="border-bottom: 1px solid #E6E1D8"] {
-  border-color: #2A2723 !important;
+  border-color: #134F41 !important;
 }
 [data-theme="dark"] .page-card,
 [data-theme="dark"] .field,
 [data-theme="dark"] .btn-secondary,
 [data-theme="dark"] .chip-muted {
-  background: #1A1814 !important;
+  background: #0F3D35 !important;
 }
 [data-theme="dark"] .field { color: var(--text) !important; }
 [data-theme="dark"] .field::placeholder { color: var(--text-muted) !important; }
-[data-theme="dark"] [style*="background: #fff"] { background: #1A1814 !important; }
-[data-theme="dark"] [style*="rgba(255,255,255,0.5)"] { background: rgba(36,33,28,0.6) !important; }
-[data-theme="dark"] [style*="rgba(255,255,255,0.6)"] { background: rgba(36,33,28,0.7) !important; }
-[data-theme="dark"] [style*="background: rgba(31,41,55,0.08)"] { background: rgba(245,241,232,0.08) !important; }
-[data-theme="dark"] [style*="background: rgba(31,41,55,0.15)"] { background: rgba(245,241,232,0.15) !important; }
-[data-theme="dark"] [style*="color: #14532d"] { color: #86efac !important; }
-[data-theme="dark"] [style*="color: #0c4a6e"] { color: #93c5fd !important; }
+[data-theme="dark"] [style*="background: #fff"] { background: #0F3D35 !important; }
+[data-theme="dark"] [style*="rgba(255,255,255,0.5)"] { background: rgba(15,61,53,0.6) !important; }
+[data-theme="dark"] [style*="rgba(255,255,255,0.6)"] { background: rgba(15,61,53,0.7) !important; }
+[data-theme="dark"] [style*="background: rgba(31,41,55,0.08)"] { background: rgba(247,223,185,0.08) !important; }
+[data-theme="dark"] [style*="background: rgba(31,41,55,0.15)"] { background: rgba(247,223,185,0.15) !important; }
+[data-theme="dark"] [style*="color: #14532d"] { color: #BFE169 !important; }
+[data-theme="dark"] [style*="color: #0c4a6e"] { color: #93D5FD !important; }
 [data-theme="dark"] [style*="color: #7F1D1D"] { color: #FCA5A5 !important; }
-[data-theme="dark"] [style*="background: #FEE2E2"] { background: rgba(220,38,38,0.15) !important; }
+[data-theme="dark"] [style*="background: #FEE2E2"] { background: rgba(220,38,38,0.18) !important; }
 [data-theme="dark"] [style*="background: #CFE3D1"] { background: var(--card-green) !important; }
+[data-theme="dark"] [style*="background: #D6E2E8"] { background: var(--card-blue) !important; }
+[data-theme="dark"] [style*="border-color: rgba(31,41,55"] { border-color: rgba(247,223,185,0.15) !important; }
 
 /* ---- Brand text: "Awesome Crew" → "AC" on dark ---- */
 .brand-text { white-space: nowrap; display: inline-flex; align-items: baseline; }
@@ -72,7 +75,6 @@ body {
 .brand-text .s { max-width: 0.6ch; opacity: 1; }
 [data-theme="dark"] .brand-text .f { max-width: 0; opacity: 0; }
 [data-theme="dark"] .brand-text .s { max-width: 0; opacity: 0; }
-/* Staggered cascade — first word shrinks, then space, then last word */
 .brand-text > :nth-child(2) { transition-delay: 0s; }
 .brand-text > :nth-child(3) { transition-delay: 0.08s; }
 .brand-text > :nth-child(5) { transition-delay: 0.04s; }
