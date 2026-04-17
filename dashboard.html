@@ -1,174 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — PageForge</title>
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" />
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Dashboard — PageForge AI</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --background: #0a0a0a; --surface: #111111; --border: #1f1f1f;
-      --foreground: #fafafa; --muted: #a1a1aa;
-      --primary: #6366f1; --primary-hover: #5558e3; --accent: #8b5cf6;
-    }
-    html { font-family: 'Satoshi', system-ui, sans-serif; background: var(--background); color: var(--foreground); -webkit-font-smoothing: antialiased; }
-    body { min-height: 100vh; background: var(--background); }
-
-    /* Nav */
-    nav {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      background: rgba(10,10,10,0.8); border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 1200px; margin: 0 auto; padding: 14px 24px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
-    .nav-logo-icon {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Clash Display', sans-serif; font-weight: 700; color: #fff; font-size: 14px;
-    }
-    .nav-logo-text { font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: -0.03em; }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
-    .avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 600; color: #fff; overflow: hidden;
-    }
-    .avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .btn-signout {
-      padding: 7px 14px; border-radius: 8px;
-      border: 1px solid var(--border); background: transparent;
-      color: var(--muted); font-family: 'Satoshi', sans-serif; font-size: 13px;
-      cursor: pointer; transition: color 0.15s, border-color 0.15s;
-    }
-    .btn-signout:hover { color: var(--foreground); border-color: #333; }
-
-    /* Main layout */
-    main { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
-
-    .page-header { margin-bottom: 40px; }
-    .greeting { font-family: 'Clash Display', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
-    .greeting-sub { font-size: 14px; color: var(--muted); }
-
-    /* Stats */
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
-    .stat-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px;
-    }
-    .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-    .stat-value { font-family: 'Clash Display', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
-    .stat-value span { font-size: 14px; color: var(--muted); font-family: 'Satoshi', sans-serif; font-weight: 400; }
-
-    /* New page button */
-    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .section-title { font-family: 'Clash Display', sans-serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
-    .btn-new {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 18px; border-radius: 8px; border: none;
-      background: var(--primary); color: #fff;
-      font-family: 'Satoshi', sans-serif; font-size: 14px; font-weight: 600;
-      cursor: pointer; transition: background 0.15s;
-    }
-    .btn-new:hover { background: var(--primary-hover); }
-
-    /* Pages grid */
-    .pages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-
-    .page-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
-      padding: 22px; transition: border-color 0.15s;
-    }
-    .page-card:hover { border-color: #333; }
-    .page-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
-    .page-title { font-family: 'Clash Display', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
-    .badge {
-      padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
-    }
-    .badge-live { background: rgba(74,222,128,0.15); color: #4ade80; }
-    .badge-draft { background: rgba(161,161,170,0.15); color: var(--muted); }
-    .page-slug { font-size: 12px; color: var(--muted); margin-bottom: 16px; font-family: monospace; }
-    .page-date { font-size: 12px; color: var(--muted); }
-    .page-actions { display: flex; gap: 8px; margin-top: 16px; }
-    .btn-sm {
-      flex: 1; padding: 8px; border-radius: 8px; font-size: 13px; font-weight: 500;
-      font-family: 'Satoshi', sans-serif; cursor: pointer; border: 1px solid var(--border);
-      background: transparent; color: var(--muted); transition: color 0.15s, border-color 0.15s;
-    }
-    .btn-sm:hover { color: var(--foreground); border-color: #333; }
-    .btn-sm.danger:hover { color: #f87171; border-color: rgba(248,113,113,0.3); }
-
-    /* Empty state */
-    .empty {
-      grid-column: 1/-1; padding: 64px 24px; text-align: center;
-      border: 1px dashed var(--border); border-radius: 14px;
-    }
-    .empty-icon {
-      width: 56px; height: 56px; border-radius: 14px;
-      background: rgba(99,102,241,0.1); margin: 0 auto 16px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .empty h3 { font-family: 'Clash Display', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 6px; }
-    .empty p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-
-    /* Loading skeleton */
-    .skeleton { animation: pulse 1.5s ease-in-out infinite; background: var(--border); border-radius: 6px; }
+    body { background-color: #09090b; color: #e5e2e1; font-family: 'Manrope', sans-serif; min-height: max(884px, 100dvh); }
+    .font-headline { font-family: 'Space Grotesk', sans-serif; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .skeleton { animation: pulse 1.5s ease-in-out infinite; background: #27272a; border-radius: 6px; }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-zinc-950 text-zinc-300">
 
-  <nav>
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <div class="nav-logo-icon">P</div>
-        <span class="nav-logo-text">PageForge</span>
-      </a>
-      <div class="nav-right">
-        <div class="avatar" id="avatar">?</div>
-        <button class="btn-signout" id="btn-signout">Sign out</button>
+  <!-- Sidebar (desktop) -->
+  <aside class="hidden lg:flex flex-col border-r border-zinc-800 h-full w-72 fixed left-0 top-0 bg-zinc-950 z-40">
+    <div class="px-6 py-8">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-indigo-400 text-2xl">auto_awesome</span>
+        <span class="text-2xl font-black text-zinc-100 font-headline tracking-tighter">PageForge AI</span>
       </div>
+    </div>
+    <nav class="flex flex-col gap-1 px-4">
+      <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-indigo-300 bg-zinc-900 font-bold transition-all">
+        <span class="material-symbols-outlined">architecture</span>
+        <span class="font-headline font-medium text-sm">Projects</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200 transition-all">
+        <span class="material-symbols-outlined">layers</span>
+        <span class="font-headline font-medium text-sm">Templates</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200 transition-all">
+        <span class="material-symbols-outlined">science</span>
+        <span class="font-headline font-medium text-sm">AI Lab</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200 transition-all">
+        <span class="material-symbols-outlined">payments</span>
+        <span class="font-headline font-medium text-sm">Billing</span>
+      </a>
+    </nav>
+    <div class="mt-auto p-6 border-t border-zinc-800/50">
+      <div class="flex items-center gap-3">
+        <div id="sidebar-avatar" class="w-8 h-8 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 text-sm font-bold overflow-hidden">?</div>
+        <div class="flex flex-col min-w-0">
+          <span id="sidebar-name" class="font-label text-xs font-bold text-zinc-200 truncate">Loading…</span>
+          <button id="sidebar-signout" class="text-[11px] text-zinc-500 hover:text-zinc-300 transition-colors text-left">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="lg:ml-72 min-h-screen pb-24 lg:pb-12 pt-24">
+
+    <!-- Top bar -->
+    <header class="fixed top-0 w-full lg:w-[calc(100%-18rem)] z-50 bg-zinc-950/70 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] bg-gradient-to-b from-zinc-800/10 to-transparent">
+      <div class="flex items-center justify-between px-6 h-20 w-full max-w-screen-2xl mx-auto">
+        <h1 class="font-headline text-xl font-bold tracking-tighter text-zinc-100">My Projects</h1>
+        <div class="flex items-center gap-4">
+          <button id="btn-new" class="hidden md:flex items-center gap-2 px-5 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 font-medium rounded-lg transition-colors">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span class="text-sm font-headline">New Page</span>
+          </button>
+          <div id="topbar-avatar" class="w-8 h-8 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 text-sm font-bold overflow-hidden">?</div>
+          <button id="topbar-signout" class="lg:hidden text-zinc-500 hover:text-zinc-200 transition-colors text-xs font-headline border border-zinc-800 px-3 py-1 rounded-lg">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 pt-4">
+
+      <!-- Usage banner -->
+      <section class="mb-12">
+        <div class="bg-zinc-900/50 p-6 rounded-xl border border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="flex flex-col gap-2">
+            <h2 class="font-headline font-semibold text-sm text-zinc-200">Current Capacity</h2>
+            <p id="usage-text" class="text-zinc-500 text-xs">Loading usage…</p>
+            <div class="w-full md:w-64 h-1 bg-zinc-800 rounded-full mt-2 overflow-hidden">
+              <div id="usage-bar" class="h-full bg-indigo-400/80 rounded-full transition-all" style="width:0%"></div>
+            </div>
+          </div>
+          <a href="#" class="flex items-center gap-2 text-indigo-400/80 text-sm font-medium hover:text-indigo-300 transition-colors">
+            <span>Upgrade to Pro</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Project grid -->
+      <section class="mb-20">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-headline text-sm font-bold text-zinc-500 uppercase tracking-widest">Active Foundations</h3>
+          <div class="flex gap-2">
+            <button class="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-md transition-colors">
+              <span class="material-symbols-outlined text-lg">search</span>
+            </button>
+            <button class="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-md transition-colors">
+              <span class="material-symbols-outlined text-lg">filter_list</span>
+            </button>
+          </div>
+        </div>
+        <div id="pages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- filled by JS -->
+        </div>
+      </section>
+
+      <!-- Empty state (shown when no pages and not loading) -->
+      <section id="empty-state" class="hidden mt-24 mb-20 text-center max-w-xl mx-auto">
+        <div class="w-16 h-16 mx-auto bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-center mb-6">
+          <span class="material-symbols-outlined text-2xl text-zinc-500">add_box</span>
+        </div>
+        <h3 class="font-headline text-xl font-bold mb-3 text-zinc-200">Sculpt a New Vision</h3>
+        <p class="text-zinc-500 text-sm mb-8">Start from a blank slate or use our AI to forge a landing page that captures attention.</p>
+        <button onclick="newPage()" class="inline-flex items-center gap-2 px-6 py-2.5 bg-zinc-100 text-zinc-900 text-sm font-semibold rounded-lg hover:bg-white transition-colors">
+          <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+          Forge First Page
+        </button>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full py-12 bg-zinc-950 border-t border-zinc-900 mt-20">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-8 items-center">
+        <div class="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
+          <span class="font-headline text-lg font-bold text-zinc-300">PageForge AI</span>
+          <p class="font-body text-xs text-zinc-600">© <span id="year"></span> PageForge AI. Minimal focus.</p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-6 text-xs font-label">
+          <a class="text-zinc-600 hover:text-zinc-300 transition-colors" href="#">Documentation</a>
+          <a class="text-zinc-600 hover:text-zinc-300 transition-colors" href="#">Privacy</a>
+          <a class="text-zinc-600 hover:text-zinc-300 transition-colors" href="#">Changelog</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Mobile bottom nav -->
+  <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-zinc-950/80 backdrop-blur-xl border-t border-zinc-800/50 rounded-t-2xl px-4 pb-6 pt-2 flex justify-around items-center">
+    <div class="flex flex-col items-center gap-1 text-indigo-300 bg-indigo-500/10 rounded-xl px-4 py-2">
+      <span class="material-symbols-outlined text-xl">architecture</span>
+      <span class="font-body text-[10px] uppercase tracking-widest">Projects</span>
+    </div>
+    <div class="flex flex-col items-center gap-1 text-zinc-500 rounded-xl px-4 py-2">
+      <span class="material-symbols-outlined text-xl">layers</span>
+      <span class="font-body text-[10px] uppercase tracking-widest">Templates</span>
+    </div>
+    <button id="mobile-new" class="flex flex-col items-center gap-1 text-zinc-500 rounded-xl px-4 py-2">
+      <span class="material-symbols-outlined text-xl">add_circle</span>
+      <span class="font-body text-[10px] uppercase tracking-widest">New</span>
+    </button>
+    <div class="flex flex-col items-center gap-1 text-zinc-500 rounded-xl px-4 py-2">
+      <span class="material-symbols-outlined text-xl">settings</span>
+      <span class="font-body text-[10px] uppercase tracking-widest">Settings</span>
     </div>
   </nav>
-
-  <main>
-    <div class="page-header">
-      <h1 class="greeting" id="greeting">Loading…</h1>
-      <p class="greeting-sub">Here's what you've built so far.</p>
-    </div>
-
-    <div class="stats">
-      <div class="stat-card">
-        <p class="stat-label">Total pages</p>
-        <p class="stat-value" id="stat-total">—</p>
-      </div>
-      <div class="stat-card">
-        <p class="stat-label">Published</p>
-        <p class="stat-value" id="stat-published">—</p>
-      </div>
-      <div class="stat-card">
-        <p class="stat-label">Plan</p>
-        <p class="stat-value" id="stat-plan">— <span>/ free</span></p>
-      </div>
-    </div>
-
-    <div class="section-header">
-      <h2 class="section-title">Your pages</h2>
-      <button class="btn-new" id="btn-new">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-        New page
-      </button>
-    </div>
-
-    <div class="pages-grid" id="pages-grid">
-      <!-- filled by JS -->
-    </div>
-  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
@@ -178,25 +167,30 @@
     const { createClient } = supabase;
     const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
+    document.getElementById('year').textContent = new Date().getFullYear();
+
     async function init() {
       const { data: { session } } = await sb.auth.getSession();
       if (!session) { window.location.href = 'login.html'; return; }
 
       const user = session.user;
-      const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'there';
+      const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Creator';
+      const initial = name[0].toUpperCase();
+      const avatar = user.user_metadata?.avatar_url;
 
-      // Greeting
-      document.getElementById('greeting').textContent = 'Hey, ' + name.split(' ')[0] + ' 👋';
+      // Set avatars
+      ['sidebar-avatar', 'topbar-avatar'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (avatar) el.innerHTML = `<img src="${avatar}" class="w-full h-full object-cover" alt="avatar"/>`;
+          else el.textContent = initial;
+        }
+      });
 
-      // Avatar
-      const avatarEl = document.getElementById('avatar');
-      if (user.user_metadata?.avatar_url) {
-        avatarEl.innerHTML = `<img src="${user.user_metadata.avatar_url}" alt="avatar" />`;
-      } else {
-        avatarEl.textContent = name[0].toUpperCase();
-      }
+      const sidebarName = document.getElementById('sidebar-name');
+      if (sidebarName) sidebarName.textContent = name;
 
-      // Load profile + pages in parallel
+      // Load data
       const [profileRes, pagesRes] = await Promise.all([
         sb.from('profiles').select('plan, pages_count').eq('id', user.id).single(),
         sb.from('pages').select('*').order('created_at', { ascending: false })
@@ -204,56 +198,60 @@
 
       const plan = profileRes.data?.plan || 'free';
       const pages = pagesRes.data || [];
+      const maxGen = plan === 'free' ? 3 : plan === 'starter' ? 20 : 999;
+      const used = Math.min(pages.length, maxGen);
 
-      // Stats
-      document.getElementById('stat-total').textContent = pages.length;
-      document.getElementById('stat-published').textContent = pages.filter(p => p.published).length;
-      document.getElementById('stat-plan').innerHTML = plan.charAt(0).toUpperCase() + plan.slice(1) + ' <span>plan</span>';
+      document.getElementById('usage-text').textContent = `${used}/${maxGen === 999 ? '∞' : maxGen} generations used this month · Plan: ${plan.charAt(0).toUpperCase() + plan.slice(1)}`;
+      document.getElementById('usage-bar').style.width = maxGen === 999 ? '20%' : `${Math.round((used / maxGen) * 100)}%`;
 
-      // Pages grid
       renderPages(pages);
+    }
+
+    function escHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
     function renderPages(pages) {
       const grid = document.getElementById('pages-grid');
+      const empty = document.getElementById('empty-state');
+
       if (pages.length === 0) {
-        grid.innerHTML = `
-          <div class="empty">
-            <div class="empty-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-            </div>
-            <h3>No pages yet</h3>
-            <p>Generate your first landing page in ten seconds.</p>
-            <button class="btn-new" onclick="newPage()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-              Create my first page
-            </button>
-          </div>`;
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
         return;
       }
+      empty.classList.add('hidden');
       grid.innerHTML = pages.map(page => `
-        <div class="page-card">
-          <div class="page-card-header">
-            <h3 class="page-title">${escHtml(page.title)}</h3>
-            <span class="badge ${page.published ? 'badge-live' : 'badge-draft'}">${page.published ? 'Live' : 'Draft'}</span>
+        <div class="group bg-zinc-900/30 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors duration-200 flex flex-col cursor-pointer">
+          <div class="h-48 relative overflow-hidden bg-zinc-900 flex items-center justify-center">
+            <span class="material-symbols-outlined text-5xl text-zinc-700">web</span>
+            <div class="absolute top-3 right-3 bg-zinc-950/90 px-2.5 py-1 rounded-md border border-zinc-800">
+              <span class="text-[9px] font-bold ${page.published ? 'text-zinc-300' : 'text-zinc-500'} uppercase tracking-widest">${page.published ? 'Published' : 'Draft'}</span>
+            </div>
           </div>
-          <p class="page-slug">/${escHtml(page.slug)}</p>
-          <p class="page-date">${new Date(page.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
-          <div class="page-actions">
-            <button class="btn-sm" onclick="editPage('${page.id}')">Edit</button>
-            <button class="btn-sm" onclick="togglePublish('${page.id}', ${page.published})">${page.published ? 'Unpublish' : 'Publish'}</button>
-            <button class="btn-sm danger" onclick="deletePage('${page.id}')">Delete</button>
+          <div class="p-5 flex flex-col flex-grow">
+            <h4 class="font-headline text-base font-semibold mb-1 text-zinc-200 group-hover:text-indigo-300 transition-colors">${escHtml(page.title)}</h4>
+            <p class="text-zinc-500 text-xs mb-6 font-mono">/${escHtml(page.slug)}</p>
+            <div class="mt-auto flex items-center justify-between">
+              <span class="text-zinc-600 text-[11px]">${new Date(page.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              <div class="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <button onclick="editPage('${page.id}')" title="Edit">
+                  <span class="material-symbols-outlined text-sm text-zinc-500 hover:text-zinc-200 transition-colors">edit</span>
+                </button>
+                <button onclick="togglePublish('${page.id}', ${page.published})" title="${page.published ? 'Unpublish' : 'Publish'}">
+                  <span class="material-symbols-outlined text-sm text-zinc-500 hover:text-indigo-400 transition-colors">${page.published ? 'cloud_off' : 'cloud_upload'}</span>
+                </button>
+                <button onclick="deletePage('${page.id}')" title="Delete">
+                  <span class="material-symbols-outlined text-sm text-zinc-500 hover:text-red-400 transition-colors">delete</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>`).join('');
     }
 
-    function escHtml(str) {
-      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
-    function newPage() {
-      alert('Page builder coming soon!');
-    }
+    function newPage() { alert('Page builder coming soon!'); }
+    function editPage(id) { alert('Editor coming soon! Page ID: ' + id); }
 
     async function togglePublish(id, current) {
       await sb.from('pages').update({ published: !current }).eq('id', id);
@@ -266,16 +264,20 @@
       init();
     }
 
-    function editPage(id) {
-      alert('Editor coming soon! Page ID: ' + id);
-    }
-
-    document.getElementById('btn-signout').addEventListener('click', async () => {
+    async function signOut() {
       await sb.auth.signOut();
       window.location.href = 'index.html';
+    }
+
+    ['sidebar-signout', 'topbar-signout'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', signOut);
     });
 
-    document.getElementById('btn-new').addEventListener('click', newPage);
+    ['btn-new', 'mobile-new'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', newPage);
+    });
 
     init();
   </script>
