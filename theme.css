@@ -7,7 +7,7 @@
 
 [data-theme="dark"] {
   --bg: #0A332D;
-  --grid: #0E3A33;
+  --grid: #1A4A3F;
   --text: #F7DFB9;
   --text-sec: #E0C9A3;
   --text-muted: #A89779;
@@ -58,6 +58,16 @@ body {
 [data-theme="dark"] [style*="background: #CFE3D1"] { background: var(--card-green) !important; }
 [data-theme="dark"] [style*="background: #D6E2E8"] { background: var(--card-blue) !important; }
 [data-theme="dark"] [style*="border-color: rgba(31,41,55"] { border-color: rgba(247,223,185,0.15) !important; }
+
+/* Class-scoped overrides for styles declared inside page <style> blocks */
+[data-theme="dark"] .tab-btn.active { background: #134F41 !important; color: var(--text) !important; }
+[data-theme="dark"] .tag-improve { background: #134F41 !important; color: var(--text) !important; }
+[data-theme="dark"] .chip-green { color: #BFE169 !important; }
+[data-theme="dark"] .tag-new { color: #BFE169 !important; }
+[data-theme="dark"] .tag-fix { color: #93D5FD !important; }
+[data-theme="dark"] .brand-text { color: var(--text) !important; }
+[data-theme="dark"] hr { border-color: rgba(247,223,185,0.15) !important; }
+[data-theme="dark"] code { background: rgba(247,223,185,0.1) !important; color: var(--text) !important; }
 
 /* ---- Brand text: "Awesome Crew" → "AC" on dark ---- */
 .brand-text { white-space: nowrap; display: inline-flex; align-items: baseline; }
