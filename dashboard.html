@@ -96,6 +96,7 @@
         <a href="index.html" class="text-lg font-bold tracking-tight brand-text" style="color: var(--text);"><span>A</span><span class="f">wesome</span><span class="s">&nbsp;</span><span>C</span><span class="f">rew</span></a>
       </div>
       <div class="flex items-center gap-3">
+        <a href="templates.html" class="btn-secondary hidden sm:inline-flex">Templates</a>
         <div id="user-chip" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full card-border" style="background: #fff;">
           <div id="avatar" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold overflow-hidden" style="background: var(--card-green); color: var(--text);">?</div>
           <span id="user-name" class="text-xs font-semibold" style="color: var(--text);">Loading…</span>
@@ -270,8 +271,8 @@
         </div>`).join('');
     }
 
-    function newPage() { alert('Page builder coming soon!'); }
-    function editPage(id) { alert('Editor coming soon! Page ID: ' + id); }
+    function newPage() { window.location.href = 'generate.html'; }
+    function editPage(id) { window.location.href = 'generate.html?id=' + encodeURIComponent(id); }
 
     async function togglePublish(id, current) {
       await sb.from('pages').update({ published: !current }).eq('id', id);

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Templates — Awesome Crew</title>
+  <meta name="description" content="Curated open-source landing page templates. Browse by category and use as a starting point for AI generation."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="theme.css" rel="stylesheet"/>
+  <script>if(localStorage.getItem('ac-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
+  <script src="theme.js" defer></script>
+  <style>
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary {
+      background: var(--btn-bg); color: #fff;
+      border-radius: 10px; padding: 8px 14px;
+      font-weight: 600; font-size: 12px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--btn-hover); transform: translateY(-1px); }
+    .btn-secondary {
+      background: #fff; color: var(--text);
+      border: 2px solid var(--border); border-radius: 10px;
+      padding: 6px 12px; font-weight: 600; font-size: 12px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: rgba(31,41,55,0.06); }
+    .tpl-card {
+      background: #fff; border-radius: 16px; border: 2px solid var(--border);
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .tpl-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+    .tpl-thumb {
+      height: 140px; display: flex; align-items: center; justify-content: center;
+      border-bottom: 2px solid var(--border); font-size: 48px; font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .cat-pill {
+      padding: 6px 14px; font-weight: 600; font-size: 12px;
+      border: 2px solid var(--border); border-radius: 999px; background: #fff;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .cat-pill.active { background: #111827; color: #fff; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: 999px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.04em; border: 1.5px solid var(--border);
+      background: var(--card-green); color: #14532d;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button type="button" class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+          <svg class="logo-light" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="currentColor"/>
+            <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+          </svg>
+          <svg class="logo-dark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 8 15 L 28 15 A 15 15 0 0 1 28 45 L 8 45 Z" fill="currentColor"/>
+            <rect x="42" y="15" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 8 55 L 28 55 A 15 15 0 0 1 28 85 L 8 85 Z" fill="#CFE3D1"/>
+            <rect x="42" y="55" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+          </svg>
+        </button>
+        <a href="index.html" class="text-lg font-bold tracking-tight brand-text" style="color: var(--text);"><span>A</span><span class="f">wesome</span><span class="s">&nbsp;</span><span>C</span><span class="f">rew</span></a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="dashboard.html" class="btn-secondary" style="font-size: 13px; padding: 8px 14px;">Dashboard</a>
+        <a href="generate.html" class="btn-primary" style="font-size: 13px; padding: 10px 18px;">New page</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-12 pb-24">
+
+    <div class="mb-6">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Open-source templates</h1>
+      <p class="text-sm mt-2" style="color: var(--text-muted);">Hand-picked starting points from GitHub. Pick one, click "Use as seed," and the generator will tailor it to your brand.</p>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-8" id="categories">
+      <button class="cat-pill active" data-cat="all">All</button>
+      <button class="cat-pill" data-cat="saas">SaaS</button>
+      <button class="cat-pill" data-cat="services">Services</button>
+      <button class="cat-pill" data-cat="portfolio">Portfolios</button>
+      <button class="cat-pill" data-cat="ecommerce">E-commerce</button>
+      <button class="cat-pill" data-cat="startup">Startup</button>
+      <button class="cat-pill" data-cat="personal">Personal</button>
+    </div>
+
+    <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+  </main>
+
+  <footer class="border-t mt-12" style="border-color: #E6E1D8; background: rgba(245,241,232,0.6);">
+    <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-4 items-center">
+      <p class="text-xs" style="color: var(--text-muted);">© <span id="year"></span> Awesome Crew. Templates are linked to their original repositories — all credit to the authors.</p>
+      <div class="flex flex-wrap gap-6 text-xs">
+        <a href="dashboard.html" class="hover:underline" style="color: var(--text-sec);">Dashboard</a>
+        <a href="docs.html" class="hover:underline" style="color: var(--text-sec);">Docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Curated list. Each item: name, category, repo (GitHub), author, blurb, accent (card color), seed (generator prompt).
+    const TEMPLATES = [
+      // SaaS
+      { name: 'Spotlight',         cat: 'saas',      repo: 'https://github.com/tailwindlabs/tailwindcss.com',                 author: 'Tailwind Labs', blurb: 'Reference marketing layout from the Tailwind team.',   accent: '#CFE3D1', seed: 'Modern SaaS tool, clean tailwind style, feature grid + pricing' },
+      { name: 'Cruip Simple',      cat: 'saas',      repo: 'https://github.com/cruip/open-react-template',                   author: 'Cruip',         blurb: 'React landing template with hero, features, testimonials.', accent: '#D6E2E8', seed: 'SaaS landing for a productivity app, blue gradient, minimal' },
+      { name: 'Precedent',         cat: 'saas',      repo: 'https://github.com/steven-tey/precedent',                        author: 'Steven Tey',    blurb: 'Next.js starter with auth + marketing page.',           accent: '#CFE3D1', seed: 'Developer-focused SaaS, dark hero with code preview' },
+      { name: 'Nextjs-Saas-Starter', cat: 'saas',    repo: 'https://github.com/leerob/next-saas-starter',                    author: 'Lee Rob',       blurb: 'Subscription SaaS with Stripe + Postgres.',             accent: '#D6E2E8', seed: 'Subscription analytics SaaS, bold headline, bento grid features' },
+      { name: 'Taxonomy',          cat: 'saas',      repo: 'https://github.com/shadcn-ui/taxonomy',                          author: 'shadcn',        blurb: 'Full-stack SaaS with shadcn/ui components.',            accent: '#CFE3D1', seed: 'Content platform SaaS, minimal typography-first design' },
+      { name: 'Novel',             cat: 'saas',      repo: 'https://github.com/steven-tey/novel',                            author: 'Steven Tey',    blurb: 'Notion-style WYSIWYG editor landing.',                  accent: '#D6E2E8', seed: 'AI writing SaaS, clean off-white with one accent color' },
+      { name: 'Shipixen',          cat: 'saas',      repo: 'https://github.com/Shipixen/shipixen-boilerplate',               author: 'Shipixen',      blurb: 'Launch-ready Next.js marketing site.',                  accent: '#CFE3D1', seed: 'Indie hacker SaaS launch page, bold headline + bento features' },
+      { name: 'Astro SaaS',        cat: 'saas',      repo: 'https://github.com/onwidget/astrowind',                          author: 'onWidget',      blurb: 'AstroWind — free Astro + Tailwind starter.',            accent: '#D6E2E8', seed: 'B2B SaaS platform, professional navy, feature tabs' },
+      { name: 'SaasKit',           cat: 'saas',      repo: 'https://github.com/denoland/saaskit',                            author: 'Deno',          blurb: 'Modern SaaS template from the Deno team.',              accent: '#CFE3D1', seed: 'API-first SaaS, terminal-inspired dark hero' },
+      { name: 'Platforms',         cat: 'saas',      repo: 'https://github.com/vercel/platforms',                            author: 'Vercel',        blurb: 'Multi-tenant SaaS platform starter.',                   accent: '#D6E2E8', seed: 'White-label platform SaaS, flexible brandable hero' },
+
+      // Services
+      { name: 'Stisla',            cat: 'services',  repo: 'https://github.com/stisla/stisla',                               author: 'Stisla',        blurb: 'Free multipurpose admin + landing template.',           accent: '#CFE3D1', seed: 'Agency services site, friendly hero + process timeline' },
+      { name: 'HTML5 UP Dimension',cat: 'services',  repo: 'https://github.com/html5up-for-github/dimension',                author: 'HTML5 UP',      blurb: 'Free one-page template with overlay cards.',            accent: '#D6E2E8', seed: 'Consultancy services, refined dark one-page' },
+      { name: 'Start Bootstrap Agency', cat: 'services', repo: 'https://github.com/StartBootstrap/startbootstrap-agency',    author: 'StartBootstrap',blurb: 'Classic agency landing page theme.',                    accent: '#CFE3D1', seed: 'Creative agency, bold colorful hero, team grid' },
+      { name: 'Tailwind Awesome',  cat: 'services',  repo: 'https://github.com/tailwindawesome/tailwindawesome',             author: 'TailwindAwesome', blurb: 'Directory of tailwind service templates.',            accent: '#D6E2E8', seed: 'Freelance consultant landing, earthy tones, case-study grid' },
+      { name: 'Creative Tim Argon',cat: 'services',  repo: 'https://github.com/creativetimofficial/argon-design-system',    author: 'Creative Tim',  blurb: 'Argon design system with service landing.',             accent: '#CFE3D1', seed: 'Marketing services, soft gradient hero, process 3-up' },
+      { name: 'Landwind',          cat: 'services',  repo: 'https://github.com/themesberg/landwind',                         author: 'Themesberg',    blurb: 'Free tailwind landing with services layout.',           accent: '#D6E2E8', seed: 'Professional services firm, confident minimal layout' },
+      { name: 'Astro Portfolio',   cat: 'services',  repo: 'https://github.com/withastro/astro/tree/main/examples/portfolio',author: 'Astro',         blurb: 'Astro official portfolio/services starter.',            accent: '#CFE3D1', seed: 'Boutique service studio, warm beige + black' },
+      { name: 'Tailblocks',        cat: 'services',  repo: 'https://github.com/mertJF/tailblocks',                           author: 'Mert F.',       blurb: 'Copy-paste tailwind section library.',                  accent: '#D6E2E8', seed: 'Service offering landing, assembled from typographic blocks' },
+      { name: 'Sivan Theme',       cat: 'services',  repo: 'https://github.com/sivan/heti',                                   author: 'Sivan',         blurb: 'Typography-focused service-style landing.',             accent: '#CFE3D1', seed: 'Writing / editorial services, literary typographic layout' },
+      { name: 'Float UI',          cat: 'services',  repo: 'https://github.com/floatui/floatui',                              author: 'FloatUI',       blurb: 'Free tailwind marketing components.',                   accent: '#D6E2E8', seed: 'Local service business, friendly bright layout' },
+
+      // Portfolio
+      { name: 'Brittany Chiang',   cat: 'portfolio', repo: 'https://github.com/bchiang7/v4',                                 author: 'Brittany Chiang',blurb: 'The classic developer portfolio template.',             accent: '#CFE3D1', seed: 'Developer portfolio, dark navy + neon mint, work grid' },
+      { name: 'Astro Resume',      cat: 'portfolio', repo: 'https://github.com/chrismwilliams/astro-theme-cactus',           author: 'Chris Williams',blurb: 'Minimal Astro portfolio / blog theme.',                 accent: '#D6E2E8', seed: 'Personal portfolio, serif headlines, warm cream' },
+      { name: 'Nextfolio',         cat: 'portfolio', repo: 'https://github.com/1msirius/Nextfolio',                          author: '1msirius',      blurb: 'Minimal Next.js portfolio.',                            accent: '#CFE3D1', seed: 'Minimalist designer portfolio, black and white, editorial' },
+      { name: 'Portfolio Astro',   cat: 'portfolio', repo: 'https://github.com/midudev/aprendiendo-astro',                   author: 'midudev',       blurb: 'Astro portfolio demo from midudev.',                    accent: '#D6E2E8', seed: 'Full-stack engineer portfolio, playful retro palette' },
+      { name: 'Enji.dev',          cat: 'portfolio', repo: 'https://github.com/mhdcodes/enji.dev',                           author: 'mhdcodes',      blurb: 'Blog + portfolio with reading progress.',               accent: '#CFE3D1', seed: 'Tech blogger portfolio, warm serif + long-form' },
+      { name: 'Lee Robinson',      cat: 'portfolio', repo: 'https://github.com/leerob/leerob.io',                            author: 'Lee Rob',       blurb: 'Popular minimal Next.js portfolio.',                    accent: '#D6E2E8', seed: 'Writer / engineer personal site, editorial mono-font' },
+      { name: 'Delba.dev',         cat: 'portfolio', repo: 'https://github.com/delbaoliveira/website',                       author: 'Delba Oliveira',blurb: 'Clean personal site with MDX.',                         accent: '#CFE3D1', seed: 'Creator portfolio, off-white with single highlight color' },
+      { name: 'Devii',             cat: 'portfolio', repo: 'https://github.com/jakemackie/devii',                             author: 'jakemackie',    blurb: 'Blog-first developer portfolio.',                       accent: '#D6E2E8', seed: 'Writing-first portfolio, reader-friendly typography' },
+      { name: 'Astro Portfolio Blog', cat: 'portfolio', repo: 'https://github.com/chrismwilliams/astro-portfolio-blog',      author: 'Chris Williams',blurb: 'Paper-inspired portfolio-blog theme.',                  accent: '#CFE3D1', seed: 'Minimal paper-like portfolio, subtle grid' },
+      { name: 'Morphic Portfolio', cat: 'portfolio', repo: 'https://github.com/miickel/tailwind-starter-ui',                 author: 'Mickel',        blurb: 'Tailwind-based portfolio starter.',                     accent: '#D6E2E8', seed: 'Visual designer portfolio, bold color blocks' },
+
+      // E-commerce
+      { name: 'Medusa Nextjs',     cat: 'ecommerce', repo: 'https://github.com/medusajs/nextjs-starter-medusa',              author: 'Medusa',        blurb: 'Headless commerce Next.js starter.',                    accent: '#CFE3D1', seed: 'Modern fashion store, minimal editorial product grid' },
+      { name: 'Commerce',          cat: 'ecommerce', repo: 'https://github.com/vercel/commerce',                             author: 'Vercel',        blurb: 'Vercel Commerce — headless e-commerce.',                accent: '#D6E2E8', seed: 'Direct-to-consumer brand, clean product-first storefront' },
+      { name: 'NextJS Commerce Shopify', cat: 'ecommerce', repo: 'https://github.com/vercel/commerce/tree/main/templates/shopify', author: 'Vercel', blurb: 'Shopify variant of Vercel Commerce.',            accent: '#CFE3D1', seed: 'Shopify store front, big product photography, neutral' },
+      { name: 'Snipcart Tailwind', cat: 'ecommerce', repo: 'https://github.com/snipcart/snipcart-tailwindcss',               author: 'Snipcart',      blurb: 'Snipcart + Tailwind e-commerce starter.',               accent: '#D6E2E8', seed: 'Small batch maker store, artisanal warm aesthetic' },
+      { name: 'Shoppy',            cat: 'ecommerce', repo: 'https://github.com/rgrzechocinski/shoppy',                       author: 'rgrz',          blurb: 'Lightweight shop landing template.',                    accent: '#CFE3D1', seed: 'Boutique shop landing, product carousel hero' },
+      { name: 'Saleor Storefront', cat: 'ecommerce', repo: 'https://github.com/saleor/storefront',                           author: 'Saleor',        blurb: 'Headless storefront in Next.js.',                       accent: '#D6E2E8', seed: 'Modern B2B marketplace, dense product grid' },
+      { name: 'Tailwind Ecommerce',cat: 'ecommerce', repo: 'https://github.com/tailwindlabs/headlessui',                     author: 'Tailwind Labs', blurb: 'Headless UI patterns for store UI.',                    accent: '#CFE3D1', seed: 'Accessories shop, colorful tailwind design' },
+      { name: 'Nx Shopify',        cat: 'ecommerce', repo: 'https://github.com/trulymittal/shopify-next-storefront',         author: 'trulymittal',   blurb: 'Shopify Next.js storefront example.',                   accent: '#D6E2E8', seed: 'Tech gadget store, dark product-first layout' },
+      { name: 'Nuxt Ecommerce',    cat: 'ecommerce', repo: 'https://github.com/nuxt-modules/shopify',                        author: 'Nuxt Modules',  blurb: 'Nuxt + Shopify module starter.',                        accent: '#CFE3D1', seed: 'Outdoor gear store, adventurous earthy palette' },
+      { name: 'Astro Storefront',  cat: 'ecommerce', repo: 'https://github.com/withastro/astro/tree/main/examples/ecommerce',author: 'Astro',         blurb: 'Official Astro e-commerce example.',                    accent: '#D6E2E8', seed: 'Homeware store, soft muted palette, lifestyle photos' },
+
+      // Startup
+      { name: 'Tailwind Connect',  cat: 'startup',   repo: 'https://github.com/tailwindlabs/tailwindcss-intellisense',       author: 'Tailwind Labs', blurb: 'Inspired by Tailwind Connect launch page.',             accent: '#CFE3D1', seed: 'Startup launch page, countdown hero, bold gradient' },
+      { name: 'Rocket Landing',    cat: 'startup',   repo: 'https://github.com/Shaddyjr/rocket',                              author: 'Shaddy',        blurb: 'Y Combinator-style startup template.',                   accent: '#D6E2E8', seed: 'YC-style startup, simple single-column, confident copy' },
+      { name: 'Launch UI',         cat: 'startup',   repo: 'https://github.com/mikolajdobrucki/launchui',                    author: 'mikolajdobrucki',blurb: 'Launch-day landing template with waitlist.',             accent: '#CFE3D1', seed: 'Pre-launch waitlist page, hype minimalism, one CTA' },
+      { name: 'Waitlist',          cat: 'startup',   repo: 'https://github.com/resend/waitlist',                             author: 'Resend',        blurb: 'Resend waitlist template with email capture.',           accent: '#D6E2E8', seed: 'Developer tool waitlist, terminal vibe, subscribe CTA' },
+      { name: 'Creem Launch',      cat: 'startup',   repo: 'https://github.com/creem-app/creem-landing',                     author: 'Creem',         blurb: 'Modern product launch page.',                            accent: '#CFE3D1', seed: 'Bold product launch, oversized hero + screenshots' },
+      { name: 'Startup Next',      cat: 'startup',   repo: 'https://github.com/zenorocha/startup',                            author: 'zenorocha',     blurb: 'Generic startup marketing page.',                        accent: '#D6E2E8', seed: 'Seed-stage startup, investor-ready professional' },
+      { name: 'Astro Landing',     cat: 'startup',   repo: 'https://github.com/onwidget/astrowind',                          author: 'onWidget',      blurb: 'Astrowind startup landing variant.',                     accent: '#CFE3D1', seed: 'Green-tech startup, eco palette, hero video placeholder' },
+      { name: 'Once UI',           cat: 'startup',   repo: 'https://github.com/once-ui-system/nextjs-starter',               author: 'Once UI',       blurb: 'Beautiful portfolio + startup starter.',                 accent: '#D6E2E8', seed: 'Design startup, artistic typography + motion feel' },
+      { name: 'Framer-style Hero', cat: 'startup',   repo: 'https://github.com/daveyplate/nextui-landing',                   author: 'daveyplate',    blurb: 'Framer-inspired NextUI landing.',                        accent: '#CFE3D1', seed: 'Design-tool startup, Framer-style glassy hero' },
+      { name: 'Plain Next',        cat: 'startup',   repo: 'https://github.com/plainorg/plain',                              author: 'Plain',         blurb: 'Opinionated startup + marketing pages.',                 accent: '#D6E2E8', seed: 'B2B startup, black-and-white editorial design' },
+
+      // Personal
+      { name: 'Personal Next',     cat: 'personal',  repo: 'https://github.com/morethanmin/morethan-log',                    author: 'morethanmin',   blurb: 'Notion-powered personal blog + home.',                    accent: '#CFE3D1', seed: 'Writer personal site, Notion-inspired clean home' },
+      { name: 'Kaku',              cat: 'personal',  repo: 'https://github.com/kkomelin/kaku',                                author: 'kkomelin',      blurb: 'Minimal personal Astro theme.',                           accent: '#D6E2E8', seed: 'Personal one-pager, very minimal, single column' },
+      { name: 'Astro Paper',       cat: 'personal',  repo: 'https://github.com/satnaing/astro-paper',                        author: 'Sat Naing',     blurb: 'Astro Paper — minimal personal + blog.',                  accent: '#CFE3D1', seed: 'Personal blog home, paper aesthetic, serif' },
+      { name: 'Hugo Terminal',     cat: 'personal',  repo: 'https://github.com/panr/hugo-theme-terminal',                    author: 'panr',          blurb: 'Terminal-inspired Hugo personal theme.',                  accent: '#D6E2E8', seed: 'Dev personal page, terminal green-on-black aesthetic' },
+      { name: 'Simply Personal',   cat: 'personal',  repo: 'https://github.com/rafaelmardojai/simple.css',                   author: 'rafaelmardojai', blurb: 'Classless CSS for personal sites.',                      accent: '#CFE3D1', seed: 'Classless simple personal page, minimal markup' },
+      { name: 'Hugo PaperMod',     cat: 'personal',  repo: 'https://github.com/adityatelange/hugo-PaperMod',                 author: 'adityatelange', blurb: 'Clean Hugo personal / blog theme.',                       accent: '#D6E2E8', seed: 'Thought-leader personal site, light serif + blog' },
+      { name: 'Taylor.town',       cat: 'personal',  repo: 'https://github.com/surprisetalk/taylor.town',                    author: 'surprisetalk',  blurb: 'Playful personal site inspiration.',                      accent: '#CFE3D1', seed: 'Quirky personal homepage, handwritten vibe' },
+      { name: 'Kepano',            cat: 'personal',  repo: 'https://github.com/kepano/defuddle',                              author: 'kepano',        blurb: 'Ideas and tools site.',                                   accent: '#D6E2E8', seed: 'Ideas personal site, calm tan background, reading focus' },
+      { name: 'Tiny Personal',     cat: 'personal',  repo: 'https://github.com/j3z/tiny-personal',                           author: 'j3z',           blurb: 'Ultra-minimal personal template.',                         accent: '#CFE3D1', seed: 'Single-page personal card, one paragraph + links' },
+      { name: 'Manuel Moreale',    cat: 'personal',  repo: 'https://github.com/manuelmoreale/website',                        author: 'Manuel Moreale', blurb: 'Blogger / writer personal site.',                         accent: '#D6E2E8', seed: 'Writer personal hub, long-form essay-forward design' }
+    ];
+
+    function render(cat) {
+      const grid = document.getElementById('grid');
+      const list = cat === 'all' ? TEMPLATES : TEMPLATES.filter(t => t.cat === cat);
+      grid.innerHTML = list.map(t => `
+        <div class="tpl-card">
+          <div class="tpl-thumb" style="background:${t.accent};color:#111827;">${initials(t.name)}</div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="chip">${categoryLabel(t.cat)}</span>
+              <span class="text-[11px] font-medium" style="color: var(--text-muted);">${escapeHtml(t.author)}</span>
+            </div>
+            <h3 class="text-lg font-bold tracking-tight mb-1">${escapeHtml(t.name)}</h3>
+            <p class="text-xs mb-4 flex-grow" style="color: var(--text-muted);">${escapeHtml(t.blurb)}</p>
+            <div class="flex items-center gap-2 mt-auto">
+              <a href="${t.repo}" target="_blank" rel="noopener" class="btn-secondary">GitHub</a>
+              <a href="generate.html?seed=${encodeURIComponent(t.seed)}" class="btn-primary">Use as seed</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function initials(s) {
+      return s.split(/\s+/).slice(0, 2).map(x => x[0]).join('').toUpperCase();
+    }
+    function categoryLabel(c) {
+      return { saas: 'SaaS', services: 'Services', portfolio: 'Portfolio', ecommerce: 'E-commerce', startup: 'Startup', personal: 'Personal' }[c] || c;
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    document.querySelectorAll('.cat-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render(btn.dataset.cat);
+      });
+    });
+
+    render('all');
+  </script>
+</body>
+</html>

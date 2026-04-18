@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Generator — Awesome Crew</title>
+  <meta name="description" content="AI-generated landing pages. Describe your business, refine with prompts, save and download."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="theme.css" rel="stylesheet"/>
+  <script>if(localStorage.getItem('ac-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
+  <script src="theme.js" defer></script>
+  <style>
+    :root {
+      --bg: #F5F1E8; --grid: #E6E1D8;
+      --text: #111827; --text-sec: #374151; --text-muted: #6B7280;
+      --container: #EDE7DB; --border: #1F2937;
+      --card-green: #CFE3D1; --card-blue: #D6E2E8;
+      --btn-bg: #111827; --btn-hover: #000000;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body {
+      background-color: var(--bg); color: var(--text);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card-border { border: 2px solid var(--border); }
+    .btn-primary {
+      background: var(--btn-bg); color: #fff;
+      border-radius: 10px; padding: 10px 18px;
+      font-weight: 600; font-size: 13px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--btn-hover); transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-secondary {
+      background: #fff; color: var(--text);
+      border: 2px solid var(--border); border-radius: 10px;
+      padding: 8px 14px; font-weight: 600; font-size: 13px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover:not(:disabled) { background: rgba(31,41,55,0.06); }
+    .btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .field {
+      width: 100%; padding: 12px 14px;
+      background: #fff; border: 2px solid var(--border);
+      border-radius: 10px; font-size: 14px; color: var(--text);
+      transition: box-shadow 0.15s;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .field:focus { outline: none; box-shadow: 0 0 0 3px rgba(31,41,55,0.12); }
+    .preview-frame {
+      width: 100%; height: 720px;
+      background: #fff; border: 2px solid var(--border); border-radius: 16px;
+    }
+    .skeleton {
+      background: linear-gradient(90deg, rgba(31,41,55,0.06) 0%, rgba(31,41,55,0.12) 50%, rgba(31,41,55,0.06) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite linear;
+      border-radius: 10px;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .chip-ex {
+      display: inline-block; padding: 6px 12px; margin: 2px;
+      background: #fff; border: 2px solid var(--border);
+      border-radius: 999px; font-size: 12px; font-weight: 500;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .chip-ex:hover { background: var(--card-green); }
+    .tab-btn {
+      padding: 8px 14px; font-weight: 600; font-size: 13px;
+      border-radius: 8px; background: transparent; color: var(--text-sec);
+      transition: background 0.15s, color 0.15s;
+    }
+    .tab-btn.active { background: #111827; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <header class="sticky top-0 z-40 backdrop-blur-sm" style="background: rgba(245,241,232,0.85); border-bottom: 1px solid #E6E1D8;">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button type="button" class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+          <svg class="logo-light" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="15" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 58 15 L 78 15 A 15 15 0 0 1 78 45 L 58 45 Z" fill="currentColor"/>
+            <rect x="8" y="55" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 58 55 L 78 55 A 15 15 0 0 1 78 85 L 58 85 Z" fill="#CFE3D1"/>
+          </svg>
+          <svg class="logo-dark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 8 15 L 28 15 A 15 15 0 0 1 28 45 L 8 45 Z" fill="currentColor"/>
+            <rect x="42" y="15" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M 8 55 L 28 55 A 15 15 0 0 1 28 85 L 8 85 Z" fill="#CFE3D1"/>
+            <rect x="42" y="55" width="50" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="5"/>
+          </svg>
+        </button>
+        <a href="index.html" class="text-lg font-bold tracking-tight brand-text" style="color: var(--text);"><span>A</span><span class="f">wesome</span><span class="s">&nbsp;</span><span>C</span><span class="f">rew</span></a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="dashboard.html" class="btn-secondary">Dashboard</a>
+        <a href="templates.html" class="btn-secondary">Templates</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 pb-24">
+
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight" id="page-title">New landing page</h1>
+      <p class="text-sm mt-2" style="color: var(--text-muted);">Describe your business. We'll generate a complete page in a few seconds.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+      <!-- Left: controls -->
+      <aside class="lg:col-span-2 flex flex-col gap-5">
+
+        <section class="rounded-[20px] card-border p-6" style="background: var(--container);">
+          <label for="prompt" class="block text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--text-muted);">Brand prompt</label>
+          <textarea id="prompt" rows="4" class="field" placeholder="Artisanal coffee roaster in Portland, minimal earthy"></textarea>
+
+          <div class="mt-3 flex flex-wrap gap-1">
+            <button type="button" class="chip-ex" data-ex="Artisanal coffee roaster in Portland, minimal earthy">Coffee roaster</button>
+            <button type="button" class="chip-ex" data-ex="SaaS tool for freelance designers to manage clients, bold and playful">SaaS tool</button>
+            <button type="button" class="chip-ex" data-ex="Indie photographer portfolio, dark moody, one-page">Photographer</button>
+            <button type="button" class="chip-ex" data-ex="Handmade ceramics shop, soft pastels, warm">Ceramics shop</button>
+            <button type="button" class="chip-ex" data-ex="Yoga studio in Bali, calm natural tones">Yoga studio</button>
+          </div>
+
+          <div class="flex items-center gap-3 mt-5">
+            <input id="title" class="field" placeholder="Project title (optional)" style="flex:1;"/>
+          </div>
+
+          <button id="btn-generate" class="btn-primary mt-4 w-full justify-center" style="padding: 12px 18px; font-size: 14px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            <span id="btn-generate-label">Generate</span>
+          </button>
+        </section>
+
+        <section id="refine-card" class="rounded-[20px] card-border p-6 hidden" style="background: var(--card-blue);">
+          <label for="instructions" class="block text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--text-muted);">Refine with a prompt</label>
+          <textarea id="instructions" rows="3" class="field" placeholder="Make the hero darker. Change the CTA to 'Start today'. Add a testimonial section."></textarea>
+          <button id="btn-refine" class="btn-primary mt-3 w-full justify-center">
+            <span id="btn-refine-label">Apply changes</span>
+          </button>
+        </section>
+
+        <section id="actions-card" class="rounded-[20px] card-border p-6 hidden" style="background: var(--card-green);">
+          <div class="text-xs font-bold uppercase tracking-widest mb-3" style="color: var(--text-muted);">Actions</div>
+          <div class="flex flex-col gap-2">
+            <button id="btn-edit" class="btn-secondary justify-center">Toggle inline edit mode</button>
+            <button id="btn-save" class="btn-primary justify-center">Save to dashboard</button>
+            <button id="btn-download" class="btn-secondary justify-center">Download ZIP</button>
+          </div>
+        </section>
+
+      </aside>
+
+      <!-- Right: preview -->
+      <section class="lg:col-span-3 flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1 p-1 rounded-[12px] card-border" style="background: var(--container);">
+            <button class="tab-btn active" data-view="desktop">Desktop</button>
+            <button class="tab-btn" data-view="tablet">Tablet</button>
+            <button class="tab-btn" data-view="mobile">Mobile</button>
+          </div>
+          <div id="status-chip" class="text-xs font-semibold" style="color: var(--text-muted);">No page yet</div>
+        </div>
+
+        <div id="preview-wrap" class="relative">
+          <iframe id="preview" class="preview-frame hidden" title="Preview"></iframe>
+          <div id="preview-empty" class="preview-frame flex items-center justify-center text-center px-8" style="background: var(--container);">
+            <div>
+              <div class="w-14 h-14 mx-auto rounded-[14px] card-border flex items-center justify-center mb-4" style="background: var(--card-green);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text);"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <h3 class="text-xl font-bold mb-1">Your page appears here</h3>
+              <p class="text-sm" style="color: var(--text-muted);">Write a prompt and hit Generate.</p>
+            </div>
+          </div>
+          <div id="preview-loading" class="preview-frame absolute inset-0 hidden flex-col gap-3 p-8" style="background: var(--container);">
+            <div class="skeleton h-10 w-3/4"></div>
+            <div class="skeleton h-5 w-1/2"></div>
+            <div class="grid grid-cols-3 gap-3 mt-4">
+              <div class="skeleton h-32"></div>
+              <div class="skeleton h-32"></div>
+              <div class="skeleton h-32"></div>
+            </div>
+            <div class="skeleton h-5 w-2/3 mt-4"></div>
+            <div class="skeleton h-5 w-1/3"></div>
+            <div class="text-center mt-6 text-sm font-semibold" style="color: var(--text-muted);">Generating with Claude…</div>
+          </div>
+        </div>
+
+        <div id="toast" class="hidden px-4 py-3 rounded-[10px] text-sm font-medium"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="border-t mt-12" style="border-color: #E6E1D8; background: rgba(245,241,232,0.6);">
+    <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-4 items-center">
+      <p class="text-xs" style="color: var(--text-muted);">© <span id="year"></span> Awesome Crew. All rights reserved.</p>
+      <div class="flex flex-wrap gap-6 text-xs">
+        <a href="dashboard.html" class="hover:underline" style="color: var(--text-sec);">Dashboard</a>
+        <a href="templates.html" class="hover:underline" style="color: var(--text-sec);">Templates</a>
+        <a href="docs.html" class="hover:underline" style="color: var(--text-sec);">Docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script>
+    const SUPABASE_URL  = 'https://ltvxbquveerzjizfbzvv.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0dnhicXV2ZWVyemppemZienZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTUyNzcsImV4cCI6MjA5MTk3MTI3N30.vj7SNmI4oFKxD-wyaoZ45RTuQ38IpjyzQYTGSmaJjOo';
+    const { createClient } = supabase;
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const els = {
+      prompt: document.getElementById('prompt'),
+      title: document.getElementById('title'),
+      btnGen: document.getElementById('btn-generate'),
+      btnGenLabel: document.getElementById('btn-generate-label'),
+      btnRefine: document.getElementById('btn-refine'),
+      btnRefineLabel: document.getElementById('btn-refine-label'),
+      btnEdit: document.getElementById('btn-edit'),
+      btnSave: document.getElementById('btn-save'),
+      btnDownload: document.getElementById('btn-download'),
+      instructions: document.getElementById('instructions'),
+      preview: document.getElementById('preview'),
+      previewEmpty: document.getElementById('preview-empty'),
+      previewLoading: document.getElementById('preview-loading'),
+      refineCard: document.getElementById('refine-card'),
+      actionsCard: document.getElementById('actions-card'),
+      status: document.getElementById('status-chip'),
+      toast: document.getElementById('toast'),
+      pageTitle: document.getElementById('page-title'),
+    };
+
+    let state = {
+      html: '',
+      pageId: null,
+      editMode: false,
+      slug: '',
+      userId: null,
+    };
+
+    function toast(msg, type = 'success') {
+      els.toast.textContent = msg;
+      els.toast.className = 'px-4 py-3 rounded-[10px] text-sm font-medium block mt-2';
+      if (type === 'success') {
+        els.toast.style.background = '#CFE3D1';
+        els.toast.style.border = '2px solid #1F2937';
+        els.toast.style.color = '#111827';
+      } else {
+        els.toast.style.background = '#FEE2E2';
+        els.toast.style.border = '2px solid #991B1B';
+        els.toast.style.color = '#7F1D1D';
+      }
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => els.toast.classList.add('hidden'), 4500);
+    }
+
+    function setLoading(on, label = 'Generating…') {
+      if (on) {
+        els.previewLoading.classList.remove('hidden');
+        els.previewLoading.classList.add('flex');
+        els.btnGen.disabled = true; els.btnRefine.disabled = true;
+        els.btnGenLabel.textContent = label;
+        els.btnRefineLabel.textContent = label;
+      } else {
+        els.previewLoading.classList.add('hidden');
+        els.previewLoading.classList.remove('flex');
+        els.btnGen.disabled = false; els.btnRefine.disabled = false;
+        els.btnGenLabel.textContent = 'Generate';
+        els.btnRefineLabel.textContent = 'Apply changes';
+      }
+    }
+
+    function showPreview(html) {
+      els.previewEmpty.classList.add('hidden');
+      els.preview.classList.remove('hidden');
+      // Use srcdoc for same-origin access so edit mode can reach into the frame.
+      els.preview.srcdoc = html;
+      state.html = html;
+      els.refineCard.classList.remove('hidden');
+      els.actionsCard.classList.remove('hidden');
+      els.status.textContent = state.pageId ? 'Saved' : 'Unsaved draft';
+      els.status.style.color = state.pageId ? '#14532d' : '#9a6700';
+    }
+
+    async function ensureAuth() {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) { window.location.href = 'login.html'; return null; }
+      state.userId = session.user.id;
+      return session;
+    }
+
+    async function loadExisting(id) {
+      const { data, error } = await sb.from('pages').select('*').eq('id', id).maybeSingle();
+      if (error || !data) return;
+      state.pageId = data.id;
+      state.slug = data.slug || '';
+      els.title.value = data.title || '';
+      els.pageTitle.textContent = data.title ? `Editing — ${data.title}` : 'Editing project';
+      const html = (data.content && (data.content.html || data.content)) || '';
+      if (typeof html === 'string' && html.includes('<html')) {
+        showPreview(html);
+      }
+    }
+
+    async function generate() {
+      const prompt = els.prompt.value.trim();
+      if (!prompt) { toast('Write a brand prompt first.', 'error'); return; }
+      setLoading(true, 'Generating…');
+      try {
+        const r = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ prompt })
+        });
+        const data = await r.json();
+        if (!r.ok || !data.html) throw new Error(data.error || 'Generation failed');
+        showPreview(data.html);
+        if (!els.title.value) els.title.value = prompt.slice(0, 40);
+        toast('Page generated. Edit inline or refine with a prompt.');
+      } catch (err) {
+        toast(err.message || String(err), 'error');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function refine() {
+      const instructions = els.instructions.value.trim();
+      if (!instructions) { toast('Describe the changes you want.', 'error'); return; }
+      if (!state.html) { toast('Generate a page first.', 'error'); return; }
+      // Capture any inline edits from the iframe before refining.
+      captureInlineEdits();
+      setLoading(true, 'Refining…');
+      try {
+        const r = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ existingHtml: state.html, instructions })
+        });
+        const data = await r.json();
+        if (!r.ok || !data.html) throw new Error(data.error || 'Refine failed');
+        showPreview(data.html);
+        els.instructions.value = '';
+        state.editMode = false;
+        toast('Applied. Keep refining or save.');
+      } catch (err) {
+        toast(err.message || String(err), 'error');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function captureInlineEdits() {
+      if (!state.editMode) return;
+      try {
+        const doc = els.preview.contentDocument;
+        if (!doc) return;
+        // Strip contenteditable attrs so the stored HTML is clean.
+        doc.querySelectorAll('[contenteditable]').forEach(n => n.removeAttribute('contenteditable'));
+        state.html = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+      } catch {}
+    }
+
+    function toggleEditMode() {
+      if (!state.html) { toast('Generate a page first.', 'error'); return; }
+      const doc = els.preview.contentDocument;
+      if (!doc) return;
+      state.editMode = !state.editMode;
+      doc.querySelectorAll('[data-edit], h1, h2, h3, p, a, button, span').forEach(n => {
+        if (state.editMode) n.setAttribute('contenteditable', 'true');
+        else n.removeAttribute('contenteditable');
+      });
+      if (state.editMode) {
+        const style = doc.createElement('style');
+        style.id = 'ac-edit-style';
+        style.textContent = '[contenteditable="true"]:hover{outline:2px dashed #111827;outline-offset:3px;cursor:text}[contenteditable="true"]:focus{outline:2px solid #111827;background:rgba(207,227,209,0.4)}';
+        doc.head.appendChild(style);
+        toast('Edit mode on. Click any text in the preview to edit it.');
+      } else {
+        const s = doc.getElementById('ac-edit-style'); if (s) s.remove();
+        captureInlineEdits();
+        toast('Edit mode off. Changes captured.');
+      }
+    }
+
+    function slugify(s) {
+      return (s || 'page').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'page';
+    }
+
+    async function save() {
+      captureInlineEdits();
+      if (!state.html) { toast('Nothing to save.', 'error'); return; }
+      const title = els.title.value.trim() || els.prompt.value.trim().slice(0, 40) || 'Untitled';
+      const slug = state.slug || slugify(title) + '-' + Math.random().toString(36).slice(2, 6);
+      const payload = { user_id: state.userId, title, slug, content: { html: state.html }, published: false };
+      try {
+        if (state.pageId) {
+          const { error } = await sb.from('pages').update({ title, content: { html: state.html } }).eq('id', state.pageId);
+          if (error) throw error;
+        } else {
+          const { data, error } = await sb.from('pages').insert(payload).select('id, slug').single();
+          if (error) throw error;
+          state.pageId = data.id;
+          state.slug = data.slug;
+          history.replaceState(null, '', 'generate.html?id=' + data.id);
+        }
+        els.status.textContent = 'Saved';
+        els.status.style.color = '#14532d';
+        toast('Saved to your dashboard.');
+      } catch (err) {
+        toast(err.message || 'Save failed', 'error');
+      }
+    }
+
+    async function download() {
+      captureInlineEdits();
+      if (!state.html) { toast('Generate a page first.', 'error'); return; }
+      const title = els.title.value.trim() || 'awesome-crew-page';
+      const zip = new JSZip();
+      zip.file('index.html', state.html);
+      zip.file('README.md', `# ${title}\n\nGenerated with Awesome Crew (landing-pageeee.vercel.app).\n\nTo preview: open index.html in any browser.\nTo host: drop the folder on Vercel, Netlify, Cloudflare Pages, or any static host.\n`);
+      const blob = await zip.generateAsync({ type: 'blob' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = slugify(title) + '.zip';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // View switcher
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const view = btn.dataset.view;
+        if (view === 'desktop') { els.preview.style.width = '100%'; els.preview.style.maxWidth = ''; }
+        if (view === 'tablet')  { els.preview.style.width = '768px'; els.preview.style.maxWidth = '100%'; }
+        if (view === 'mobile')  { els.preview.style.width = '390px'; els.preview.style.maxWidth = '100%'; }
+      });
+    });
+
+    document.querySelectorAll('.chip-ex').forEach(c => c.addEventListener('click', () => {
+      els.prompt.value = c.dataset.ex; els.prompt.focus();
+    }));
+    els.btnGen.addEventListener('click', generate);
+    els.btnRefine.addEventListener('click', refine);
+    els.btnEdit.addEventListener('click', toggleEditMode);
+    els.btnSave.addEventListener('click', save);
+    els.btnDownload.addEventListener('click', download);
+
+    (async () => {
+      const session = await ensureAuth();
+      if (!session) return;
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      const seed = params.get('seed');
+      if (id) await loadExisting(id);
+      else if (seed) els.prompt.value = seed;
+    })();
+  </script>
+</body>
+</html>
