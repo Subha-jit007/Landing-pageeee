@@ -3,7 +3,7 @@
 // Assembles a complete, premium HTML landing page from a user prompt.
 // This is the "AI" of PageForge — entirely deterministic, zero API keys.
 // ═══════════════════════════════════════════════════════════════════
-import { THEMES, FONT_PAIRS, type Theme } from "./themes";
+import { THEMES, FONT_PAIRS, type Theme, type FontPair } from "./themes";
 import { extractContent, type BusinessContent } from "./content";
 import {
   renderNavbar,
@@ -125,7 +125,7 @@ function buildAnimationScript(level: AnimationLevel): string {
 function wrapPage(
   sections: string,
   theme: Theme,
-  fontPair: ReturnType<typeof Object.values<typeof FONT_PAIRS>>[number],
+  fontPair: FontPair,
   animationScript: string,
   title: string,
   description: string,

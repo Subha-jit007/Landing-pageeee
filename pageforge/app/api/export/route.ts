@@ -50,7 +50,7 @@ The entire file is self-contained. No build step required.
   const buffer = await zip.generateAsync({ type: "uint8array" });
   const filename = `${slugify(page.title) || "landing-page"}.zip`;
 
-  return new Response(buffer, {
+  return new Response(new Blob([buffer as BlobPart]), {
     headers: {
       "Content-Type": "application/zip",
       "Content-Disposition": `attachment; filename="${filename}"`,
