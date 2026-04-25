@@ -215,10 +215,15 @@ function seedFrom(str) {
 }
 const pick = (arr, seed) => arr[Math.abs(seed) % arr.length];
 
-function extractContent(prompt, providedIndustry) {
+function slugify(s) {
+  return String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40) || "brand";
+}
+
+function extractContent(prompt, providedIndustry, extraSeed) {
   const industry = providedIndustry || detectIndustry(prompt);
   const productName = extractProductName(prompt);
-  const seed = seedFrom(prompt);
+  const seed = seedFrom(prompt) ^ (extraSeed | 0);
+  const heroImageSeed = slugify(productName) + "-" + Math.abs(seed).toString(36);
 
   const featurePool = FEATURES_BY_INDUSTRY[industry] || FEATURES_BY_INDUSTRY.saas;
   const headlinePool = HEADLINES[industry] || HEADLINES.saas;
@@ -272,6 +277,8 @@ function extractContent(prompt, providedIndustry) {
     secondaryCta: "See how it works",
     features, stats, testimonials, pricingPlans, faqs, industry,
     logoLetter: productName.charAt(0).toUpperCase(),
+    heroImage: `https://picsum.photos/seed/${encodeURIComponent(heroImageSeed)}/1280/720`,
+    seed,
   };
 }
 
@@ -321,6 +328,10 @@ function renderHero(t, c) {
       </a>
       <a href="#features" style="background:transparent;color:${t.text};text-decoration:none;padding:14px 28px;border-radius:10px;font-weight:600;font-size:15px;border:1px solid ${t.border};">${c.secondaryCta}</a>
     </div>
+  </div>
+  <div data-gsap="fade-up" style="max-width:1100px;margin:90px auto 0;position:relative;">
+    <div style="position:absolute;inset:-40px;background:radial-gradient(60% 60% at 50% 30%, ${rgba(t.primary,0.18)} 0%, transparent 70%);pointer-events:none;filter:blur(20px);"></div>
+    <img src="${c.heroImage}" alt="" loading="lazy" style="position:relative;width:100%;height:auto;border-radius:18px;border:1px solid ${t.border};box-shadow:0 30px 60px -20px ${rgba("#000000",0.45)};display:block;" />
   </div>
 </section>`;
 }
@@ -521,15 +532,31 @@ function buildAnimationScript(level) {
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script>
+(function(){
+  function reveal(){
+    document.querySelectorAll('[data-gsap="fade-up"]').forEach(function(el){
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.style.transition = 'opacity .8s ease, transform .8s ease';
+    });
+  }
+  if (!window.gsap) { setTimeout(reveal, 50); return; }
   gsap.registerPlugin(ScrollTrigger);
   gsap.set('[data-gsap="fade-up"]', { opacity: 0, y: 28 });
   document.querySelectorAll('[data-section]').forEach(function(section){
     var items = section.querySelectorAll('[data-gsap="fade-up"]');
     if (!items.length) return;
-    gsap.to(items, { opacity: 1, y: 0, duration: ${duration}, stagger: ${stagger}, ease: "power3.out", scrollTrigger: { trigger: section, start: "top 82%", once: true } });
+    gsap.to(items, { opacity: 1, y: 0, duration: ${duration}, stagger: ${stagger}, ease: "power3.out", scrollTrigger: { trigger: section, start: "top 85%", once: true } });
   });
   var hero = document.querySelector('[data-section="hero"]');
   if (hero) gsap.to(hero.querySelectorAll('[data-gsap="fade-up"]'), { opacity: 1, y: 0, duration: ${duration}, stagger: ${stagger}, ease: "power3.out", delay: 0.1 });
+  // Safety net — if a section never enters viewport, force-reveal at 3s
+  setTimeout(function(){
+    document.querySelectorAll('[data-gsap="fade-up"]').forEach(function(el){
+      if (parseFloat(getComputedStyle(el).opacity) < 0.5) { el.style.opacity = '1'; el.style.transform = 'none'; }
+    });
+  }, 3000);
+})();
 </script>`;
 }
 
@@ -556,7 +583,19 @@ ${fp.link}
   img { max-width: 100%; height: auto; display: block; }
   ::selection { background: ${t.primary}; color: ${t.isDark?"#000":"#fff"}; }
   details > summary::-webkit-details-marker { display: none; }
-  details[open] summary svg { transform: rotate(180deg); }
+  details[open] summary svg { transform: rotate(180deg); transition: transform 0.2s ease; }
+  details summary svg { transition: transform 0.2s ease; }
+  /* Hover polish (survives DOMPurify since it's CSS not inline JS) */
+  a, button { transition: all 0.2s ease; }
+  [data-section="navbar"] a:hover { color: ${t.text} !important; }
+  [data-section="hero"] a[href="#cta"]:hover { background: ${t.primaryHover} !important; transform: translateY(-2px); box-shadow: 0 12px 30px -10px ${rgba(t.primary, 0.6)}; }
+  [data-section="hero"] a[href="#features"]:hover { background: ${t.surface} !important; border-color: ${t.textMuted} !important; }
+  [data-section="features"] > div > div > div:hover { background: ${t.surface} !important; }
+  [data-section="testimonials"] > div > div > div:hover { transform: translateY(-4px); border-color: ${t.textMuted} !important; }
+  [data-section="pricing"] > div > div > div:hover { border-color: ${t.textMuted} !important; }
+  [data-section="cta"] a:hover { transform: translateY(-2px); }
+  [data-section="footer"] a:hover { color: ${t.text} !important; }
+  details:hover { border-color: ${t.textMuted} !important; }
   @media (max-width: 768px) { [data-section="navbar"] > div > div:last-child a:not(:last-child) { display: none; } }
 </style>
 </head>
@@ -569,9 +608,15 @@ ${animationScript}
 
 function generatePage(opts) {
   const level = opts.animationLevel || "dynamic";
-  const content = extractContent(opts.prompt, opts.industry);
-  const themeKey = opts.theme || THEME_BY_INDUSTRY[content.industry] || "electric-indigo";
-  const fontKey = opts.fontPair || FONT_BY_INDUSTRY[content.industry] || "clash-satoshi";
+  const variantSeed = (opts.seed | 0) || (Date.now() & 0x7fffffff) ^ Math.floor(Math.random() * 0x7fffffff);
+  const content = extractContent(opts.prompt, opts.industry, variantSeed);
+
+  // When the caller doesn't lock a theme/font, vary on every call so
+  // repeated generates with the same prompt feel different.
+  const themeKeys = Object.keys(THEMES);
+  const fontKeys = Object.keys(FONT_PAIRS);
+  const themeKey = opts.theme || themeKeys[Math.abs(variantSeed) % themeKeys.length];
+  const fontKey = opts.fontPair || fontKeys[Math.abs(variantSeed >> 3) % fontKeys.length];
   const theme = THEMES[themeKey] || THEMES["electric-indigo"];
   const fp = FONT_PAIRS[fontKey] || FONT_PAIRS["clash-satoshi"];
 
@@ -606,13 +651,25 @@ export default async function handler(req, res) {
 
   let body = req.body;
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }
-  const { prompt, existingHtml, instructions, theme, fontPair, animationLevel, industry } = body || {};
+  const { prompt, originalPrompt, existingHtml, instructions, theme, fontPair, animationLevel, industry } = body || {};
 
+  // Refine: blend the original prompt with the user's edit instructions
+  // and roll a fresh seed → genuinely different page in the same brand.
   if (existingHtml && instructions) {
-    res.status(200).json({
-      html: existingHtml,
-      notice: "This build has no AI refinement. Click text in the preview to edit it directly, then hit Save."
-    });
+    const base = (originalPrompt || prompt || "").trim();
+    if (!base) {
+      res.status(400).json({ error: 'Refine requires {originalPrompt} or {prompt} alongside {instructions}.' });
+      return;
+    }
+    try {
+      const { html } = generatePage({
+        prompt: `${base}. ${instructions}`,
+        theme, fontPair, animationLevel, industry,
+      });
+      res.status(200).json({ html });
+    } catch (err) {
+      res.status(500).json({ error: 'Refine failed', detail: String(err).slice(0, 500) });
+    }
     return;
   }
 

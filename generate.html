@@ -351,7 +351,7 @@
         const r = await fetch('/api/generate', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ existingHtml: state.html, instructions })
+          body: JSON.stringify({ existingHtml: state.html, instructions, originalPrompt: els.prompt.value })
         });
         const data = await r.json();
         if (!r.ok || !data.html) throw new Error(data.error || 'Refine failed');
