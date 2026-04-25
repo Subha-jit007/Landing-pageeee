@@ -53,8 +53,13 @@
       border-radius: 10px; font-size: 14px; color: var(--text);
       transition: box-shadow 0.15s;
       font-family: 'Inter', system-ui, sans-serif;
+      pointer-events: auto;
+      -webkit-user-select: text;
+      user-select: text;
+      caret-color: currentColor;
     }
-    .field:focus { outline: none; box-shadow: 0 0 0 3px rgba(31,41,55,0.12); }
+    textarea.field { min-height: 84px; resize: vertical; }
+    .field:focus { outline: none; box-shadow: 0 0 0 3px rgba(31,41,55,0.18); border-color: #111827; }
     .preview-frame {
       width: 100%; height: 720px;
       background: #fff; border: 2px solid var(--border); border-radius: 16px;
@@ -143,12 +148,14 @@
           </button>
         </section>
 
-        <section id="refine-card" class="rounded-[20px] card-border p-6 hidden" style="background: var(--card-blue);">
+        <section id="refine-card" class="rounded-[20px] card-border p-6" style="background: var(--card-blue);">
           <label for="instructions" class="block text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--text-muted);">Refine with a prompt</label>
-          <textarea id="instructions" rows="3" class="field" placeholder="Make the hero darker. Change the CTA to 'Start today'. Add a testimonial section."></textarea>
-          <button id="btn-refine" class="btn-primary mt-3 w-full justify-center">
+          <p class="text-xs mb-2" style="color: var(--text-muted);" id="refine-hint">Generate a page first, then describe the tweaks you want.</p>
+          <textarea id="instructions" rows="3" class="field" autocomplete="off" autocorrect="on" spellcheck="true" placeholder="Make the hero darker. Change the CTA to 'Start today'. Add a testimonial section."></textarea>
+          <button id="btn-refine" class="btn-primary mt-3 w-full justify-center" disabled>
             <span id="btn-refine-label">Apply changes</span>
           </button>
+          <p class="text-[11px] mt-2" style="color: var(--text-muted);">Tip: press <kbd style="background:#fff;border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:10px;">Ctrl/⌘ + Enter</kbd> to apply.</p>
         </section>
 
         <section id="actions-card" class="rounded-[20px] card-border p-6 hidden" style="background: var(--card-green);">
@@ -292,10 +299,20 @@
       // Use srcdoc for same-origin access so edit mode can reach into the frame.
       els.preview.srcdoc = html;
       state.html = html;
-      els.refineCard.classList.remove('hidden');
       els.actionsCard.classList.remove('hidden');
       els.status.textContent = state.pageId ? 'Saved' : 'Unsaved draft';
       els.status.style.color = state.pageId ? '#14532d' : '#9a6700';
+      // Refine is now always usable.
+      els.btnRefine.disabled = false;
+      const hint = document.getElementById('refine-hint');
+      if (hint) hint.textContent = "Describe the tweaks. We'll regenerate the page with them folded in.";
+      // Bump the textarea so the user notices it.
+      setTimeout(() => {
+        try {
+          els.instructions.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          els.instructions.focus({ preventScroll: false });
+        } catch (_) {}
+      }, 200);
     }
 
     async function ensureAuth() {
@@ -461,6 +478,14 @@
     }));
     els.btnGen.addEventListener('click', generate);
     els.btnRefine.addEventListener('click', refine);
+
+    // Cmd/Ctrl+Enter inside the refine textarea fires Apply changes.
+    els.instructions.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (!els.btnRefine.disabled) refine();
+      }
+    });
     els.btnEdit.addEventListener('click', toggleEditMode);
     els.btnSave.addEventListener('click', save);
     els.btnDownload.addEventListener('click', download);
