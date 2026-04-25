@@ -1,6 +1,7 @@
-// Deterministic landing page generator. No API keys, no external LLM.
-// Given a prompt, infers industry + product name and assembles a complete
-// themed HTML document from curated content pools and section renderers.
+// Landing page generator. Calls Gemini for prompt-aware copy when
+// GEMINI_API_KEY is configured, falls back to a deterministic content
+// pool when the key is missing or the API fails. The themer/renderer
+// is deterministic in both modes.
 
 // ─────────────────────────────────────────────────────────────
 // Themes
@@ -646,17 +647,204 @@ ${animationScript}
 </html>`;
 }
 
+// ─────────────────────────────────────────────────────────────
+// Gemini caller — produces prompt-aware content. Returns null if
+// the API key is missing or the call fails, so the caller can fall
+// back to the deterministic content extractor.
+// ─────────────────────────────────────────────────────────────
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite";
+const GEMINI_FALLBACK_MODELS = ["gemini-2.0-flash-lite", "gemini-flash-lite-latest", "gemini-2.5-flash"];
+const GEMINI_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    productName: { type: "STRING", description: "Inventive 1-2 syllable brand name. Never use the literal first word of the brief." },
+    tagline: { type: "STRING", description: "Short tagline, 3-7 words." },
+    heroHeadline: { type: "STRING", description: "Specific to the brief, 5-12 words." },
+    heroSubhead: { type: "STRING", description: "One sentence, 14-30 words, references the actual subject of the brief." },
+    primaryCta: { type: "STRING" },
+    secondaryCta: { type: "STRING" },
+    industry: { type: "STRING", enum: ["saas","ecommerce","agency","fitness","food","education","finance","portfolio","nonprofit","realestate"] },
+    themeKey: { type: "STRING", enum: ["dark-minimal","electric-indigo","forest-emerald","sunset-coral","bold-monochrome","royal-amber","cyber-neon","warm-cream"] },
+    fontPair: { type: "STRING", enum: ["clash-satoshi","cabinet-satoshi","serif-elegant","geometric-modern","editorial-bold"] },
+    features: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          title: { type: "STRING", description: "1-4 word title." },
+          description: { type: "STRING", description: "12-22 words, specific to the business." },
+          icon: { type: "STRING", enum: ["bolt","shield","chart","globe","layers","zap","cpu","users","heart"] },
+        },
+        required: ["title","description","icon"],
+      },
+    },
+    testimonials: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          quote: { type: "STRING" },
+          author: { type: "STRING" },
+          role: { type: "STRING" },
+        },
+        required: ["quote","author","role"],
+      },
+    },
+    pricingPlans: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          name: { type: "STRING" },
+          price: { type: "STRING" },
+          period: { type: "STRING" },
+          description: { type: "STRING" },
+          features: { type: "ARRAY", items: { type: "STRING" } },
+          featured: { type: "BOOLEAN" },
+          cta: { type: "STRING" },
+        },
+        required: ["name","price","period","description","features","featured","cta"],
+      },
+    },
+    faqs: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          question: { type: "STRING" },
+          answer: { type: "STRING" },
+        },
+        required: ["question","answer"],
+      },
+    },
+  },
+  required: ["productName","tagline","heroHeadline","heroSubhead","primaryCta","secondaryCta","industry","features","testimonials","pricingPlans","faqs"],
+};
+
+function initialsOf(name) {
+  return String(name || "").split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join("") || "—";
+}
+
+async function callGemini(prompt) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) return null;
+
+  const systemPrompt = `You are an expert copywriter and brand strategist. Given a brief, produce specific, vivid landing page copy as JSON matching the schema.
+
+Hard rules:
+- Brand name MUST be inventive (1-2 syllables, original, brandable). NEVER use the literal first word of the brief.
+- Headlines and copy reference the ACTUAL subject of the brief. No generic SaaS phrases unless the brief is genuinely SaaS.
+- Tone matches the brief (minimal/bold/playful/luxe/earthy/etc.) — read between the lines.
+- Exactly 6 features, 3 testimonials with realistic varied names, 3 pricing plans (middle one featured=true, prices appropriate to the product type — free trial for SaaS, per-piece for ecommerce, project-based for agency), 6 FAQs answering what a real customer would ask about THIS specific brief.
+- themeKey and fontPair: pick what matches the vibe.
+
+Brief: ${prompt}`;
+
+  const body = JSON.stringify({
+    contents: [{ role: "user", parts: [{ text: systemPrompt }] }],
+    generationConfig: {
+      temperature: 0.95,
+      topP: 0.95,
+      maxOutputTokens: 2048,
+      responseMimeType: "application/json",
+      responseSchema: GEMINI_SCHEMA,
+    },
+  });
+
+  // Try primary model, then fall back to progressively smaller free-tier
+  // models if we hit quota / not-found errors.
+  const modelsToTry = [GEMINI_MODEL, ...GEMINI_FALLBACK_MODELS.filter((m) => m !== GEMINI_MODEL)];
+  let raw = null;
+  for (const model of modelsToTry) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
+    const ac = new AbortController();
+    const timer = setTimeout(() => ac.abort(), 22000);
+    let resp;
+    try {
+      resp = await fetch(url, { method: "POST", signal: ac.signal, headers: { "Content-Type": "application/json" }, body });
+    } catch (err) {
+      clearTimeout(timer);
+      console.error(`[gemini:${model}] fetch error:`, err && err.message);
+      continue;
+    }
+    clearTimeout(timer);
+    if (!resp.ok) {
+      const text = await resp.text().catch(() => "");
+      console.error(`[gemini:${model}] non-OK ${resp.status}`, text.slice(0, 200));
+      continue;
+    }
+    const data = await resp.json().catch(() => null);
+    raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (raw) break;
+  }
+  if (!raw) { console.error("[gemini] all models exhausted"); return null; }
+
+  let parsed;
+  try { parsed = JSON.parse(raw); } catch (e) {
+    console.error("[gemini] JSON parse failed:", e.message, raw.slice(0, 300));
+    return null;
+  }
+
+  // Validate minimum shape
+  if (!parsed.productName || !Array.isArray(parsed.features) || parsed.features.length < 3) {
+    console.error("[gemini] schema-light response", JSON.stringify(parsed).slice(0, 300));
+    return null;
+  }
+
+  // Resolve icons → SVG strings, clip arrays to expected lengths,
+  // attach default stats + initials so the renderers find what they need.
+  const features = (parsed.features || []).slice(0, 6).map((f) => ({
+    title: f.title, description: f.description, icon: ICON[f.icon] || ICON.zap,
+  }));
+  while (features.length < 6) features.push(features[features.length - 1] || { title: "Feature", description: "", icon: ICON.zap });
+
+  const testimonials = (parsed.testimonials || []).slice(0, 3).map((x) => ({
+    quote: x.quote, author: x.author, role: x.role, initials: initialsOf(x.author),
+  }));
+  while (testimonials.length < 3) testimonials.push(testimonials[testimonials.length - 1] || { quote: "", author: "—", role: "—", initials: "—" });
+
+  const pricingPlans = (parsed.pricingPlans || []).slice(0, 3);
+  while (pricingPlans.length < 3) pricingPlans.push({ name: "Plan", price: "$0", period: "forever", description: "", features: [], featured: false, cta: "Get started" });
+
+  const faqs = (parsed.faqs || []).slice(0, 6);
+  while (faqs.length < 6) faqs.push({ question: "Have questions?", answer: "Reach out — we're happy to help." });
+
+  const stats = [
+    { value: "10k+", label: "Happy customers" },
+    { value: "99.99%", label: "Uptime" },
+    { value: "4.9", label: "Average rating" },
+    { value: "<50ms", label: "Response time" },
+  ];
+
+  return {
+    content: {
+      productName: parsed.productName,
+      tagline: parsed.tagline,
+      heroHeadline: parsed.heroHeadline,
+      heroSubhead: parsed.heroSubhead,
+      primaryCta: parsed.primaryCta,
+      secondaryCta: parsed.secondaryCta,
+      industry: parsed.industry || "saas",
+      logoLetter: String(parsed.productName).charAt(0).toUpperCase(),
+      features, stats, testimonials, pricingPlans, faqs,
+    },
+    themeKey: parsed.themeKey || null,
+    fontPair: parsed.fontPair || null,
+  };
+}
+
 function generatePage(opts) {
   const level = opts.animationLevel || "dynamic";
   const variantSeed = (opts.seed | 0) || (Date.now() & 0x7fffffff) ^ Math.floor(Math.random() * 0x7fffffff);
-  const content = extractContent(opts.prompt, opts.industry, variantSeed);
+  const content = opts.content || extractContent(opts.prompt, opts.industry, variantSeed);
 
   // When the caller doesn't lock a theme/font, vary on every call so
-  // repeated generates with the same prompt feel different.
+  // repeated generates with the same prompt feel different. Honor any
+  // theme/font Gemini suggested.
   const themeKeys = Object.keys(THEMES);
   const fontKeys = Object.keys(FONT_PAIRS);
-  const themeKey = opts.theme || themeKeys[Math.abs(variantSeed) % themeKeys.length];
-  const fontKey = opts.fontPair || fontKeys[Math.abs(variantSeed >> 3) % fontKeys.length];
+  const themeKey = opts.theme || opts.themeKey || themeKeys[Math.abs(variantSeed) % themeKeys.length];
+  const fontKey = opts.fontPair || opts.fontPairKey || fontKeys[Math.abs(variantSeed >> 3) % fontKeys.length];
   const theme = THEMES[themeKey] || THEMES["electric-indigo"];
   const fp = FONT_PAIRS[fontKey] || FONT_PAIRS["clash-satoshi"];
 
@@ -704,11 +892,16 @@ export default async function handler(req, res) {
       return;
     }
     try {
+      const blended = `${base}. ${instructions}`;
+      const gemini = await callGemini(blended);
       const { html } = generatePage({
-        prompt: `${base}. ${instructions}`,
-        theme, fontPair, animationLevel, industry,
+        prompt: blended,
+        content: gemini?.content,
+        themeKey: theme || gemini?.themeKey,
+        fontPairKey: fontPair || gemini?.fontPair,
+        animationLevel, industry,
       });
-      res.status(200).json({ html });
+      res.status(200).json({ html, mode: gemini ? 'gemini' : 'deterministic' });
     } catch (err) {
       res.status(500).json({ error: 'Refine failed', detail: String(err).slice(0, 500) });
     }
@@ -721,8 +914,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { html } = generatePage({ prompt: prompt.trim(), theme, fontPair, animationLevel, industry });
-    res.status(200).json({ html });
+    const cleanPrompt = prompt.trim();
+    const gemini = await callGemini(cleanPrompt);
+    const { html } = generatePage({
+      prompt: cleanPrompt,
+      content: gemini?.content,
+      themeKey: theme || gemini?.themeKey,
+      fontPairKey: fontPair || gemini?.fontPair,
+      animationLevel, industry,
+    });
+    res.status(200).json({ html, mode: gemini ? 'gemini' : 'deterministic' });
   } catch (err) {
     res.status(500).json({ error: 'Generation failed', detail: String(err).slice(0, 500) });
   }
