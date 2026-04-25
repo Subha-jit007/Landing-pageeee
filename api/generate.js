@@ -194,15 +194,28 @@ function detectIndustry(prompt) {
   return "saas";
 }
 
-function extractProductName(prompt) {
+// Curated set of plausible 1-2 syllable brand names. We never use the
+// literal first word of the prompt as a brand — it produced gems like
+// "Saas" and "Artisanal" as company names.
+const BRAND_NAMES = [
+  "Atlas","Aero","Arc","Beacon","Brio","Canvas","Cedar","Cinder","Compass","Cove",
+  "Crest","Cypress","Drift","Echo","Ember","Fable","Forge","Frame","Gravity","Halo",
+  "Harbor","Helix","Hush","Ivy","Junction","Kepler","Lattice","Linden","Loft","Loom",
+  "Lumen","Mantle","Maple","Mesa","Mira","Moss","North","Nova","Oak","Onyx",
+  "Orbit","Pace","Pact","Parallel","Pebble","Pine","Plume","Polar","Praxis","Quartz",
+  "Ravel","Rivet","Sable","Sage","Shore","Slate","Sonder","Spark","Stack","Stellar",
+  "Tally","Tempo","Terra","Tilt","Timber","Tonic","Trail","Tribe","Vail","Vector",
+  "Vela","Vesper","Vine","Vista","Volt","Wake","Wander","Wedge","Whim","Yield","Zenith",
+];
+
+function extractProductName(prompt, seed) {
+  // Honor explicit naming: "called X" or "named X"
   const called = prompt.match(/(?:called|named)\s+["']?([A-Z][\w\s]{2,30})["']?/i);
   if (called) return called[1].trim();
-  const words = prompt.split(/\s+/).slice(0, 6);
-  const meaningful = words.filter((w) => w.length > 3 && !/^(the|and|for|with|that|this|your|our|from)$/i.test(w));
-  if (meaningful.length > 0) {
-    return meaningful[0].charAt(0).toUpperCase() + meaningful[0].slice(1).toLowerCase();
-  }
-  return "Acme";
+  // Otherwise pick a brand name deterministically from the curated pool
+  // (prompt-seeded so it stays stable per-prompt, varies per session via variantSeed).
+  const idx = Math.abs(seed | 0) % BRAND_NAMES.length;
+  return BRAND_NAMES[idx];
 }
 
 function seedFrom(str) {
@@ -221,9 +234,8 @@ function slugify(s) {
 
 function extractContent(prompt, providedIndustry, extraSeed) {
   const industry = providedIndustry || detectIndustry(prompt);
-  const productName = extractProductName(prompt);
   const seed = seedFrom(prompt) ^ (extraSeed | 0);
-  const heroImageSeed = slugify(productName) + "-" + Math.abs(seed).toString(36);
+  const productName = extractProductName(prompt, seed);
 
   const featurePool = FEATURES_BY_INDUSTRY[industry] || FEATURES_BY_INDUSTRY.saas;
   const headlinePool = HEADLINES[industry] || HEADLINES.saas;
@@ -277,7 +289,6 @@ function extractContent(prompt, providedIndustry, extraSeed) {
     secondaryCta: "See how it works",
     features, stats, testimonials, pricingPlans, faqs, industry,
     logoLetter: productName.charAt(0).toUpperCase(),
-    heroImage: `https://picsum.photos/seed/${encodeURIComponent(heroImageSeed)}/1280/720`,
     seed,
   };
 }
@@ -329,9 +340,38 @@ function renderHero(t, c) {
       <a href="#features" style="background:transparent;color:${t.text};text-decoration:none;padding:14px 28px;border-radius:10px;font-weight:600;font-size:15px;border:1px solid ${t.border};">${c.secondaryCta}</a>
     </div>
   </div>
-  <div data-gsap="fade-up" style="max-width:1100px;margin:90px auto 0;position:relative;">
-    <div style="position:absolute;inset:-40px;background:radial-gradient(60% 60% at 50% 30%, ${rgba(t.primary,0.18)} 0%, transparent 70%);pointer-events:none;filter:blur(20px);"></div>
-    <img src="${c.heroImage}" alt="" loading="lazy" style="position:relative;width:100%;height:auto;border-radius:18px;border:1px solid ${t.border};box-shadow:0 30px 60px -20px ${rgba("#000000",0.45)};display:block;" />
+  <div data-gsap="fade-up" style="max-width:1100px;margin:80px auto 0;position:relative;">
+    <div style="position:absolute;inset:-40px;background:radial-gradient(60% 60% at 50% 30%, ${rgba(t.primary,0.22)} 0%, transparent 70%);pointer-events:none;filter:blur(20px);"></div>
+    <div style="position:relative;aspect-ratio:16/10;border-radius:16px;background:${t.surface};border:1px solid ${t.border};overflow:hidden;box-shadow:0 30px 60px -20px ${rgba("#000000",0.55)};">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg, ${rgba(t.primary,0.18)}, ${rgba(t.accent,0.08)});"></div>
+      <div style="position:absolute;top:14px;left:16px;display:flex;gap:6px;z-index:2;">
+        <span style="width:11px;height:11px;border-radius:50%;background:#ff5f57;"></span>
+        <span style="width:11px;height:11px;border-radius:50%;background:#febc2e;"></span>
+        <span style="width:11px;height:11px;border-radius:50%;background:#28c840;"></span>
+      </div>
+      <div style="position:absolute;top:14px;left:80px;right:80px;height:22px;border-radius:6px;background:${rgba(t.bg,0.35)};border:1px solid ${rgba(t.border,0.5)};"></div>
+      <div style="position:absolute;inset:48px 20px 20px;display:grid;grid-template-columns:200px 1fr;gap:14px;">
+        <div style="background:${rgba(t.bg,0.55)};border:1px solid ${t.border};border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:9px;">
+          <div style="height:9px;width:55%;border-radius:3px;background:${t.primary};opacity:0.9;"></div>
+          ${[68,52,72,46,60,38,64].map((w)=>`<div style="height:8px;width:${w}%;border-radius:3px;background:${rgba(t.text,0.18)};"></div>`).join("")}
+        </div>
+        <div style="background:${rgba(t.bg,0.55)};border:1px solid ${t.border};border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="height:14px;width:36%;border-radius:3px;background:${t.text};opacity:0.85;"></div>
+            <div style="height:22px;width:80px;border-radius:6px;background:${t.primary};"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+            ${[1,2,3].map(()=>`<div style="aspect-ratio:1.4;background:${rgba(t.text,0.08)};border:1px solid ${rgba(t.border,0.6)};border-radius:8px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;"><div style="height:6px;width:50%;background:${rgba(t.text,0.3)};border-radius:2px;"></div><div style="height:14px;width:38%;background:${t.primary};border-radius:3px;"></div></div>`).join("")}
+          </div>
+          <div style="flex:1;background:${rgba(t.text,0.06)};border:1px solid ${rgba(t.border,0.5)};border-radius:8px;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 200 60" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;">
+              <path d="M0,50 L20,40 L40,42 L60,28 L80,30 L100,18 L120,22 L140,12 L160,16 L180,8 L200,12 L200,60 L0,60 Z" fill="${rgba(t.primary,0.25)}"/>
+              <path d="M0,50 L20,40 L40,42 L60,28 L80,30 L100,18 L120,22 L140,12 L160,16 L180,8 L200,12" stroke="${t.primary}" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>`;
 }
@@ -646,6 +686,8 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  res.setHeader('Vercel-CDN-Cache-Control', 'no-store');
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST only' }); return; }
 
